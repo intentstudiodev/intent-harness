@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2 — 2026-11-12
+
+- **Three ways to start, one question.** "Let's start a project" never decides; the project card's `status` does. The hello asks where the product stands (idea · being made · running); the answer sets the status and the route: **Start a project** (new, the interview), **Catch up** (`knowledge/catch-up.md`: where the project is, then read everything before asking), **Map what exists** (`research/map-existing.md`: reverse-engineer with purpose ours, nothing invented, no suggestions, whys asked not guessed). `core/state.mjs` routes by the status every session; a two-step ladder for foggy answers.
+- **Question widget.** Harness cold start detects a structured question tool (Claude Code: AskUserQuestion) and records `question widget: yes|no`; `ask-questions` sends choice questions through it (guess first, two to four options, four per call, "unknown" and "later" as options), text otherwise; the wire-in line and the situation question use it.
+- README: install commands; the three starts.
+
 ## 1.1 — 2026-11-12
 
 - **Names and the public face.** The format's CLI is `intent-format` (was `mds`) everywhere. README rewritten: purpose, the three moments (start · live · hand over), the connections table, what it is not, set up with a tools folder and a `<product>-kb/` beside the code. Repository `intentstudiodev/intent-harness` (private until 1.0.0).

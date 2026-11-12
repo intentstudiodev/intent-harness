@@ -27,6 +27,10 @@ const kb = versions.map(v => {
   return { version: v, cards, total };
 });
 const cardsNow = kb.length ? kb[kb.length - 1].total : 0;
+// the product's lifecycle on the project card decides which start applies (knowledge/start-project.md, Which start)
+const projectCard = versions.length ? read(path.join(versions[versions.length - 1], 'project.md')) : '';
+const lifecycle = (projectCard.match(/^status:\s*(.+)$/m) || [, '—'])[1].trim();
+const startFor = (l) => l === 'Live' ? 'Map what exists' : /^(In design|Approved|In build)$/.test(l) ? 'Catch up' : 'Start a project';
 // the format's own files at the root
 const inputs = files('inputs').filter(n => n !== 'links.md').length;
 const proposal = ex('proposal');
@@ -79,8 +83,8 @@ for (const row of entry.split('\n')) {
 }
 let useCase, why, format = null;
 if (!setup) { useCase = 'Harness cold start'; why = 'no tweaks/setup-record.md in the harness (once per computer; say "skip" to run on defaults)'; }
-else if (!versions.length) { useCase = 'Start a project'; why = 'no KB yet'; format = 'intent-format next ' + root; }
-else if (cardsNow <= 1 || (proposal && !report)) { useCase = 'Start a project'; why = cardsNow <= 1 ? 'the KB holds no cards beyond the project card' : 'the format\'s cold start is under way (proposal/ exists, report.md does not)'; format = 'intent-format next ' + root; }
+else if (!versions.length) { useCase = 'Start a project'; why = 'no KB yet — the hello asks where the product stands (Which start)'; format = 'intent-format next ' + root; }
+else if (cardsNow <= 1 || (proposal && !report)) { useCase = startFor(lifecycle); why = (cardsNow <= 1 ? 'the KB holds no cards beyond the project card' : 'the format\'s cold start is under way (proposal/ exists, report.md does not)') + (lifecycle === '—' ? '; the project card has no status yet — the hello asks where the product stands' : ` · project status ${lifecycle}`); format = useCase === 'Start a project' ? 'intent-format next ' + root : null; }
 else if (asksDue || asksOpen + openDecisions > 5) { useCase = 'Answer questions'; why = `${asksOpen} question(s) to the owner${asksDue ? `, ${asksDue} said later and due again` : ''} and ${openDecisions} open decision(s) in the KB (intent-format open lists them)`; }
 else { useCase = 'Pick up'; why = 'a KB exists; read the latest notes, then ask what the user wants'; }
 const readNext = routes.get(useCase) || [];

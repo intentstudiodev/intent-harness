@@ -9,6 +9,7 @@ Written once per computer at Harness cold start, into `tweaks/setup-record.md`. 
 - found: <path> — <what it is>            one line per thing found: repo, agent instructions, docs, design library, older KB, installed skill, MCP server, format tool
 - found: <path> — <what it is>
 - detected: <config lines taken from the environment: language, coding agent, design tool>
+- question widget: <yes | no>          yes when the agent has a structured question tool (Claude Code: AskUserQuestion); ask-questions then uses it for choice questions
 - defaults: <config lines left at their shipped default>
 - asked: <the questions that were actually asked, and the answers; usually only the wire-in line>
 - changed: <tweaks written · pointer added to which instructions file>

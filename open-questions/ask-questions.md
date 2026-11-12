@@ -20,7 +20,7 @@ description: Turns what is open into questions a person can answer, asks them in
 
 One question per block. No "and". No question whose answer you could look up. No question below the level the owner is working at.
 
-**Ask.** One message, the batch numbered, nothing else in it. Then wait. Never answer your own question in the same message; never ask the next batch before this one is written down.
+**Ask.** One message, the batch numbered, nothing else in it. **Through the question widget when there is one** (the setup record says `question widget: yes` — Claude Code's AskUserQuestion; other agents: text, same content): a choice question is one widget question, our guess the first option marked as the guess, two to four options, the description carrying where it comes from and what hangs on it; at most four questions per call, so a batch of five is two calls; "unknown — leave it open" and "later" are options wherever they apply; the widget's own "Other" is the free answer. Not through the widget: anything whose answer is a paragraph ("tell me about the product", a why with no candidates), and anything you could default. A widget answer that stays in the chat is a lost question: it lands in the card like any other. Then wait. Never answer your own question in the same message; never ask the next batch before this one is written down.
 
 **Write, at once.** The answers are a pending list the owner has already said yes to: show what you write, then write it (librarian, `write-knowledge`). Per answer:
 

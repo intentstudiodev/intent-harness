@@ -29,7 +29,9 @@ The request decides the use case. When two fit, ask with one sentence.
 | The user… | Use case | Load, in order |
 |---|---|---|
 | uses the harness on this computer for the first time (no `tweaks/setup-record.md`) | Harness cold start | `core/cold-start.md` |
-| starts a new product, has an idea and no cards yet, or brings a large batch for a new version | Start a project | `knowledge/start-project.md` (wraps the format's cold start; `intent-format next` keeps the place) · `research/researcher.md` · `research/interview.md` · `product-owner/checkpoint.md` · `knowledge/librarian.md` · `knowledge/write-knowledge.md` |
+| says "let's start" with no cards yet: the hello asks where the product stands (Which start); an idea, a brief, nothing made → New product; or brings a large batch for a new version | Start a project | `knowledge/start-project.md` (wraps the format's cold start; `intent-format next` keeps the place) · `research/researcher.md` · `research/interview.md` · `product-owner/checkpoint.md` · `knowledge/librarian.md` · `knowledge/write-knowledge.md` |
+| no cards yet and the product is being made — designs, docs, tickets, a prototype, some code (project status In design · Approved · In build) | Catch up | `knowledge/catch-up.md` · `intake/intake.md` · `research/read-input.md` · `open-questions/ask-questions.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
+| no cards yet and the product already runs, with people using it (project status Live) | Map what exists | `research/map-existing.md` · `intake/intake.md` · `research/reverse-engineer.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
 | points at code, a running product, a screenshot, a recording, a competitor | Reverse engineer | `intake/intake.md` · `research/reverse-engineer.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
 | talks, asks, thinks aloud | Discuss | `product-owner/talk.md` · `product-owner/checkpoint.md` |
 | wants something changed, added or removed in the product | Change | `knowledge/change-impact.md` · `product-owner/checkpoint.md` · `knowledge/librarian.md` · `knowledge/write-knowledge.md` |
@@ -52,7 +54,7 @@ Every route ends with: the next step suggested; the retro (not after Harness col
 
 <!-- index:start -->
 ```
-CHANGELOG.md | Changelog | - **Names and the public face.** The format's CLI is `intent-format` (was `mds`) everywhere. README rewritten:
+CHANGELOG.md | Changelog | - **Three ways to start, one question.** "Let's start a project" never decides; the project card's `status` do
 CONTRIBUTING.md | Contributing | - **Improvement notes**: the harness can send them for you (`self-improvement/share-note.md`), anonymised and 
 README.md | Intent Harness | Software teams lose what they know about their own product: why a rule exists, what was decided and what was d
 build/connector.md | Connector: developer | kind: connector
@@ -85,6 +87,7 @@ design/design.md | Hands the brief to the connected design skill or tool; brings
 design/designer.md | role designer | runs as either
 design/library-map.md | For each component in a scope: use the library's as is, adjust it, or build new.
 intake/intake.md | Saves anything the user hands over into inputs/, as given, with one header line, and routes it to its reader. Step 1 of read-input and rever
+knowledge/catch-up.md | A product in progress — docs, designs, tickets, a prototype, some code — and no cards yet. First where the project stands, then read everyth
 knowledge/change-impact.md | Impact first, then the change as a proposal. Also used to unpark an idea and to adopt a reference.
 knowledge/librarian.md | role librarian | runs as either
 knowledge/source-check.md | Inputs against the KB, both ways: nothing lost, nothing invented.
@@ -109,6 +112,7 @@ qa/connector.md | Connector: QA | kind: connector
 qa/qa.md | role qa | runs as sub-agent
 qa/test-cases.md | Test cases from the acceptance conditions, each checked against the why; tests beyond them from the edge cases.
 research/interview.md | A few questions at a time; asks only what the user alone knows; "unknown" is kept as such.
+research/map-existing.md | An existing product — code that runs, people using it — and no cards yet. Reverse-engineer with purpose ours, plus four rules: nothing inven
 research/read-input.md | Reads an input that states intent (a brief, a doc, a spec, feedback, data), then compares it with the KB. Intake is step 1.
 research/researcher.md | role researcher | runs as either
 research/reverse-engineer.md | Reads any result backwards to the intent behind it: code, a running product, a screenshot, a recording. One procedure, four purposes.

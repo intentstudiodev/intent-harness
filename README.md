@@ -8,7 +8,7 @@ Software teams lose what they know about their own product: why a rule exists, w
 
 ## How you use it
 
-**Start.** Point your agent at `ENTRY.md`, drop a brief into your project's `inputs/`, say "let's start". You answer a few batched questions and review a proposal. Cards appear: features, screens, flows, rules, decisions, each with its why.
+**Start.** Point your agent at `ENTRY.md`, say hello. The first thing it asks is where the product stands: still an idea, being made, or already running. A **new product** gets a short interview, a few batched questions, then a proposal you review before any card is written. A **product in progress** is caught up first: it reads what you have (docs, designs, tickets) and asks only the gaps and the contradictions. An **existing product** is mapped: screens, flows, rules and tech as found in the code and the running product, nothing invented, every why asked rather than guessed. Cards appear: features, screens, flows, rules, decisions, each with its why.
 
 **Live.** Talk to the agent as you would to a product person: paste a tester's email, change a rule, ask where things stand. It files, asks, records. `intent-format open` is the one list of what is still unknown, guessed or undecided; a question you answer with "later" comes back in two days, and "unknown" keeps it open.
 
@@ -33,8 +33,18 @@ Not a dev pipeline, not a spec generator, not a wiki. It is the memory the other
 
 ## Set up
 
-1. Put this folder and the Intent Format folder side by side in a tools folder, outside your projects, for example `~/tools/intent-harness/` and `~/tools/intent-format/`. One copy per computer serves every project. Keep an untouched copy of the harness as the **Factory** (`core/verify.mjs` compares against it).
-2. Make a folder for your product's knowledge, `<product>-kb/`, beside its code (never inside it unless you say so). Put one file in it, `AGENTS.md`, with one line: `Read ~/tools/intent-harness/ENTRY.md first.` (your path). Claude Code users add `CLAUDE.md` holding `@AGENTS.md`.
+1. Get both folders into a tools folder outside your projects; one copy per computer serves every project (Node 18 or newer is needed for the format's CLI):
+
+   ```bash
+   mkdir -p ~/tools && cd ~/tools && git clone https://github.com/intentstudiodev/intent-harness.git && git clone https://github.com/intentstudiodev/intent-format.git
+   ```
+
+   Or download a release of each from GitHub and unpack it there. Keep an untouched copy of the harness as the **Factory** (`core/verify.mjs` compares against it).
+2. Make a folder for your product's knowledge, `<product>-kb/`, beside its code (never inside it unless you say so), with one file, `AGENTS.md`, holding one line; Claude Code users add `CLAUDE.md` holding `@AGENTS.md`:
+
+   ```bash
+   mkdir myproduct-kb && printf 'Read ~/tools/intent-harness/ENTRY.md first.\n' > myproduct-kb/AGENTS.md && printf '@AGENTS.md\n' > myproduct-kb/CLAUDE.md
+   ```
 3. Open the project in your agent and say anything. The first run on a computer does the Harness cold start (no questions, one pointer line to confirm); a folder without cards offers *Start a project*, which wraps the format's own cold start (`intent-format next`).
 
 A walk: a brief in `inputs/` → twelve cards and five questions → a tester's mail pasted → a rule changed, with its why → a pack handed to your spec tool → its spec back in `inputs/` → the decisions it took, recorded.
