@@ -44,14 +44,14 @@ Then the question, at once. With the question widget (`question widget: yes` in 
 
 | Option | Description |
 |---|---|
-| Welcome tour | See what I can do first, in eight short stops |
+| Welcome tour | See what I can do first: one page, then any topic in detail |
 | New idea | Nothing built yet, maybe a brief or notes |
 | In development | Designs, docs, tickets or some code exist |
 | Running | People already use it |
 
 Without a widget: the same four as a short numbered list.
 
-The answer: **New idea**, **In development**, **Running** → `knowledge/start-project.md` from *Say the situation back* (the question is answered; the project card's `status` follows from it). **Welcome tour** → `core/tour.md`. "Other" with words → read them for facts, as Which start says.
+The answer: **New idea**, **In development**, **Running** → `knowledge/start-project.md` from *Say the situation back* (the question is answered; the project card's `status` follows from it). **Welcome tour** → the `intent-welcome-tour` skill (Claude Code loads it by name; any other agent reads `skills/intent-welcome-tour/SKILL.md` and follows it). "Other" with words → read them for facts, as Which start says.
 
 ## Choose a project
 
@@ -63,7 +63,7 @@ Welcome back. Which project are we working on?
 
 Widget: header *Project*; options: the two most recent projects (label: the name; description: `<status> · last: <last> · next: <next>`, from the list), then **New project** (*Start from an idea, a product in development, or a running one*), then **Welcome tour** (*See what I can do*). More than two projects: name the others in the line above the widget ("Also: Booking, Notes — type a name"). Without a widget: a short numbered list.
 
-The answer: a project → run `core/state.mjs` on its folder and follow it (Pick up, unless it says otherwise); say in one line where we stopped and what is next. **New project** → the Welcome's question (skip the welcome text: they have seen it). **Welcome tour** → `core/tour.md`.
+The answer: a project → run `core/state.mjs` on its folder and follow it (Pick up, unless it says otherwise); say in one line where we stopped and what is next. **New project** → the Welcome's question (skip the welcome text: they have seen it). **Welcome tour** → the `intent-welcome-tour` skill (Claude Code loads it by name; any other agent reads `skills/intent-welcome-tour/SKILL.md` and follows it).
 
 ## Where we stopped
 

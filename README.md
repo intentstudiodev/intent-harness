@@ -79,7 +79,8 @@ A walk: a brief in `inputs/` → twelve cards and five questions → a tester's 
 | `ENTRY.md` | Routes, always-on rules, the index. The one file always read. |
 | `philosophy/philosophy.md` | Sixteen statements with their test and practice. Tweaks never change them. |
 | `modules.md` | The map: module → roles, skills, what it gives. |
-| `core/` | terms, cold start, the welcome and the project menu (`welcome.md`), the welcome tour (`tour.md`), connectors mechanism, config and setup-record templates, scripts: `state` (the one "read next"), `verify`, `index`, `anonymise`, `sandbox` (archive) |
+| `core/` | terms, cold start, the welcome and the project menu (`welcome.md`), connectors mechanism, config and setup-record templates, scripts: `state` (the one "read next"), `verify`, `index`, `anonymise`, `sandbox` (archive) |
+| `skills/` | skills in the shared `SKILL.md` format; `intent-welcome-tour` is the welcome tour (the installer also adds it to Claude Code) |
 | `<module>/<role>.md` | one file per role, each with the header `runs as · default · size limit · writes to · on load` |
 | `<module>/<name>.md` | one procedure each |
 | `spec/templates/` | spec templates (default, extendable), why line, retro, report, setup record, config |
