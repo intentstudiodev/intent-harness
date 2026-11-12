@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.4 — 2026-11-12
+
+- **One visible home: `~/Intent/`** with `Harness/`, `Format/` and `Projects/` (was the hidden `~/.intent/`). One harness for all projects; each product's knowledge in `Projects/<name>/` by default, its code wherever it is (`code:` links them). The installer moves your tweaks from `~/.intent/` and rewrites the old pointer line.
+- **The pointer travels.** Every wired folder's `AGENTS.md` says: read the harness first; if it is not on this computer, offer to install it.
+- **A welcome.** `core/welcome.md`: who the harness is, the diagram (everything flows into product knowledge, then spec, then design and dev, and back), four bold lines, then one widget question: New idea · In development · Running · Welcome tour. WHY is always in capitals in chat.
+- **A project menu.** With projects in `Projects/`, hello shows the two most recent with status, where they stopped and what is next, plus New project and Welcome tour. Never a gate: a clear first message goes straight to its route. `core/state.mjs` lists the projects and finds a project from its code folder.
+- **Where we stopped.** `sandbox/where-we-stopped.md`, three lines rewritten at the end of every use case: last, next, code.
+- **Welcome tour.** `core/tour.md`: what the harness can do on one screen, then Start a project · See an example · Ask me something · Done for now.
+- **Start in the same chat.** The installer's last lines tell the agent that ran it to read `ENTRY.md` and greet you, so a new chat is no longer needed.
+
 ## 1.3 — 2026-11-12
 
 - hotfix 2026-11-12: the drift check in `core/state.mjs` reads a `found:` path up to ` — ` (a folder named `Test 1` no longer reports as missing); the situation question goes through the question widget when there is one, said as an instruction, not a hint.

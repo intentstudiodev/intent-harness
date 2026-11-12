@@ -36,8 +36,10 @@
 Lowercase kebab-case. One file per skill: `<module>/<name>.md`. `.md` for anything an agent reads, `.mjs` for scripts. No numbers in names except KB versions.
 
 ```
-<projects folder>/              chosen at Harness cold start; any folder
-  booking-example-service-kb/   the knowledge project: the harness points here
+~/Intent/                       installed by npx …intent-harness init; README.md says what is where
+  Harness/  Format/             one copy each for all projects; .factory/ holds the untouched harness
+  Projects/                     the default home of every project
+  booking-example-service/      the knowledge project (Projects/<name>/)
     AGENTS.md                   entry for any agent: points to the format and to the harness
     inputs/                     everything handed over, as given, with a header line; what cards cite (the format's folder); never deleted
     proposal/  report.md        the format's cold-start files (Start a project)
@@ -46,7 +48,8 @@ Lowercase kebab-case. One file per skill: `<module>/<name>.md`. `.md` for anythi
       research/  specs/  plans/  reports/  notes/  templates/
       ideas.md  designs.md  tweaks.md  improvement-notes.md
       archive/<name>/<yyyy-mm>.md   what is finished; read, never edited
-  booking-example-service-work/ everything else: the code repository, design exports, prototypes; any structure; the harness never writes here
+      where-we-stopped.md       last · next · code: three lines, rewritten at the end of every use case
+<anywhere>/booking-app/         the product's own folder: the code repository, design exports, prototypes; any structure; the harness never writes here except the pointer in its AGENTS.md (on the owner's yes)
 ```
 
-When a repository already exists, it is the work folder as it is, and the kb folder goes beside it. "Knowledge inside the repository" is a tweak, not the default.
+The code stays where it is; the project goes to `Projects/<name>/` and points back to it with `code:` in `sandbox/where-we-stopped.md`. "Knowledge inside the repository" is the owner's choice at Set up, not the default.

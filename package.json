@@ -1,6 +1,6 @@
 {
   "name": "intent-harness",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Plain files that teach an AI coding agent to keep a product's knowledge in the Intent Format. `npx github:intentstudiodev/intent-harness init` installs it.",
   "bin": { "intent-harness": "bin/intent-harness.mjs" },
   "type": "module",

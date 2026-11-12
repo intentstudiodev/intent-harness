@@ -1,14 +1,38 @@
 #!/usr/bin/env node
 // Reads a project folder and says where it stands, which use case is next and which files to load, in order.
-//   node core/state.mjs <project> [--json]
+//   node core/state.mjs <folder> [--json]
 // The one "read next": it takes the route from ENTRY.md's table and hands the format's steps to intent-format next. Never writes.
+// <folder> is the folder the chat is in: a project, the Intent folder (the projects menu), or a product's own folder
+// (its code), which leads to its project through `code:` in sandbox/where-we-stopped.md.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const harness = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const root = path.resolve(process.argv[2] || '.');
 const json = process.argv.includes('--json');
+const opened = path.resolve(process.argv.slice(2).find(a => !a.startsWith('--')) || '.');
+const HOME = process.env.HOME || '';
+const untilde = (p) => p.startsWith('~') ? path.join(HOME, p.slice(1)) : p;
+
+// the projects: <Intent>/Projects/<name>/, beside the harness (core/welcome.md, Choose a project)
+const intent = path.resolve(harness, '..'), projectsDir = path.join(intent, 'Projects');
+const isDir = (p) => { try { return fs.statSync(p).isDirectory(); } catch { return false; } };
+const kbVersions = (dir) => { try { return fs.readdirSync(dir).filter(n => /^V\d+(\.\d+)*(-[a-z0-9-]+)?$/.test(n) && isDir(path.join(dir, n))).sort(); } catch { return []; } };
+const stopOf = (dir) => {
+  let text = ''; try { text = fs.readFileSync(path.join(dir, 'sandbox', 'where-we-stopped.md'), 'utf8'); } catch {}
+  const get = (k) => (text.match(new RegExp(`^\\s*[-*]\\s*${k}:\\s*(.+)$`, 'm')) || [, null])[1]?.trim() || null;
+  return { last: get('last'), next: get('next'), code: get('code') };
+};
+const projects = (isDir(projectsDir) ? fs.readdirSync(projectsDir) : []).filter(n => !n.startsWith('.') && kbVersions(path.join(projectsDir, n)).length).map(n => {
+  const dir = path.join(projectsDir, n), vs = kbVersions(dir), card = (() => { try { return fs.readFileSync(path.join(dir, vs[vs.length - 1], 'project.md'), 'utf8'); } catch { return ''; } })();
+  const stop = stopOf(dir);
+  let touched = 0; for (const f of ['sandbox/where-we-stopped.md', vs[vs.length - 1], '.']) { try { touched = Math.max(touched, fs.statSync(path.join(dir, f)).mtimeMs); } catch {} }
+  return { name: (card.match(/^name:\s*(.+)$/m) || [, n])[1].trim(), folder: dir, status: (card.match(/^status:\s*(.+)$/m) || [, '—'])[1].trim(), ...stop, touched };
+}).sort((a, b) => b.touched - a.touched);
+// a product's own folder (its code) leads to its project
+const linked = kbVersions(opened).length ? null : projects.find(p => p.code && path.resolve(untilde(p.code)) === opened);
+const root = linked ? linked.folder : opened;
+const menu = !kbVersions(root).length && projects.length > 0; // no project here, projects exist: Choose a project
 const ex = (p) => fs.existsSync(path.join(root, p));
 const ls = (p) => { try { return fs.readdirSync(path.join(root, p)).filter(n => !n.startsWith('.')); } catch { return []; } };
 const read = (p) => { try { return fs.readFileSync(path.join(root, p), 'utf8'); } catch { return ''; } };
@@ -83,15 +107,16 @@ for (const row of entry.split('\n')) {
 }
 let useCase, why, format = null;
 if (!setup) { useCase = 'Harness cold start'; why = 'no tweaks/setup-record.md in the harness (once per computer; say "skip" to run on defaults)'; }
-else if (!versions.length) { useCase = 'Start a project'; why = 'no KB yet — the hello asks where the product stands (Which start)'; format = 'intent-format next ' + root; }
+else if (menu) { useCase = 'Choose a project'; why = `${projects.length} project(s) in ${path.relative(intent, projectsDir) || 'Projects'}/ and none in this folder — the project menu (core/welcome.md), unless the first message already names one`; }
+else if (!versions.length) { useCase = 'Start a project'; why = 'no project yet — the welcome, then where the product stands (core/welcome.md); the new project goes to Projects/<name>/'; format = 'intent-format next <project>'; }
 else if (cardsNow <= 1 || (proposal && !report)) { useCase = startFor(lifecycle); why = (cardsNow <= 1 ? 'the KB holds no cards beyond the project card' : 'the format\'s cold start is under way (proposal/ exists, report.md does not)') + (lifecycle === '—' ? '; the project card has no status yet — the hello asks where the product stands' : ` · project status ${lifecycle}`); format = useCase === 'Start a project' ? 'intent-format next ' + root : null; }
 else if (asksDue || asksOpen + openDecisions > 5) { useCase = 'Answer questions'; why = `${asksOpen} question(s) to the owner${asksDue ? `, ${asksDue} said later and due again` : ''} and ${openDecisions} open decision(s) in the KB (intent-format open lists them)`; }
-else { useCase = 'Pick up'; why = 'a KB exists; read the latest notes, then ask what the user wants'; }
+else { useCase = 'Pick up'; why = 'a KB exists; say where we stopped and what is next (sandbox/where-we-stopped.md), then ask what the user wants'; }
 const readNext = routes.get(useCase) || [];
 const working = notes.length ? 'sandbox/notes/' + notes[notes.length - 1] : null;
 
 const out = {
-  project: root, kb, format: { inputs, uncited, proposal, report, kickoff }, open: { asks: asksOpen, asksLater, asksDue, openDecisions },
+  project: root, opened: linked ? opened : undefined, projects: projects.map(({ touched, ...p }) => p), kb, format: { inputs, uncited, proposal, report, kickoff }, open: { asks: asksOpen, asksLater, asksDue, openDecisions },
   sandbox: nb ? { working: true, ideas, research, specs, plans, reports, notes: notes.length, tweaks, unsentImprovementNotes: unsent } : null,
   harness: { setupRecord: setup, drift },
   useCase, why, readNext, then: format ? `${format}  (the format's steps; intent-format next keeps the place)` : null, workingNotes: working,
@@ -99,6 +124,12 @@ const out = {
 if (json) { console.log(JSON.stringify(out, null, 2)); process.exit(0); }
 
 const line = (k, v) => console.log(k.padEnd(20) + v);
+if (projects.length) {
+  console.log('# Projects (most recent first)');
+  for (const p of projects) console.log(`- ${p.name} · ${p.status}${p.last ? ' · last: ' + p.last : ''}${p.next ? ' · next: ' + p.next : ''} · ${p.folder}`);
+  console.log('');
+}
+if (linked) console.log(`This folder is the product's own folder (code:) of ${linked.name}; its project is ${root}.\n`);
 console.log('# Project state: ' + path.basename(root));
 if (!versions.length) line('KB', 'none'); else for (const k of kb) line('KB ' + k.version, k.total ? Object.entries(k.cards).map(([t, n]) => `${t} ${n}`).join(' · ') : 'empty');
 line('Evidence', `inputs ${inputs}${uncited ? ` (${uncited} not yet cited)` : ''}${kickoff ? ' · kickoff answers' : ''}${proposal ? ' · proposal/' : ''}${report ? ' · report.md' : ''}`);

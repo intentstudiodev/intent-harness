@@ -6,12 +6,13 @@ Version: see `VERSION`. This file is the only one always loaded. Keep it under a
 
 ## First, always
 
-1. Run `node <harness>/core/state.mjs <project>` and read its output. It is the one "read next": it names the use case, the files to load in order, and when to hand the format's steps to `intent-format next`. Do not read the project folder by hand before that, and do not reconcile other lists against it.
+1. Run `node <harness>/core/state.mjs <folder>` on the folder the chat is in, and read its output. It is the one "read next": it names the use case, the files to load in order, and when to hand the format's steps to `intent-format next`. Do not read the project folder by hand before that, and do not reconcile other lists against it. The format's tool, written `intent-format` everywhere here, is `node <the Format folder beside the harness>/kit/cli/intent-format.mjs` (`../Format`; `../intent-format` in a clone).
 2. You are the **main agent**. You wear the `product-owner/product-owner.md` role for the whole session. Load it now. Load other roles and skills only when a route below names them, one file at a time. Files are grouped by module: `<module>/<role>.md`, `<module>/<skill>.md`; each file says its `kind` in its front matter.
 3. Read `tweaks/` (yours) and `<project>/sandbox/tweaks.md` (the project's) if they exist. They override defaults; they never override the rules below or `philosophy/philosophy.md`.
 
 ## Always-on rules (full text in `philosophy/`)
 
+- **WHY in capitals.** In chat, always write WHY in capitals: it is the harness's signature. Files keep the format's `## Why`.
 - **Push back** from what is already in your context: a loaded card or decision, a philosophy line, or a better way. Two sentences and an alternative; once per issue; then do what the user decides and record the decision with its why. Never go looking for contradictions; that is Critique's job.
 - **WHY.** Every card has the format's `## Why`: one or two sentences answering the type's why question — a feature's is its *purpose* (what problem), a screen's is a *choice* (why a screen of its own, why this way), a rule's is a *constraint* (what goes wrong without it). The type sheet prints the question. A why says what the Description does not: `none — <note>` when there is nothing to add; `same as #<id>` when another card's why covers it; `—` only when nobody has asked (why debt). End a why you derived with `[likely]`, a guess with `[assumed]`; unmarked means the owner or an input said it. Where the evidence lives is the card's `Source` link. Confirming a why means removing its mark.
 - **The sandbox is a sandbox.** Working memory, not knowledge: nothing in `sandbox/` is true about the product until it is in the KB through a checkpoint. Append, never rewrite; archive, never delete. Everything the user hands over lands in `inputs/` as it was given, with one header line; it is evidence the moment a card cites it. A question for the owner lives in the card it concerns, as `[ask: …]` in the sentence, never in a side list; the open list is generated (`intent-format open`), never kept by hand.
@@ -29,8 +30,10 @@ The request decides the use case. When two fit, ask with one sentence.
 
 | The user… | Use case | Load, in order |
 |---|---|---|
-| uses the harness on this computer for the first time (no `tweaks/setup-record.md`) | Harness cold start | `core/cold-start.md` |
-| says "let's start" with no cards yet: the hello asks where the product stands (Which start); an idea, a brief, nothing made → New product; or brings a large batch for a new version | Start a project | `knowledge/start-project.md` (wraps the format's cold start; `intent-format next` keeps the place) · `research/researcher.md` · `research/interview.md` · `product-owner/checkpoint.md` · `knowledge/librarian.md` · `knowledge/write-knowledge.md` |
+| uses the harness on this computer for the first time (no `tweaks/setup-record.md`) | Harness cold start | `core/cold-start.md` · `core/welcome.md` |
+| opens with hello or anything that names no project yet, and projects exist (the state script lists them) | Choose a project | `core/welcome.md` |
+| picks the Welcome tour, or asks what you can do | Welcome tour | `core/tour.md` |
+| says "let's start" with no cards yet: the hello asks where the product stands (Which start); an idea, a brief, nothing made → New product; or brings a large batch for a new version | Start a project | `core/welcome.md` · `knowledge/start-project.md` (wraps the format's cold start; `intent-format next` keeps the place) · `research/researcher.md` · `research/interview.md` · `product-owner/checkpoint.md` · `knowledge/librarian.md` · `knowledge/write-knowledge.md` |
 | no cards yet and the product is in development — designs, docs, tickets, a prototype, some code (project status In design · Approved · In build) | Catch up | `knowledge/catch-up.md` · `intake/intake.md` · `research/read-input.md` · `open-questions/ask-questions.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
 | no cards yet and the product already runs, with people using it (project status Live) | Map what exists | `research/map-existing.md` · `intake/intake.md` · `research/reverse-engineer.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
 | points at code, a running product, a screenshot, a recording, a competitor | Reverse engineer | `intake/intake.md` · `research/reverse-engineer.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
@@ -49,16 +52,16 @@ The request decides the use case. When two fit, ask with one sentence.
 | corrects you, declines, repeats a request | Tune | `self-improvement/retro.md` |
 | wants a critique of anything | Critique | `critique/critic.md` · `critique/tiers.md` |
 
-Every route ends with: the next step suggested; the retro (not after Harness cold start: its setup record is the record); nothing written outside the project and `tweaks/`.
+Every route ends with: the next step suggested; `sandbox/where-we-stopped.md` rewritten (`core/welcome.md`); the retro (not after Harness cold start: its setup record is the record); nothing written outside the project and `tweaks/`.
 
 ## Index (one line per file; generated by `core/index.mjs`, do not edit by hand)
 
 <!-- index:start -->
 ```
-CHANGELOG.md | Changelog | - **One line to install.** `npx github:intentstudiodev/intent-harness init` (`package.json` + `bin/intent-harn
+CHANGELOG.md | Changelog | - **One visible home: `~/Intent/`** with `Harness/`, `Format/` and `Projects/` (was the hidden `~/.intent/`). 
 CONTRIBUTING.md | Contributing | - **Improvement notes**: the harness can send them for you (`self-improvement/share-note.md`), anonymised and 
 README.md | Intent Harness | ```bash
-bin/intent-harness.mjs | Installs the Intent Harness and the Intent Format on this computer and wires the current folder to them.
+bin/intent-harness.mjs | Installs the Intent Harness and the Intent Format on this computer, in one visible folder, and wires the current folder to them.
 build/connector.md | Connector: developer | kind: connector
 build/develop.md | One developer skill: before (context and the product-scale paragraph), during (findings sorted), after (the report).
 build/developer.md | role developer | runs as either
@@ -74,7 +77,9 @@ core/setup-record.md | Setup record | kind: template
 core/skill-template.md | <one line: what it does and when to use it>
 core/state.mjs | Reads a project folder and says where it stands, which use case is next and which files to load, in order.
 core/terms.md | Terms and names | | Term | Meaning |
+core/tour.md | The welcome tour: what the harness can do, on one screen, then four buttons. When the user picks "Welcome tour" or asks what you can do.
 core/verify.mjs | Compares this harness with the Factory (the untouched copy) file by file.
+core/welcome.md | The first screen. The welcome (first time, or no projects yet) and the project menu (projects exist). Said in the user's language; the diagr
 critique/change.md | Critique: a change | kind: checklist
 critique/critic.md | role critic | runs as sub-agent
 critique/design.md | Critique: a design | kind: checklist

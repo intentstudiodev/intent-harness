@@ -4,7 +4,7 @@
 npx github:intentstudiodev/intent-harness init
 ```
 
-Run that in an empty folder for your product's knowledge, then open the folder in your coding agent and say hello.
+Run it in your coding agent's chat or a terminal, in any folder (your product's code, or an empty one). Then say hello: the harness greets you and asks where your product stands, or which project to continue.
 
 Software teams lose what they know about their own product: why a rule exists, what was decided and what was dropped, what nobody has answered yet. The Intent Harness keeps that knowledge in one folder of plain markdown cards, the [Intent Format](https://github.com/intentstudiodev/intent-format), and teaches your AI coding agent to maintain it: to ask before guessing, to mark what is a guess, to record the why, and to never lose a question. The folder is the source of truth. Specs, designs, code and tickets are produced from it or fed back into it.
 
@@ -39,16 +39,34 @@ Not a dev pipeline, not a spec generator, not a wiki. It is the memory the other
 
 ## Set up
 
-1. In an empty folder for your product's knowledge (beside its code, never inside it unless you say so), run:
+1. In any folder (your product's code, or an empty one), run:
 
    ```bash
    npx github:intentstudiodev/intent-harness init
    ```
 
-   It installs the harness and the Intent Format into `~/.intent/` (one copy per computer, with an untouched Factory copy that `core/verify.mjs` compares against), writes `AGENTS.md` with one line, `Read ~/.intent/intent-harness/ENTRY.md first.`, and `CLAUDE.md` with `@AGENTS.md`. It never overwrites a file of yours. Run it again any time to update; `tweaks/` is kept. Node 18 or newer; git signed in to GitHub while the repositories are private.
-2. Open the folder in your coding agent and say hello. The first run on a computer does the Harness cold start (no questions, one pointer line to confirm); then it asks where the product stands — still an idea, in development, or already running — and starts from there.
+   It creates one visible folder, `~/Intent/`, the same for all your products:
 
-By hand, without npx: clone `intentstudiodev/intent-harness` and `intentstudiodev/intent-format` side by side into any tools folder, and put the one line, with your path, into your project's `AGENTS.md`.
+   ```
+   ~/Intent/
+   ├── Harness/
+   ├── Format/
+   └── Projects/
+   ```
+
+   | Folder | What it holds | Who changes it |
+   |---|---|---|
+   | `Harness/` | the harness, one copy for all projects | updates; your own changes go in `Harness/tweaks/` |
+   | `Format/` | the Intent Format and its tool | updates |
+   | `Projects/` | each product's knowledge, one folder per product | you, with your agent |
+
+   It also writes a two-line `AGENTS.md` (and a `CLAUDE.md` that imports it) in the folder you ran it in and in `~/Intent/`: read the harness first, and if it is missing on this computer, offer to install it. So a project you send to someone tells their agent what to do. It never overwrites a file of yours. Node 18 or newer; git signed in to GitHub while the repositories are private.
+2. Say hello, in the same chat or a new one. The first time, it welcomes you and asks where your product stands: a new idea, in development, or running (or a short tour first). Later, it shows your projects and where each one stopped.
+3. Update any time: `npx github:intentstudiodev/intent-harness update`. Your tweaks are kept. Each project's files carry the format version they were written in; the harness never writes into a project of another version, and offers `intent-format migrate` for an older one.
+
+Your code stays where it is. The knowledge goes to `~/Intent/Projects/<name>/` and remembers where the code lives; a chat opened in the code folder finds its project. Keeping the knowledge inside the repository is a choice at the start, not the default.
+
+By hand, without npx: clone `intentstudiodev/intent-harness` and `intentstudiodev/intent-format` into one folder as `Harness/` and `Format/`, add `Projects/`, and put the two lines, with your path, into your project's `AGENTS.md`.
 
 A walk: a brief in `inputs/` → twelve cards and five questions → a tester's mail pasted → a rule changed, with its why → a pack handed to your spec tool → its spec back in `inputs/` → the decisions it took, recorded.
 
@@ -59,7 +77,7 @@ A walk: a brief in `inputs/` → twelve cards and five questions → a tester's 
 | `ENTRY.md` | Routes, always-on rules, the index. The one file always read. |
 | `philosophy/philosophy.md` | Sixteen statements with their test and practice. Tweaks never change them. |
 | `modules.md` | The map: module → roles, skills, what it gives. |
-| `core/` | terms, cold start, connectors mechanism, config and setup-record templates, scripts: `state` (the one "read next"), `verify`, `index`, `anonymise`, `sandbox` (archive) |
+| `core/` | terms, cold start, the welcome and the project menu (`welcome.md`), the welcome tour (`tour.md`), connectors mechanism, config and setup-record templates, scripts: `state` (the one "read next"), `verify`, `index`, `anonymise`, `sandbox` (archive) |
 | `<module>/<role>.md` | one file per role, each with the header `runs as · default · size limit · writes to · on load` |
 | `<module>/<name>.md` | one procedure each |
 | `spec/templates/` | spec templates (default, extendable), why line, retro, report, setup record, config |
