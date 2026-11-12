@@ -1,0 +1,11 @@
+name: Tweak worth making a default
+description: A tweak you keep making; maybe the shipped default is wrong.
+labels: [tweak]
+body:
+  - type: input
+    id: file
+    attributes: { label: Role or skill it adjusts }
+  - type: textarea
+    id: tweak
+    attributes: { label: The tweak, and why you need it }
+    validations: { required: true }

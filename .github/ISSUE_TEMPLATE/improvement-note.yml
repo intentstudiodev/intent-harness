@@ -1,0 +1,12 @@
+name: Improvement note
+description: What the harness did badly, anonymised (the harness can file this for you).
+labels: [improvement-note]
+body:
+  - type: input
+    id: version
+    attributes: { label: Harness version }
+    validations: { required: true }
+  - type: textarea
+    id: notes
+    attributes: { label: Notes, description: "One line each: what happened · expected · suggestion. No project content." }
+    validations: { required: true }

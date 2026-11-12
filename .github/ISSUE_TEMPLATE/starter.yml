@@ -1,0 +1,11 @@
+name: Starter contribution
+description: A domain or area file for starters/ (or open a pull request with the file).
+labels: [starter]
+body:
+  - type: input
+    id: name
+    attributes: { label: Domain or area }
+  - type: textarea
+    id: content
+    attributes: { label: The file, in the starters/ shape, with sources named }
+    validations: { required: true }
