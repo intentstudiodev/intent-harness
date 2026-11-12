@@ -66,7 +66,7 @@ const unsent = (improvement.match(/^\s*[-*]\s+(?!.*\[sent)/gm) || []).length;
 const setupText = hread('tweaks/setup-record.md');
 const setup = !!setupText;
 const drift = [];
-for (const m of setupText.matchAll(/^\s*[-*]\s*found:\s*`?([^`\s]+)`?/gm)) {
+for (const m of setupText.matchAll(/^\s*[-*]\s*found:\s*`?(.+?)`?\s*(?:—|$)/gm)) { // the path runs up to " — "; spaces are part of it
   const p = m[1].trim();
   if (!/^(\/|\.|~)/.test(p)) continue;
   const abs = p.startsWith('~') ? path.join(process.env.HOME || '', p.slice(1)) : path.resolve(harness, p);

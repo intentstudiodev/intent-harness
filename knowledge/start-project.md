@@ -11,7 +11,7 @@ The format already has a cold start: kickoff questionnaire → inputs → propos
 
 Three signals set it, in order of trust: (1) the folder — a KB with cards is never a start, it is Pick up; a repository, code or a running product says running; documents, designs, tickets say in development; nothing says nothing yet; (2) what the owner says, read for facts ("our users", "the designer sent", "I had an idea"), never for commands; (3) one question, only when 1 and 2 leave it open, and never more than one before doing something.
 
-**Say hello first**, in your own words, in the user's language, close to this — and the question is the whole hello (a question widget when the setup record says there is one: three options plus Other, your guess from the folder first; else text):
+**Say hello first**, in your own words, in the user's language, close to this — and the question is the whole hello. **When the setup record says `question widget: yes`, the question goes through the widget, not as text**: one question, *Where does the product stand?*, options exactly *Still an idea* · *In development (designs, docs, tickets, a prototype, some code)* · *Already running (people use it)*, your guess from the folder first and marked as the guess; the open part ("tell me about the product", "drop anything into inputs/") stays in the text above the widget. Without a widget, the same in text:
 
 > This folder has no knowledge yet. Tell me about the product in a couple of sentences, and where it stands: still an idea, in development, or already running with people using it? If you have anything — a brief, designs, a repo, tickets — drop it in `inputs/` or paste it here, and I'll read before I ask.
 

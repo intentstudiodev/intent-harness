@@ -2,6 +2,8 @@
 
 ## 1.3 — 2026-11-12
 
+- hotfix 2026-11-12: the drift check in `core/state.mjs` reads a `found:` path up to ` — ` (a folder named `Test 1` no longer reports as missing); the situation question goes through the question widget when there is one, said as an instruction, not a hint.
+
 - **One line to install.** `npx github:intentstudiodev/intent-harness init` (`package.json` + `bin/intent-harness.mjs`): installs the harness and the Intent Format into `~/.intent/` with a Factory copy, writes the one line into `AGENTS.md` and `CLAUDE.md` without overwriting anything, updates on re-run; `update` and `where` too.
 - The three starts are named by the owner's situation: **new** · **in development** · **running** (were "in progress" and "existing"); the hello, README, catch-up and map-existing say so.
 
