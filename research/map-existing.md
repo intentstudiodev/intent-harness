@@ -1,7 +1,7 @@
 ---
 kind: skill
 name: map-existing
-description: An existing product — code that runs, people using it — and no cards yet. Reverse-engineer with purpose ours, plus four rules: nothing invented, found not decided, whys asked not guessed, no suggestions.
+description: A running product — code that runs, people using it — and no cards yet. Reverse-engineer with purpose ours, plus four rules: nothing invented, found not decided, whys asked not guessed, no suggestions.
 ---
 # map-existing
 
