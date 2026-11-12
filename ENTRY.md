@@ -43,6 +43,12 @@ The request decides the use case. When two fit, ask with one sentence.
 | wants to answer what is open, or the state script shows asks or open decisions piling up | Answer questions | `open-questions/ask-questions.md` · `product-owner/checkpoint.md` |
 | wants a design | Design | `design/designer.md` · `design/design-brief.md` · `design/connector.md` |
 | wants a spec, or something built | Build | `spec/tech-lead.md` · `spec/make-spec.md` · `plan/build-plan.md` · then `build/developer.md` · `build/connector.md` |
+| wants a spec tool (Spec Kit, Kiro, BMAD, OpenSpec) to work from the knowledge, or the code folder has one at start or pick up | Connect a spec tool | `build/connect-pipeline.md` · `build/connector.md` |
+| wants to plan or build straight in a spec tool ("let's plan with BMAD") | Work in a spec tool | `build/connect-pipeline.md` (Follow) · `build/connector.md` |
+| wants a feature specified or built with a connected spec tool | Hand to the spec tool | `build/hand-to-pipeline.md` · `spec/assemble-spec.md` |
+| says "catch up from <tool>" or that its spec is ready, or the state script says a spec tool wrote files | Catch up from a spec tool | `build/follow-pipeline.md` · `intake/intake.md` · `research/read-input.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
+| wants to move from one spec tool to another | Switch spec tool | `build/connect-pipeline.md` (Switch) · `build/follow-pipeline.md` · `build/hand-to-pipeline.md` |
+| wants a spec tool disconnected, or the state script says our block is missing from it | Disconnect or repair a spec tool | `build/connect-pipeline.md` (Disconnect, Repair) |
 | reports a bug or a failed test | Fix | `spec/tech-lead.md` · `spec/make-spec.md` (fix template) |
 | asks whether the knowledge can be trusted | Validate | format `check` · `knowledge/source-check.md` · `critique/critic.md` |
 | starts the next version | Next version | `knowledge/versions.md` · `knowledge/change-impact.md` (a large batch of new material: `knowledge/start-project.md` again, in the new version) |
@@ -58,13 +64,18 @@ Every route ends with: the next step suggested; `sandbox/where-we-stopped.md` re
 
 <!-- index:start -->
 ```
-CHANGELOG.md | Changelog | - **One visible home: `~/Intent/`** with `Harness/`, `Format/` and `Projects/` (was the hidden `~/.intent/`). 
-CONTRIBUTING.md | Contributing | - **Improvement notes**: the harness can send them for you (`self-improvement/share-note.md`), anonymised and 
+CHANGELOG.md | Changelog | - **Spec tools, connected.** `build/connect-pipeline.md` connects Spec Kit, Kiro, BMAD or OpenSpec (or any age
+CODE_OF_CONDUCT.md | Contributor Covenant Code of Conduct | We as members, contributors, and leaders pledge to make participation in our
+CONTRIBUTING.md | Contributing | Thanks for looking. The Intent Harness is made by one person, in the open. You don't need to be a developer to
 README.md | Intent Harness | ```bash
+SECURITY.md | Security | Found a security problem, for example in the installer or the harness's scripts? Please don't open a public is
 bin/intent-harness.mjs | Installs the Intent Harness and the Intent Format on this computer, in one visible folder, and wires the current folder to them.
+build/connect-pipeline.md | Connect, add, switch, disconnect or repair a spec tool (Spec Kit, Kiro, BMAD, OpenSpec, or any coding agent). Puts one short marked block wh
 build/connector.md | Connector: developer | kind: connector
 build/develop.md | One developer skill: before (context and the product-scale paragraph), during (findings sorted), after (the report).
 build/developer.md | role developer | runs as either
+build/follow-pipeline.md | Read back what a connected spec tool wrote since the last read-back (Spec Kit, Kiro, BMAD, OpenSpec): progress, tech, decisions, open points
+build/hand-to-pipeline.md | Give one feature to a connected spec tool as a pack made from the cards, and record it in sandbox/pipelines.md. What the tool writes is read
 build/report.md | Report: <task> | kind: template
 core/anonymise.mjs | Strips project content from improvement notes before they are shared. Deny by default.
 core/cold-start.md | Harness cold start | The first run of the harness on a computer: once, not once per project. It asks nothing that can be detected o
@@ -77,7 +88,7 @@ core/setup-record.md | Setup record | kind: template
 core/skill-template.md | <one line: what it does and when to use it>
 core/state.mjs | Reads a project folder and says where it stands, which use case is next and which files to load, in order.
 core/terms.md | Terms and names | | Term | Meaning |
-core/tour.md | The welcome tour: what the harness can do, on one screen, then four buttons. When the user picks "Welcome tour" or asks what you can do.
+core/tour.md | The welcome tour: eight short stops, one screen each, a widget under each. When the user picks "Welcome tour" or asks what you can do.
 core/verify.mjs | Compares this harness with the Factory (the untouched copy) file by file.
 core/welcome.md | The first screen. The welcome (first time, or no projects yet) and the project menu (projects exist). Said in the user's language; the diagr
 critique/change.md | Critique: a change | kind: checklist

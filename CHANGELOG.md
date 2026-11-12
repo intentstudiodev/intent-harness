@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.5 — 2026-11-13
+
+- **Spec tools, connected.** `build/connect-pipeline.md` connects Spec Kit, Kiro, BMAD or OpenSpec (or any agent through `AGENTS.md`): one marked note in the file each tool always reads, removable byte for byte. Several tools at once, a default per job, a switch from one tool to another without losing features in progress, disconnect, repair. One registry per project: `sandbox/pipelines.md`.
+- **Lead or follow.** Lead: `build/hand-to-pipeline.md` builds a feature pack (the feature's screens, flows, rules, decisions and open questions, every WHY) and hands it to the tool. Follow: work straight in BMAD or any tool; the harness sets it up once, steps back, and `build/follow-pipeline.md` reads back what the tool wrote (progress, tech, decisions, open questions) when you return. Nothing becomes a card without a yes.
+- **Noticed on hello.** `core/state.mjs` sees new files in a connected tool and suggests reading them back.
+- **The welcome tour, rebuilt.** Eight short stops, one per message, each with its own buttons: where the harness sits in spec-driven development, the three starts, what you can bring, the kinds of knowledge, how we work, what comes out, connectors, keeping it right. Welcome tour is the first choice in the welcome widget.
+- **Registry.** Kiro and OpenSpec added; Spec Kit and BMAD install lines refreshed.
+
 ## 1.4 — 2026-11-12
 
 - **One visible home: `~/Intent/`** with `Harness/`, `Format/` and `Projects/` (was the hidden `~/.intent/`). One harness for all projects; each product's knowledge in `Projects/<name>/` by default, its code wherever it is (`code:` links them). The installer moves your tweaks from `~/.intent/` and rewrites the old pointer line.

@@ -29,7 +29,7 @@ The knowledge sits in the middle. Each tool gets a slice in the shape it already
 | Your tool | What it gets | How |
 |---|---|---|
 | Your coding agent (Claude Code, Codex, Cursor …) | the whole harness | `npx github:intentstudiodev/intent-harness init` writes the one line into your project's `AGENTS.md` |
-| A spec pipeline (Spec Kit, Kiro, BMAD …) | the one-page summary in its context file; a feature pack per feature | *connect a pipeline* writes two sentences there; `intent-format export <feature>` (coming) |
+| A spec tool (Spec Kit, Kiro, BMAD, OpenSpec) | a short block where it always reads; a feature pack per feature, made from the cards with every WHY | *connect a spec tool* writes the block between markers (removable); hand it features one by one, or work straight in the tool and let the harness catch up: its progress, tech, decisions and open points come back as cards on your yes |
 | A design tool or skill | a design brief from the cards | the designer's connector (`design/connector.md`) |
 | A test tool or skill | the rules and flows to check | the QA connector (`qa/connector.md`) |
 | Tickets, chat logs, old docs, code | nothing: they are read | drop them in `inputs/`; the agent sorts them into cards |

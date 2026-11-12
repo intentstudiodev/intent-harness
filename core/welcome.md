@@ -36,14 +36,14 @@ Say it as written, in the user's language (translate the words, keep the diagram
 >
 > Where does your product stand?
 
-Then the question, at once. With the question widget (`question widget: yes` in the setup record): one question, header *Your product*, these four options in this order, your guess from the folder first and marked as the guess when the folder says something (a repository → Running or In development):
+Then the question, at once. With the question widget (`question widget: yes` in the setup record): one question, header *Your product*, these four options in this order, **Welcome tour always first**. When the folder says something (a repository → Running or In development), mark that option's description with *(my guess)*; the order stays.
 
 | Option | Description |
 |---|---|
+| Welcome tour | See what I can do first, in eight short stops |
 | New idea | Nothing built yet, maybe a brief or notes |
 | In development | Designs, docs, tickets or some code exist |
 | Running | People already use it |
-| Welcome tour | See what I can do first |
 
 Without a widget: the same four as a short numbered list.
 

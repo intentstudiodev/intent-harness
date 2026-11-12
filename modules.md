@@ -13,7 +13,7 @@ A module is a box with one job, and a folder: `<module>/` holds its role, its sk
 | Design | the knowledge, for a scope | a design in your tool; `sandbox/designs.md` | designer | design-brief, library-map, design | `design/connector.md` |
 | Spec | the knowledge, for a scope | `sandbox/specs/` | tech-lead | make-spec, assemble-spec | `templates/spec/` |
 | Plan | specs, reports | `sandbox/plans/` | tech-lead | build-plan | may go stale |
-| Build | one task | what came back: `sandbox/reports/`, changes to the knowledge | developer | develop | `build/connector.md`; the work itself happens in your coding agent |
+| Build | one task; a feature for a spec tool | what came back: `sandbox/reports/`, `sandbox/packs/`, `sandbox/pipelines.md`, changes to the knowledge | developer | develop, connect-pipeline, hand-to-pipeline, follow-pipeline | `build/connector.md`; the work itself happens in your coding agent or spec tool |
 | QA | a built piece and its spec | `sandbox/reports/`: passed, failed, condition questioned | qa | test-cases | `qa/connector.md`; `qa/checklist.md` |
 | Critique | any written work | findings with reasons, as a list to accept or reject | critic | — | `checklists/critique-*.md`, `critique/tiers.md`; optional after any step |
 | Self-improvement | how you work, what went badly | `tweaks/`, `sandbox/tweaks.md`, `sandbox/improvement-notes.md` | product-owner | retro, share-note | `core/anonymise.mjs` |

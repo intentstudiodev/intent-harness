@@ -86,6 +86,30 @@ const research = files('sandbox/research').length, specs = files('sandbox/specs'
 const tweaks = ex('sandbox/tweaks.md');
 const improvement = read('sandbox/improvement-notes.md');
 const unsent = (improvement.match(/^\s*[-*]\s+(?!.*\[sent)/gm) || []).length;
+// spec tools connected to this project (sandbox/pipelines.md, build/connect-pipeline.md): files they wrote since the last
+// read-back, by modification time only, depth-limited; and whether our marked block is still in their always-read file
+const WATCH = { 'spec kit': ['specs'], kiro: ['.kiro/specs', '.kiro/steering'], bmad: ['_bmad-output'], openspec: ['openspec/changes', 'openspec/specs'] };
+const sinceOf = (t) => { const m = /^(\d{4}-\d{2}-\d{2})(?:[ T](\d{1,2}:\d{2}))?/.exec(t || ''); if (!m) return 0; const at = Date.parse(`${m[1]}T${m[2] ? m[2].padStart(5, '0') : '00:00'}`); return m[2] ? at : at + 86400000; };
+const newerThan = (dir, since, depth = 0, seen = { n: 0 }) => {
+  let count = 0; if (depth > 4 || seen.n > 5000) return 0;
+  let names = []; try { names = fs.readdirSync(dir); } catch { return 0; }
+  for (const n of names) {
+    if (n.startsWith('.') || n === 'node_modules' || n === 'intent-knowledge.md' || n.startsWith('intent-pack-')) continue;
+    const p = path.join(dir, n); let st; try { st = fs.statSync(p); } catch { continue; } seen.n++;
+    if (st.isDirectory()) count += newerThan(p, since, depth + 1, seen); else if (st.mtimeMs > since) count++;
+  }
+  return count;
+};
+const pipelines = [];
+for (const row of ((read('sandbox/pipelines.md').split(/^## /m).find(t => t.startsWith('Connections'))) || '').split('\n')) {
+  const c = row.split('|').slice(1, -1).map(t => t.trim());
+  if (c.length < 7 || c[0] === 'Tool' || /^-+$/.test(c[0]) || !/^connected/i.test(c[6])) continue;
+  const [tool, code, fileMarker, mode, , lastRead] = c, dir = path.resolve(root, untilde(code)), file = fileMarker.split('·')[0].trim();
+  const found = isDir(dir), since = sinceOf(lastRead);
+  const changed = found ? (WATCH[tool.toLowerCase()] || []).reduce((n, w) => n + newerThan(path.join(dir, w), since), 0) : 0;
+  let block = false; try { block = fs.readFileSync(path.join(dir, file), 'utf8').includes('<!-- intent-harness:start -->'); } catch {}
+  pipelines.push({ tool, code, mode, lastRead, found, changed, file, block });
+}
 // the harness: set up on this computer? (once per computer, proof in tweaks/)
 const setupText = hread('tweaks/setup-record.md');
 const setup = !!setupText;
@@ -118,6 +142,7 @@ const working = notes.length ? 'sandbox/notes/' + notes[notes.length - 1] : null
 const out = {
   project: root, opened: linked ? opened : undefined, projects: projects.map(({ touched, ...p }) => p), kb, format: { inputs, uncited, proposal, report, kickoff }, open: { asks: asksOpen, asksLater, asksDue, openDecisions },
   sandbox: nb ? { working: true, ideas, research, specs, plans, reports, notes: notes.length, tweaks, unsentImprovementNotes: unsent } : null,
+  pipelines,
   harness: { setupRecord: setup, drift },
   useCase, why, readNext, then: format ? `${format}  (the format's steps; intent-format next keeps the place)` : null, workingNotes: working,
 };
@@ -139,6 +164,9 @@ line('Project tweaks', tweaks ? 'yes' : 'no');
 if (unsent) line('Improvement notes', `${unsent} unsent`);
 line('Harness set up', setup ? 'yes (tweaks/setup-record.md)' : 'no');
 if (drift.length) line('Drift', 'missing: ' + drift.join(', '));
+for (const p of pipelines) line('Spec tool', !p.found ? `${p.tool}: code folder not found (${p.code})`
+  : [p.changed ? `${p.tool} (${p.mode}) wrote ${p.changed} file(s) since ${p.lastRead || 'it was connected'} → build/follow-pipeline.md` : `${p.tool} (${p.mode}): nothing new since ${p.lastRead || 'it was connected'}`,
+     p.block ? null : `our block is missing from ${p.file} → build/connect-pipeline.md (Repair)`].filter(Boolean).join(' · '));
 console.log('');
 line('Use case', `${useCase} — ${why}`);
 line('Load, in order', readNext.length ? readNext.join(' · ') : '(see the route table in ENTRY.md)');
