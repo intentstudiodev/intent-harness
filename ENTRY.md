@@ -12,6 +12,7 @@ Version: see `VERSION`. This file is the only one always loaded. Keep it under a
 
 ## Always-on rules (full text in `philosophy/`)
 
+- **Scripted messages in full.** A file's text between `<!-- message -->` and `<!-- end of message -->` is the message itself: copy it whole into your reply (diagrams, tables, bold), translate only, never shorten, summarise or announce it. Then any widget.
 - **WHY in capitals.** In chat, always write WHY in capitals: it is the harness's signature. Files keep the format's `## Why`.
 - **Push back** from what is already in your context: a loaded card or decision, a philosophy line, or a better way. Two sentences and an alternative; once per issue; then do what the user decides and record the decision with its why. Never go looking for contradictions; that is Critique's job.
 - **WHY.** Every card has the format's `## Why`: one or two sentences answering the type's why question — a feature's is its *purpose* (what problem), a screen's is a *choice* (why a screen of its own, why this way), a rule's is a *constraint* (what goes wrong without it). The type sheet prints the question. A why says what the Description does not: `none — <note>` when there is nothing to add; `same as #<id>` when another card's why covers it; `—` only when nobody has asked (why debt). End a why you derived with `[likely]`, a guess with `[assumed]`; unmarked means the owner or an input said it. Where the evidence lives is the card's `Source` link. Confirming a why means removing its mark.
