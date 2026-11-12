@@ -1,7 +1,9 @@
 {
   "name": "intent-harness",
   "version": "1.4.0",
-  "description": "Plain files that teach an AI coding agent to keep a product's knowledge in the Intent Format. `npx github:intentstudiodev/intent-harness init` installs it.",
+  "description": "Plain files that teach your AI coding agent to keep your product's knowledge: what it is, how it works, and WHY. `npx github:intentstudiodev/intent-harness init` installs it.",
+  "homepage": "https://github.com/intentstudiodev/intent-harness#readme",
+  "bugs": { "url": "https://github.com/intentstudiodev/intent-harness/issues" },
   "bin": { "intent-harness": "bin/intent-harness.mjs" },
   "type": "module",
   "engines": { "node": ">=18" },

@@ -4,7 +4,7 @@
 //   npx github:intentstudiodev/intent-harness update    install or update only; touch nothing in the current folder
 //   npx github:intentstudiodev/intent-harness where     print the paths and versions
 // Options: --dir <path> (default ~/Intent) · --no-wire (init without writing AGENTS.md / CLAUDE.md here)
-// No dependencies. Needs git signed in to GitHub while the repositories are private. Never overwrites a file of yours.
+// No dependencies. Needs Node 18 or newer and git. Never overwrites a file of yours.
 //
 // ~/Intent/
 //   Harness/     the harness, one copy for all projects (tweaks/ is yours and survives updates)
@@ -47,7 +47,7 @@ for (const r of REPOS) {
     if (fs.existsSync(path.join(dir, '.git'))) git(['pull', '-q', '--ff-only'], dir);
     else git(['clone', '-q', '--depth', '1', r.url, dir]);
   } catch (e) {
-    say(`✗ could not get the ${r.title} from ${r.url}\n  ${String(e.stderr || e.message).trim().split('\n')[0]}\n  While the repositories are private, git must be signed in to GitHub on this computer.`);
+    say(`✗ could not get the ${r.title} from ${r.url}\n  ${String(e.stderr || e.message).trim().split('\n')[0]}\n  Check your internet connection and that git works (git --version). If you changed files inside ${dir}, move your changes to Harness/tweaks/ and run this again.`);
     process.exit(1);
   }
 }
