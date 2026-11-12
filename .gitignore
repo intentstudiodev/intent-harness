@@ -1,0 +1,6 @@
+.DS_Store
+node_modules/
+.intent/
+# yours after install: config and setup record; only the README ships
+tweaks/*
+!tweaks/README.md
