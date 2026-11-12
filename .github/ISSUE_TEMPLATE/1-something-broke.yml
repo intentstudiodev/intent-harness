@@ -1,0 +1,27 @@
+name: Something went wrong
+description: The install failed, the agent did something odd, or a step didn't work.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for telling us. Plain words are fine; you don't need to know how the harness works inside.
+  - type: textarea
+    id: did
+    attributes: { label: "What did you do?", description: "The command you ran, or what you said to the agent." }
+    validations: { required: true }
+  - type: textarea
+    id: happened
+    attributes: { label: "What happened?", description: "Paste the message or the agent's answer. A screenshot is welcome." }
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes: { label: "What did you expect instead?" }
+  - type: dropdown
+    id: agent
+    attributes: { label: "Which AI agent?", options: [Claude Code, Codex, Cursor, Other] }
+  - type: input
+    id: version
+    attributes: { label: "Harness version", description: "Run `npx github:intentstudiodev/intent-harness where` — or leave empty if you don't know." }
+  - type: markdown
+    attributes:
+      value: Please don't paste anything private from your product. A made-up example is just as useful.

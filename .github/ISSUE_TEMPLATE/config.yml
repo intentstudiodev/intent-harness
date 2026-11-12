@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Read the guide first
+    url: https://github.com/intentstudiodev/intent-harness#readme
+    about: Install, first steps, and how the folder works.

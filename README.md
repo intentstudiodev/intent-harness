@@ -12,9 +12,11 @@ Software teams lose what they know about their own product: why a rule exists, w
 - Enter anywhere: no step needs an earlier one to have been done by the harness.
 - Light: one entry file is always loaded; everything else is read only on its route.
 
+Something broke, or an idea? [Open an issue](https://github.com/intentstudiodev/intent-harness/issues/new/choose); plain words are fine.
+
 ## How you use it
 
-**Start.** Point your agent at `ENTRY.md`, say hello. The first thing it asks is where the product stands: still an idea, in development, or already running. A **new product** gets a short interview, a few batched questions, then a proposal you review before any card is written. A **product in development** is caught up first: it reads what you have (docs, designs, tickets) and asks only the gaps and the contradictions. A **running product** is mapped: screens, flows, rules and tech as found in the code and the running product, nothing invented, every why asked rather than guessed. Cards appear: features, screens, flows, rules, decisions, each with its why.
+**Start.** Install, then say hello. The first thing it asks is where the product stands: still an idea, in development, or already running. A **new product** gets a short interview, a few batched questions, then a proposal you review before any card is written. A **product in development** is caught up first: it reads what you have (docs, designs, tickets) and asks only the gaps and the contradictions. A **running product** is mapped: screens, flows, rules and tech as found in the code and the running product, nothing invented, every why asked rather than guessed. Cards appear: features, screens, flows, rules, decisions, each with its why.
 
 **Live.** Talk to the agent as you would to a product person: paste a tester's email, change a rule, ask where things stand. It files, asks, records. `intent-format open` is the one list of what is still unknown, guessed or undecided; a question you answer with "later" comes back in two days, and "unknown" keeps it open.
 
@@ -60,7 +62,7 @@ Not a dev pipeline, not a spec generator, not a wiki. It is the memory the other
    | `Format/` | the Intent Format and its tool | updates |
    | `Projects/` | each product's knowledge, one folder per product | you, with your agent |
 
-   It also writes a two-line `AGENTS.md` (and a `CLAUDE.md` that imports it) in the folder you ran it in and in `~/Intent/`: read the harness first, and if it is missing on this computer, offer to install it. So a project you send to someone tells their agent what to do. It never overwrites a file of yours. Node 18 or newer; git signed in to GitHub while the repositories are private.
+   It also writes a two-line `AGENTS.md` (and a `CLAUDE.md` that imports it) in the folder you ran it in and in `~/Intent/`: read the harness first, and if it is missing on this computer, offer to install it. So a project you send to someone tells their agent what to do. It never overwrites a file of yours. Needs Node 18 or newer and git.
 2. Say hello, in the same chat or a new one. The first time, it welcomes you and asks where your product stands: a new idea, in development, or running (or a short tour first). Later, it shows your projects and where each one stopped.
 3. Update any time: `npx github:intentstudiodev/intent-harness update`. Your tweaks are kept. Each project's files carry the format version they were written in; the harness never writes into a project of another version, and offers `intent-format migrate` for an older one.
 
@@ -86,10 +88,10 @@ A walk: a brief in `inputs/` → twelve cards and five questions → a tester's 
 | `starters/` | typical shapes by domain and area; suggestions, never defaults |
 | `tweaks/` | yours; empty when shipped; survives upgrades; holds `config.md`, `setup-record.md` (proof of cold start, once per computer), `connectors.md` |
 | `bin/` | the installer behind `npx github:intentstudiodev/intent-harness init` |
-| `.github/` | issue templates for improvement notes |
+| `.github/` | issue forms: something went wrong, idea, improvement note, starter, tweak |
 
 ## Versions
 
 `VERSION` holds the harness version; `CHANGELOG.md` the changes. Upgrading = replacing every file except `tweaks/`; `core/verify.mjs` shows what you had adjusted. Projects carry their own tweaks in `sandbox/tweaks.md`.
 
-MIT licence. Contributions: see `CONTRIBUTING.md`.
+MIT licence. How to help: [`CONTRIBUTING.md`](CONTRIBUTING.md). Everyone here follows the [Code of Conduct](CODE_OF_CONDUCT.md).
