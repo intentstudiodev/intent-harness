@@ -10,6 +10,7 @@
 - **Welcome tour.** `core/tour.md`: what the harness can do on one screen, then Start a project · See an example · Ask me something · Done for now.
 - **Start in the same chat.** The installer's last lines tell the agent that ran it to read `ENTRY.md` and greet you, so a new chat is no longer needed.
 - hotfix 2026-11-12: public repository: issue forms for visitors (something went wrong, idea), a Code of Conduct, CONTRIBUTING written for visitors, README without the sign-in note.
+- hotfix 2026-11-12: reply times said honestly; SECURITY.md (report privately); the installer no longer mentions private repositories; package.json links to issues.
 
 ## 1.3 — 2026-11-12
 

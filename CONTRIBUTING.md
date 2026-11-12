@@ -6,7 +6,7 @@ Thanks for looking. The Intent Harness is made by one person, in the open. You d
 
 - [Open an issue](https://github.com/intentstudiodev/intent-harness/issues/new/choose) and pick **Something went wrong** or **Idea or wish**. Plain words are fine.
 - Don't paste anything private from your product. A made-up example works just as well.
-- Issues are read about once a week, so a reply may take a few days.
+- As it's one person, replies can take a while: we'll do our best to get back to you soon, but can't promise when.
 
 ## Other ways to help
 
