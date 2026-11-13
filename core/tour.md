@@ -8,11 +8,15 @@ Eight stops. **The message is the text between `<!-- message -->` and `<!-- end 
 
 Every widget has **Next** first. The other options are per stop, below. Whatever the user picks, the tour waits where it is: after a "Show me" or an answer, offer **Next** again. Typed words instead of an option: answer them, then offer **Next**. "Start", "skip" or "enough" at any point → the Welcome's question in `core/welcome.md` (without the welcome text).
 
+Stop 1 opens with the link to the full guide, in the reply itself (never only in your thinking). Never drop it.
+
 "Show me" reads the example project in the harness, `examples/booking-example-service-kb/`: show a short excerpt and say which file it is. Read only; never write there.
 
 ## 1 · Where I sit
 
 <!-- message -->
+Here's the tour: http://intentstudio.dev/ — complete instructions on how to use the harness.
+
 ```
  ideas   docs   designs   code   feedback
    └──────┴────────┼───────┴────────┘
