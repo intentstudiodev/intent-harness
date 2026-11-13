@@ -48,7 +48,7 @@ Work the product does outside the request a person is waiting on. The app record
 
 - Jobs that are not safe to repeat · retries send duplicate emails, charges or records
 - Failed jobs that vanish quietly · a missing invoice is found by a customer, not by you
-- Scheduled jobs nobody watches · a job that never started raises no error; alert on missed runs
+- Scheduled jobs nobody watches · a job that never started raises no error, so missed runs go unnoticed without an alert
 - Measuring only how long a job takes · the wait in the queue is often the delay people feel
 - One shared queue for everything · a large batch starves the urgent messages behind it
 - Scheduled jobs on several servers at once · each copy runs the job; one runner or a lock is needed
