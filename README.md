@@ -63,7 +63,7 @@ Not a dev pipeline, not a spec generator, not a wiki. It is the memory the other
    | `Projects/` | each product's knowledge, one folder per product | you, with your agent |
 
    It also writes a two-line `AGENTS.md` (and a `CLAUDE.md` that imports it) in the folder you ran it in and in `~/Intent/`: read the harness first, and if it is missing on this computer, offer to install it. So a project you send to someone tells their agent what to do. It never overwrites a file of yours. Needs Node 18 or newer and git.
-2. Say hello, in the same chat or a new one. The first time, it greets you and offers the tour or a new project; a new project starts from where your product stands: a new idea, in development, or running. Questions about the harness itself are answered any time. Later, it shows your projects and where each one stopped.
+2. Say hello, in the same chat or a new one. The first time, it welcomes you and asks where your product stands: a new idea, in development, or running (or a short tour first). Later, it shows your projects and where each one stopped.
 3. Update any time: `npx github:intentstudiodev/intent-harness update`. Your tweaks are kept. Each project's files carry the format version they were written in; the harness never writes into a project of another version, and offers `intent-format migrate` for an older one.
 
 Your code stays where it is. The knowledge goes to `~/Intent/Projects/<name>/` and remembers where the code lives; a chat opened in the code folder finds its project. Keeping the knowledge inside the repository is a choice at the start, not the default.
@@ -80,7 +80,7 @@ A walk: a brief in `inputs/` → twelve cards and five questions → a tester's 
 | `philosophy/philosophy.md` | Sixteen statements with their test and practice. Tweaks never change them. |
 | `modules.md` | The map: module → roles, skills, what it gives. |
 | `core/` | terms, cold start, the welcome and the project menu (`welcome.md`), connectors mechanism, config and setup-record templates, scripts: `state` (the one "read next"), `verify`, `index`, `anonymise`, `sandbox` (archive) |
-| `skills/` | skills in the shared `SKILL.md` format; `intent-about` answers questions about the harness itself, read only when asked (the installer also adds it to Claude Code) |
+| `skills/` | skills in the shared `SKILL.md` format; `intent-welcome-tour` is the welcome tour (the installer also adds it to Claude Code) |
 | `<module>/<role>.md` | one file per role, each with the header `runs as · default · size limit · writes to · on load` |
 | `<module>/<name>.md` | one procedure each |
 | `spec/templates/` | spec templates (default, extendable), why line, retro, report, setup record, config |

@@ -33,8 +33,7 @@ The request decides the use case. When two fit, ask with one sentence.
 |---|---|---|
 | uses the harness on this computer for the first time (no `tweaks/setup-record.md`) | Harness cold start | `core/cold-start.md` · `core/welcome.md` |
 | opens with hello or anything that names no project yet, and projects exist (the state script lists them) | Choose a project | `core/welcome.md` |
-| picks the Welcome tour | Welcome tour | `core/welcome.md` (the link) |
-| asks about the harness itself: what it can do, how a part works, where files go, update, remove | About | `skills/intent-about/SKILL.md` (Claude Code: the `intent-about` skill); answer in your own words |
+| picks the Welcome tour, or asks what you can do | Welcome tour | `skills/intent-welcome-tour/SKILL.md` (Claude Code: the `intent-welcome-tour` skill) |
 | says "let's start" with no cards yet: the hello asks where the product stands (Which start); an idea, a brief, nothing made → New product; or brings a large batch for a new version | Start a project | `core/welcome.md` · `knowledge/start-project.md` (wraps the format's cold start; `intent-format next` keeps the place) · `research/researcher.md` · `research/interview.md` · `product-owner/checkpoint.md` · `knowledge/librarian.md` · `knowledge/write-knowledge.md` |
 | no cards yet and the product is in development — designs, docs, tickets, a prototype, some code (project status In design · Approved · In build) | Catch up | `knowledge/catch-up.md` · `intake/intake.md` · `research/read-input.md` · `open-questions/ask-questions.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
 | no cards yet and the product already runs, with people using it (project status Live) | Map what exists | `research/map-existing.md` · `intake/intake.md` · `research/reverse-engineer.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
@@ -91,7 +90,7 @@ core/skill-template.md | <one line: what it does and when to use it>
 core/state.mjs | Reads a project folder and says where it stands, which use case is next and which files to load, in order.
 core/terms.md | Terms and names | | Term | Meaning |
 core/verify.mjs | Compares this harness with the Factory (the untouched copy) file by file.
-core/welcome.md | The first screen. The welcome (first time, or no project yet) and the project menu (projects exist). A short greeting, then the widget; New 
+core/welcome.md | The first screen. The welcome (first time, or no projects yet) and the project menu (projects exist). Said in the user's language; the diagr
 critique/change.md | Critique: a change | kind: checklist
 critique/critic.md | role critic | runs as sub-agent
 critique/design.md | Critique: a design | kind: checklist
@@ -137,7 +136,7 @@ research/researcher.md | role researcher | runs as either
 research/reverse-engineer.md | Reads any result backwards to the intent behind it: code, a running product, a screenshot, a recording. One procedure, four purposes.
 self-improvement/retro.md | Four lines at the end of a use case; findings become a tweak, an improvement note, or nothing. Keeps an open line.
 self-improvement/share-note.md | Anonymise unsent improvement notes, show them, and on the user's yes open a GitHub issue under their own login.
-skills/intent-about/SKILL.md | About the Intent Harness — what it is, what it can do and how it works. Use when the user asks about the harness itself (what it does, how a
+skills/intent-welcome-tour/SKILL.md | The Intent Harness welcome tour. Use when the user picks "Welcome tour", asks for the tour, or asks what the Intent Harness can do.
 spec/assemble-spec.md | Pulls a scope out of the knowledge the same way every time, and records what it was made from.
 spec/make-spec.md | A spec from a template: scope plus blocks, the why chain, trade-offs. The tech lead proposes the type; the user chooses.
 spec/tech-lead.md | role tech-lead | runs as either
