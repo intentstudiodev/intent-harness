@@ -122,7 +122,8 @@ const found = (() => {
   if (remote) f.code.push('git: ' + remote[1].replace(/\/\/[^/@]+@/, '//'));
   else if (has('.git')) f.code.push('git (no remote)');
   const pkg = (() => { try { return JSON.parse(txt('package.json')); } catch { return null; } })();
-  const deps = pkg ? Object.keys({ ...pkg.dependencies, ...pkg.devDependencies }) : [];
+  const subPkgs = ['apps', 'packages', 'services'].flatMap(d => { try { return fs.readdirSync(at(d)).map(n => path.join(d, n, 'package.json')).filter(has); } catch { return []; } });
+  const deps = [pkg, ...subPkgs.map(p => { try { return JSON.parse(txt(p)); } catch { return null; } })].filter(Boolean).flatMap(p => Object.keys({ ...p.dependencies, ...p.devDependencies }));
   const any = (...names) => deps.some(d => names.some(n => d === n || d.startsWith(n + '/')));
   if (pkg) f.code.push('package.json' + (pkg.name ? ' (' + pkg.name + ')' : ''));
   if (any('next', 'react-dom', 'vue', 'nuxt', 'svelte', '@sveltejs', 'astro', '@angular/core', '@remix-run')) f.platforms.push('web');
@@ -149,7 +150,8 @@ const found = (() => {
   if (has('supabase')) f.arch.push('Supabase');
   if (has('Dockerfile') || has('docker-compose.yml') || has('compose.yaml')) f.arch.push('containers (Docker)');
   if (top.some(n => n.endsWith('.tf')) || has('terraform') || has('infra')) f.arch.push('infrastructure as code');
-  if (has('prisma/schema.prisma') || has('schema.prisma')) f.arch.push('data model: prisma/schema.prisma');
+  const schema = ['prisma/schema.prisma', 'schema.prisma', ...['apps', 'packages', 'services'].flatMap(d => { try { return fs.readdirSync(at(d)).map(n => path.join(d, n, 'prisma', 'schema.prisma')); } catch { return []; } })].find(has);
+  if (schema) f.arch.push('data model: ' + schema);
   if (has('.github/workflows')) f.arch.push('CI: GitHub Actions');
   const envNames = ['.env.example', '.env.sample', '.env.template', '.dev.vars.example'].map(txt).join('\n');
   const services = { STRIPE: 'Stripe', SENDGRID: 'SendGrid', RESEND: 'Resend', POSTMARK: 'Postmark', MAILGUN: 'Mailgun', TWILIO: 'Twilio', OPENAI: 'OpenAI', ANTHROPIC: 'Anthropic', SUPABASE: 'Supabase', FIREBASE: 'Firebase', AWS: 'AWS', S3: 'S3 storage', CLOUDINARY: 'Cloudinary', ALGOLIA: 'Algolia', SENTRY: 'Sentry', POSTHOG: 'PostHog', SEGMENT: 'Segment', MAPBOX: 'Mapbox', GOOGLE_MAPS: 'Google Maps', PUSHER: 'Pusher', ABLY: 'Ably', REDIS: 'Redis', DATABASE_URL: 'a database', AUTH0: 'Auth0', CLERK: 'Clerk', OKTA: 'Okta', SLACK: 'Slack', GITHUB: 'GitHub', POLAR: 'Polar', PADDLE: 'Paddle', LEMONSQUEEZY: 'Lemon Squeezy' };
