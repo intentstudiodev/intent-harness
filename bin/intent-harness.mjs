@@ -12,7 +12,6 @@
 //   Projects/    each product's knowledge, one folder per product (the default; a project may live anywhere)
 //   .factory/    an untouched copy of the harness that core/verify.mjs compares against
 //   AGENTS.md    so a chat opened in ~/Intent starts with the harness and its project menu
-// With Claude Code installed (~/.claude), the harness's intent-* skills are copied to ~/.claude/skills/ and refreshed on every update.
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -65,11 +64,6 @@ if (ROOT !== OLD && fs.existsSync(oldTweaks)) for (const f of fs.readdirSync(old
   fs.cpSync(path.join(oldTweaks, f), path.join(newTweaks, f), { recursive: true }); moved++;
 }
 
-// 3b. Claude Code skills: the harness's skills/ go to ~/.claude/skills/ (only where Claude Code is installed). Ours only, replaced on every update.
-const claudeHome = path.join(ME, '.claude');
-const skills = fs.existsSync(claudeHome) ? fs.readdirSync(path.join(ROOT, 'Harness', 'skills')).filter((d) => d.startsWith('intent-')) : [];
-for (const d of skills) { const to = path.join(claudeHome, 'skills', d); fs.rmSync(to, { recursive: true, force: true }); fs.cpSync(path.join(ROOT, 'Harness', 'skills', d), to, { recursive: true }); }
-
 // 4. The pointer: what every wired folder says. Portable (~), and it tells a newcomer's agent what to do without the harness.
 const entry = tilde(path.join(ROOT, 'Harness', 'ENTRY.md'));
 const pointer = `This folder uses the Intent Harness. Read \`${entry}\` first.\nIf that file does not exist on this computer, tell the user and offer to install it: \`npx github:intentstudiodev/intent-harness init\`.`;
@@ -100,7 +94,7 @@ say(`
   It keeps your product's knowledge: what it is, how it works, and WHY.
   You just talk. It asks, suggests, and writes the knowledge down as plain files.
   Your projects live in ${tilde(path.join(ROOT, 'Projects'))}.
-${skills.length ? `  For Claude Code it also added the skill${skills.length > 1 ? 's' : ''} ${skills.join(', ')} (in ~/.claude/skills/).\n` : ''}${moved ? `\n  Your settings came along from ~/.intent (the old install). You can delete ~/.intent.\n` : ''}
+${moved ? `\n  Your settings came along from ~/.intent (the old install). You can delete ~/.intent.\n` : ''}
 Next: say hello. It asks where your product stands, or which project to continue.
 ${cmd === 'init' ? `
 (For the agent that ran this: to start in this same chat, read ${entry} now and follow it; the greeting is core/welcome.md.)` : ''}
