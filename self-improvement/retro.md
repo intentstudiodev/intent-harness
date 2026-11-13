@@ -16,6 +16,7 @@ Each line gets a destination:
 - **harness tweak** (how this user works, across projects) → offer: "Shall I work this way from now on?" On yes: one plain sentence with date and reason in `tweaks/<role-or-skill>.md`.
 - **project tweak** (this project's conventions) → same offer; `sandbox/tweaks.md`.
 - **improvement note** (the shipped harness should change) → append to `sandbox/improvement-notes.md`: `- <date> · harness <version> · <what happened> · <expected> · <suggestion>`. No project content in the line. Offered for sharing by `share-note` when the user opted in.
+- **library note** (a library file was wrong, thin or out of date, or this project taught something it lacks) → offer "Shall I remember this for future projects?" (yes: a dated line in `tweaks/library/<path>`), and, when it would help everyone, an improvement note tagged `library: <path>`. No project content in either.
 - **nothing**.
 
 Never apply a tweak silently. The areas seen so far (efficiency, coverage, routing, fit) are examples, not a list; tag freely, and tags that recur become areas. Signals also arrive outside the retro: a correction, a rejection, a repeated request; note them when they happen, offer at the next pause.

@@ -1,0 +1,12 @@
+name: Library file
+description: A new or better file for library/ (a domain or Area knowledge), or a correction to one. A pull request with the file works too.
+labels: [library]
+body:
+  - type: input
+    id: path
+    attributes: { label: Which file, new or existing (e.g. domains/booking.md) }
+    validations: { required: true }
+  - type: textarea
+    id: content
+    attributes: { label: "What to add or correct, in the shape of library/template.md, with sources named" }
+    validations: { required: true }

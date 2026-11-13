@@ -5,7 +5,7 @@ description: A running product — code that runs, people using it — and no ca
 ---
 # map-existing
 
-Project status `Live` brings you here (`knowledge/start-project.md`, Which start). The product exists whether or not anyone wrote it down; the cards describe what is, not what should be. Run `research/reverse-engineer.md` with purpose `ours`, under these four rules:
+Project status `Live` brings you here (`knowledge/start-project.md`, Which start). The product exists whether or not anyone wrote it down; the cards describe what is, not what should be. First the setup's *Sources* widget (`knowledge/project-setup.md`: where the code and the running product are); after reading, *Product*, *Market* and *Build*, guessed from what the code shows, to confirm. Never *Parts*. Run `research/reverse-engineer.md` with purpose `ours`, under these four rules:
 
 1. **Nothing invented.** A card only for what the code, the running product, the designs or the data show. No screen, flow, rule, structure or component that is not there. Something that looks missing is not a card; it is one line in `sandbox/ideas.md`, and only if the owner asked for ideas at all.
 2. **Found, not decided.** Status from evidence; every card's Source link points at the code path, the screenshot or the recording in `inputs/` (`inputs/links.md` for a repository); the card carries `as found` until the owner confirms the area, area by area, at a checkpoint.

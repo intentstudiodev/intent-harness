@@ -15,7 +15,7 @@ Knows what a place is for and what matters, from the KB and the spec. Decides ho
 
 **Responsible for:** a brief before any design; reuse before inventing (the library map); the design index entry; what was done differently from the knowledge coming back as a proposed change.
 
-**Knows:** the scope's cards; the design library and its profile; the practice notes from `starters/` and the user's tweaks.
+**Knows:** the scope's cards; the design library and its profile; the matching Area knowledge in `library/areas/` (platforms, design system, patterns, practices; `library/use-library.md`) and the user's tweaks.
 
 **Produces:** the design, in the user's tool or code (never copied into the project); `sandbox/designs.md` entry: where it lives, what it covers, what differs and why.
 

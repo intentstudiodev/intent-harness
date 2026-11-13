@@ -34,10 +34,11 @@ The request decides the use case. When two fit, ask with one sentence.
 | uses the harness on this computer for the first time (no `tweaks/setup-record.md`) | Harness cold start | `core/cold-start.md` · `core/welcome.md` |
 | opens with hello or anything that names no project yet, and projects exist (the state script lists them) | Choose a project | `core/welcome.md` |
 | picks the Welcome tour, or asks what you can do | Welcome tour | `core/tour.md` |
-| says "let's start" with no cards yet: the hello asks where the product stands (Which start); an idea, a brief, nothing made → New product; or brings a large batch for a new version | Start a project | `core/welcome.md` · `knowledge/start-project.md` (wraps the format's cold start; `intent-format next` keeps the place) · `research/researcher.md` · `research/interview.md` · `product-owner/checkpoint.md` · `knowledge/librarian.md` · `knowledge/write-knowledge.md` |
-| no cards yet and the product is in development — designs, docs, tickets, a prototype, some code (project status In design · Approved · In build) | Catch up | `knowledge/catch-up.md` · `intake/intake.md` · `research/read-input.md` · `open-questions/ask-questions.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
-| no cards yet and the product already runs, with people using it (project status Live) | Map what exists | `research/map-existing.md` · `intake/intake.md` · `research/reverse-engineer.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
+| says "let's start" with no cards yet: the hello asks where the product stands (Which start); an idea, a brief, nothing made → New product; or brings a large batch for a new version | Start a project | `core/welcome.md` · `knowledge/start-project.md` (wraps the format's cold start; `intent-format next` keeps the place) · `knowledge/project-setup.md` · `research/researcher.md` · `research/interview.md` · `product-owner/checkpoint.md` · `knowledge/librarian.md` · `knowledge/write-knowledge.md` |
+| no cards yet and the product is in development — designs, docs, tickets, a prototype, some code (project status In design · Approved · In build) | Catch up | `knowledge/catch-up.md` · `knowledge/project-setup.md` · `intake/intake.md` · `research/read-input.md` · `open-questions/ask-questions.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
+| no cards yet and the product already runs, with people using it (project status Live) | Map what exists | `research/map-existing.md` · `knowledge/project-setup.md` · `intake/intake.md` · `research/reverse-engineer.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
 | points at code, a running product, a screenshot, a recording, a competitor | Reverse engineer | `intake/intake.md` · `research/reverse-engineer.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
+| asks how a kind of product or an area usually works ("how do booking apps handle no-shows", "what should a dashboard have"), or a step needs it | Library | `library/use-library.md` (then only the matching files from `library/index.md`) |
 | talks, asks, thinks aloud | Discuss | `product-owner/talk.md` · `product-owner/checkpoint.md` |
 | wants something changed, added or removed in the product | Change | `knowledge/change-impact.md` · `product-owner/checkpoint.md` · `knowledge/librarian.md` · `knowledge/write-knowledge.md` |
 | brings a document, a file, a paste, a link, feedback, data | Add input | `intake/intake.md` · `research/read-input.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
@@ -65,7 +66,7 @@ Every route ends with: the next step suggested; `sandbox/where-we-stopped.md` re
 
 <!-- index:start -->
 ```
-CHANGELOG.md | Changelog | - **Spec tools, connected.** `build/connect-pipeline.md` connects Spec Kit, Kiro, BMAD or OpenSpec (or any age
+CHANGELOG.md | Changelog | - **Project setup in a few clicks.** After "where does your product stand", up to five short widgets, every op
 CODE_OF_CONDUCT.md | Contributor Covenant Code of Conduct | We as members, contributors, and leaders pledge to make participation in our
 CONTRIBUTING.md | Contributing | Thanks for looking. The Intent Harness is made by one person, in the open. You don't need to be a developer to
 README.md | Intent Harness | ```bash
@@ -109,10 +110,15 @@ intake/intake.md | Saves anything the user hands over into inputs/, as given, wi
 knowledge/catch-up.md | A product in development — docs, designs, tickets, a prototype, some code — and no cards yet. First where the project stands, then read ever
 knowledge/change-impact.md | Impact first, then the change as a proposal. Also used to unpark an idea and to adopt a reference.
 knowledge/librarian.md | role librarian | runs as either
+knowledge/project-setup.md | The setup widgets every start shares, after "where does your product stand": where things are, your product, your market, how it's built, ty
 knowledge/source-check.md | Inputs against the KB, both ways: nothing lost, nothing invented.
 knowledge/start-project.md | A new product, or a folder without cards: run the format's own cold start (intent-format next) with the harness's roles and rules on top. Re
 knowledge/versions.md | Opens a version beside the current one, so what was released or handed off stays intact.
 knowledge/write-knowledge.md | Writes the knowledge in the format. Every write is one small complete step; librarian only.
+library/README.md | Library | Short, sourced notes on the kinds of products people build and the areas every product touches. **A lens, not 
+library/index.md | Library index | Generated by `node core/index.mjs`; do not edit by hand. One line per file: path | name | fits when. Read this
+library/template.md | <Name> | kind: library
+library/use-library.md | Use the library as a lens. Pick the files that match the project (domains, audience, platforms, design library, parts in scope), let them sh
 modules.md | Modules | A module is a box with one job, and a folder: `<module>/` holds its role, its skills, its checklists, template
 open-questions/ask-questions.md | Turns what is open into questions a person can answer, asks them in one batch, and writes every answer into its card at once. The only way t
 open-questions/open-questions.md | Where what is open lives (in the cards, listed by intent-format open), and how a question gets there. The asking itself is ask-questions.
@@ -149,9 +155,5 @@ spec/templates/full.md | template full | scope the whole product, one version
 spec/templates/integration.md | template integration | scope one outside system or service
 spec/templates/prototype.md | template prototype | scope a question to answer by building something throwaway
 spec/templates/test-plan.md | template test-plan | scope a feature or a release
-starters/README.md | Starters | Typical shapes for common kinds of product (`domains/`) and common areas (`areas/`). Suggestions the user keep
-starters/areas/sign-in.md | Area: sign-in | sources: general practice; to be replaced by surveyed sources
-starters/domains/README.md | Domains | Empty at 1.0. Planned: shop, SaaS, booking, marketplace, internal tool. Each needs named sources.
-starters/starters.md | For a kind of product or area, show the typical shape and let the user keep or drop each item. Never imposes.
 ```
 <!-- index:end -->

@@ -1,6 +1,6 @@
 {
   "name": "intent-harness",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "The first step of spec-driven development: product knowledge your team shares and your AI agents align around. `npx github:intentstudiodev/intent-harness init` installs it.",
   "homepage": "https://github.com/intentstudiodev/intent-harness#readme",
   "bugs": { "url": "https://github.com/intentstudiodev/intent-harness/issues" },

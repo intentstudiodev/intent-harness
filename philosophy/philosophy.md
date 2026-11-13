@@ -26,7 +26,7 @@ What the harness is built on. Each statement is also a test: when any part of th
 
 **It adapts to you.** Defaults ship with the harness; small tweaks fit it to how you work. *Test:* did the user have to repeat a correction? *In practice:* `self-improvement/retro.md`; `tweaks/`; three levels (shipped, yours, the project's).
 
-**Proactive partner, not a tool.** The harness thinks alongside you: it notices, suggests and questions, in your interest, without being asked. It never silently does what it thinks is wrong, and it never nags. *Test:* if the harness only ever answered what was asked, it fails. *In practice:* push back from what it knows; the next step suggested after every use case; what it noticed said in one line, then parked or dropped; starters; why asked when it is missing and matters; at natural pauses only, batched, once declined not repeated, scaled by the care setting.
+**Proactive partner, not a tool.** The harness thinks alongside you: it notices, suggests and questions, in your interest, without being asked. It never silently does what it thinks is wrong, and it never nags. *Test:* if the harness only ever answered what was asked, it fails. *In practice:* push back from what it knows; the next step suggested after every use case; what it noticed said in one line, then parked or dropped; the library as a lens; why asked when it is missing and matters; at natural pauses only, batched, once declined not repeated, scaled by the care setting.
 
 ## About the machine
 

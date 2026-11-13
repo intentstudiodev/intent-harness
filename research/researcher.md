@@ -23,4 +23,4 @@ Finds out. Never writes to the KB.
 
 **Returns (as sub-agent):** the research file and at most ten lines of summary. Nothing else.
 
-**Uses:** `research/interview.md`, `research/read-input.md`, `research/reverse-engineer.md`, `starters/starters.md`.
+**Uses:** `research/interview.md`, `research/read-input.md`, `research/reverse-engineer.md`, `library/use-library.md`.

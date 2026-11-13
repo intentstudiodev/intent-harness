@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.6 — not released yet
+
+- **Project setup in a few clicks.** After "where does your product stand", up to five short widgets, every option guessed first and every tab skippable (`knowledge/project-setup.md`): *Sources* (code, designs, docs, tickets, with links), *Product* (domains, audience, users, platforms), *Market* (competitors, what's different, how it makes money, region), *Build* (design library, tech, team, spec tool), *Parts* (the usual parts from the library, to keep or drop). The answers are written at once as the owner's words; domains and audience go onto the project card (`industry:`, `audience:`) and frame every suggestion after, down to the packs handed to spec tools.
+- **The library** (was `starters/`): short, sourced notes in one shape (`library/template.md`). `domains/` says what a product is, and a product has several (an internal marketplace with booking and a community: Marketplace + Booking + Social); `areas/` is Area knowledge: platforms, design systems, patterns, parts, practices. A lens, never a rulebook: questions worth asking, the usual shape, choices and trade-offs, what to watch out for, and where to read deeper. `library/index.md` lists every file; an agent reads only the matching ones.
+- **The library learns.** What a project teaches can be kept for your next projects (`tweaks/library/`) or, anonymised and on your yes, sent as a library note for everyone (`self-improvement/retro.md`, `share-note`). Files older than a year are re-checked against their sources when used with web access.
+- **Found in the folder.** `core/state.mjs` reports what a code folder shows (git remote, platforms, design library, sign-in and payments libraries, Figma, Notion, Linear or Jira links in the README), so setup guesses from facts.
+- Catch up starts with the *Sources* widget instead of a batch of five questions; Map what exists confirms the product and the build from the code and never suggests parts.
+
 ## 1.5 — 2026-11-13
 
 - **Spec tools, connected.** `build/connect-pipeline.md` connects Spec Kit, Kiro, BMAD or OpenSpec (or any agent through `AGENTS.md`): one marked note in the file each tool always reads, removable byte for byte. Several tools at once, a default per job, a switch from one tool to another without losing features in progress, disconnect, repair. One registry per project: `sandbox/pipelines.md`.

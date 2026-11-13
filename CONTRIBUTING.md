@@ -11,7 +11,7 @@ Thanks for looking. The Intent Harness is made by one person, in the open. You d
 ## Other ways to help
 
 - **Improvement notes**: the harness can send them for you (`self-improvement/share-note.md`), anonymised and shown to you first; or open an issue with the "Improvement note" form.
-- **By pull request**: starters, connector registry entries (with licence and last-checked date), checklists, templates. These have a fixed shape and are cheap to review.
+- **By pull request**: library files (`library/`, in the shape of `library/template.md`, sources named), connector registry entries (with licence and last-checked date), checklists, templates. These have a fixed shape and are cheap to review.
 - **Through an issue first**: roles, skills, the entry file, the philosophy. The philosophy changes only by the maintainer, after discussion.
 
 ## Good to know

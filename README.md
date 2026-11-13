@@ -85,10 +85,10 @@ A walk: a brief in `inputs/` → twelve cards and five questions → a tester's 
 | `spec/templates/` | spec templates (default, extendable), why line, retro, report, setup record, config |
 | `critique/` | critique checklists per kind, QA, tiers |
 | `<module>/connector.md` | designer, developer, QA: cases → outside skills |
-| `starters/` | typical shapes by domain and area; suggestions, never defaults |
+| `library/` | short, sourced notes: `domains/` (what a product is; a product has several) and `areas/` (Area knowledge: platforms, design systems, patterns, parts, practices). A lens, never a rulebook; `index.md` lists them |
 | `tweaks/` | yours; empty when shipped; survives upgrades; holds `config.md`, `setup-record.md` (proof of cold start, once per computer), `connectors.md` |
 | `bin/` | the installer behind `npx github:intentstudiodev/intent-harness init` |
-| `.github/` | issue forms: something went wrong, idea, improvement note, starter, tweak |
+| `.github/` | issue forms: something went wrong, idea, improvement note, library file, tweak |
 
 ## Versions
 

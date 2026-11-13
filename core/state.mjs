@@ -111,6 +111,42 @@ for (const row of ((read('sandbox/pipelines.md').split(/^## /m).find(t => t.star
   pipelines.push({ tool, code, mode, lastRead, found, changed, file, block });
 }
 // the harness: set up on this computer? (once per computer, proof in tweaks/)
+// Found: signals in the folder the chat was opened in, so the setup widgets can guess (knowledge/project-setup.md). Local files only.
+const found = (() => {
+  const at = (p) => path.join(opened, p);
+  const txt = (p) => { try { return fs.readFileSync(at(p), 'utf8'); } catch { return ''; } };
+  const has = (p) => fs.existsSync(at(p));
+  const top = (() => { try { return fs.readdirSync(opened); } catch { return []; } })();
+  const f = { code: [], platforms: [], design: [], parts: [], links: [] };
+  const remote = /url\s*=\s*(\S+)/.exec(txt('.git/config'));
+  if (remote) f.code.push('git: ' + remote[1].replace(/\/\/[^/@]+@/, '//'));
+  else if (has('.git')) f.code.push('git (no remote)');
+  const pkg = (() => { try { return JSON.parse(txt('package.json')); } catch { return null; } })();
+  const deps = pkg ? Object.keys({ ...pkg.dependencies, ...pkg.devDependencies }) : [];
+  const any = (...names) => deps.some(d => names.some(n => d === n || d.startsWith(n + '/')));
+  if (pkg) f.code.push('package.json' + (pkg.name ? ' (' + pkg.name + ')' : ''));
+  if (any('next', 'react-dom', 'vue', 'nuxt', 'svelte', '@sveltejs', 'astro', '@angular/core', '@remix-run')) f.platforms.push('web');
+  if (any('react-native', 'expo') || has('pubspec.yaml')) f.platforms.push('iOS/Android app');
+  if (top.some(n => n.endsWith('.xcodeproj') || n.endsWith('.xcworkspace')) || has('Package.swift')) f.platforms.push('Apple app');
+  if (has('build.gradle') || has('build.gradle.kts') || has('app/src/main/AndroidManifest.xml')) f.platforms.push('Android app');
+  if (any('electron', '@tauri-apps')) f.platforms.push('desktop app');
+  if (has('components.json')) f.design.push('shadcn/ui');
+  if (any('@radix-ui')) f.design.push('Radix');
+  if (any('@mui/material', '@material/web')) f.design.push('Material');
+  if (any('antd')) f.design.push('Ant Design');
+  if (any('@fluentui')) f.design.push('Fluent');
+  if (any('@carbon')) f.design.push('Carbon');
+  if (any('@shopify/polaris')) f.design.push('Polaris');
+  if (any('tailwindcss')) f.design.push('Tailwind');
+  if (any('stripe', '@stripe')) f.parts.push('payments (Stripe)');
+  if (any('next-auth', '@auth', '@clerk', 'better-auth', '@supabase/supabase-js', 'firebase')) f.parts.push('sign-in');
+  if (any('@prisma/client', 'prisma', 'drizzle-orm', 'mongoose', 'pg')) f.parts.push('database');
+  const readme = top.find(n => /^readme(\.md)?$/i.test(n));
+  const kinds = { 'figma.com': 'Figma', 'notion.so': 'Notion', 'notion.site': 'Notion', 'linear.app': 'Linear', 'atlassian.net': 'Jira', 'docs.google.com': 'Google Docs', 'miro.com': 'Miro' };
+  for (const [host, name] of Object.entries(kinds)) if (readme && txt(readme).includes(host) && !f.links.includes(name)) f.links.push(name);
+  return Object.values(f).some(v => v.length) ? f : null;
+})();
+
 const setupText = hread('tweaks/setup-record.md');
 const setup = !!setupText;
 const drift = [];
@@ -142,7 +178,7 @@ const working = notes.length ? 'sandbox/notes/' + notes[notes.length - 1] : null
 const out = {
   project: root, opened: linked ? opened : undefined, projects: projects.map(({ touched, ...p }) => p), kb, format: { inputs, uncited, proposal, report, kickoff }, open: { asks: asksOpen, asksLater, asksDue, openDecisions },
   sandbox: nb ? { working: true, ideas, research, specs, plans, reports, notes: notes.length, tweaks, unsentImprovementNotes: unsent } : null,
-  pipelines,
+  pipelines, found,
   harness: { setupRecord: setup, drift },
   useCase, why, readNext, then: format ? `${format}  (the format's steps; intent-format next keeps the place)` : null, workingNotes: working,
 };
@@ -167,6 +203,7 @@ if (drift.length) line('Drift', 'missing: ' + drift.join(', '));
 for (const p of pipelines) line('Spec tool', !p.found ? `${p.tool}: code folder not found (${p.code})`
   : [p.changed ? `${p.tool} (${p.mode}) wrote ${p.changed} file(s) since ${p.lastRead || 'it was connected'} → build/follow-pipeline.md` : `${p.tool} (${p.mode}): nothing new since ${p.lastRead || 'it was connected'}`,
      p.block ? null : `our block is missing from ${p.file} → build/connect-pipeline.md (Repair)`].filter(Boolean).join(' · '));
+if (found && !kb.some(k => k.total > 1)) line('Found (setup)', [found.code.length && 'code: ' + found.code.join(', '), found.platforms.length && 'platforms: ' + found.platforms.join(', '), found.design.length && 'design: ' + found.design.join(', '), found.parts.length && 'parts: ' + found.parts.join(', '), found.links.length && 'links in README: ' + found.links.join(', ')].filter(Boolean).join(' · ') + ' — guesses for knowledge/project-setup.md');
 console.log('');
 line('Use case', `${useCase} — ${why}`);
 line('Load, in order', readNext.length ? readNext.join(' · ') : '(see the route table in ENTRY.md)');
