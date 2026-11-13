@@ -7,6 +7,7 @@
 - **Noticed on hello.** `core/state.mjs` sees new files in a connected tool and suggests reading them back.
 - **The welcome tour, rebuilt.** Eight short stops, one per message, each with its own buttons: where the harness sits in spec-driven development, the three starts, what you can bring, the kinds of knowledge, how we work, what comes out, connectors, keeping it right. Welcome tour is the first choice in the welcome widget.
 - **Registry.** Kiro and OpenSpec added; Spec Kit and BMAD install lines refreshed.
+- hotfix 2026-11-13: a plain start. A two-sentence greeting, then one widget: Welcome tour (a link to http://intentstudio.dev/) · New project; New project opens New idea · In development · Running. The eight-stop tour is gone from the chat; its content became **About** (`skills/intent-about/`), read only when someone asks about the harness, with a short FAQ. The installer adds About to Claude Code and removes the earlier tour skill.
 - hotfix 2026-11-13: the welcome and the tour stops are said in full, not summarised: their text sits between `<!-- message -->` markers, with an always-on rule to copy it whole.
 
 ## 1.4 — 2026-11-12

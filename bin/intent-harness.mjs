@@ -68,6 +68,7 @@ if (ROOT !== OLD && fs.existsSync(oldTweaks)) for (const f of fs.readdirSync(old
 // 3b. Claude Code skills: the harness's skills/ go to ~/.claude/skills/ (only where Claude Code is installed). Ours only, replaced on every update.
 const claudeHome = path.join(ME, '.claude');
 const skills = fs.existsSync(claudeHome) ? fs.readdirSync(path.join(ROOT, 'Harness', 'skills')).filter((d) => d.startsWith('intent-')) : [];
+for (const old of ['intent-welcome-tour']) if (fs.existsSync(claudeHome)) fs.rmSync(path.join(claudeHome, 'skills', old), { recursive: true, force: true }); // ours, renamed
 for (const d of skills) { const to = path.join(claudeHome, 'skills', d); fs.rmSync(to, { recursive: true, force: true }); fs.cpSync(path.join(ROOT, 'Harness', 'skills', d), to, { recursive: true }); }
 
 // 4. The pointer: what every wired folder says. Portable (~), and it tells a newcomer's agent what to do without the harness.
@@ -100,7 +101,7 @@ say(`
   It keeps your product's knowledge: what it is, how it works, and WHY.
   You just talk. It asks, suggests, and writes the knowledge down as plain files.
   Your projects live in ${tilde(path.join(ROOT, 'Projects'))}.
-${skills.length ? `  For Claude Code it also added the skill${skills.length > 1 ? 's' : ''} ${skills.join(', ')} (in ~/.claude/skills/).\n` : ''}${moved ? `\n  Your settings came along from ~/.intent (the old install). You can delete ~/.intent.\n` : ''}
+${skills.length ? `  For Claude Code it also added ${skills.join(', ')} (in ~/.claude/skills/): answers about the harness, read only when you ask.\n` : ''}${moved ? `\n  Your settings came along from ~/.intent (the old install). You can delete ~/.intent.\n` : ''}
 Next: say hello. It asks where your product stands, or which project to continue.
 ${cmd === 'init' ? `
 (For the agent that ran this: to start in this same chat, read ${entry} now and follow it; the greeting is core/welcome.md.)` : ''}
