@@ -1,6 +1,6 @@
 ---
 kind: library
-shelf: domain | platform | design-system | pattern | part | practice
+shelf: domain | platform | architecture | design-system | pattern | part | practice
 group: model | sector
 name: <Name as people say it>
 fits when: <one line: the signal that this file applies>

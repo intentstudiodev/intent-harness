@@ -43,6 +43,20 @@ areas/platforms/wearables-tv-car.md | Wearables, TV and car | the product extend
 areas/platforms/web-desktop.md | Web on desktop | people use the product in a browser on a laptop or desktop computer, from a marketing site to a full web application
 areas/platforms/web-mobile.md | Web on mobile | people reach the product in a phone browser, as a responsive site, a mobile web app or an installable progressive web app (PWA)
 
+## Area knowledge · architecture
+
+areas/architecture/ai-features.md | AI features | the product calls a language or other generative model to answer, write, summarise, classify, search by meaning or take actions, whether as the core or as one feature among many
+areas/architecture/api-styles.md | API styles | apps, services or outside partners call each other's functions and data, and the shape of those calls has to be chosen and kept stable
+areas/architecture/background-jobs-queues.md | Background jobs and queues | some work should not make the user wait or must happen later or on a schedule: emails, imports, media processing, reports, AI calls, syncing with outside systems
+areas/architecture/c4-model.md | C4 model and decision records | someone needs to say what parts a product has, how they talk and why they were chosen, at a level a product owner can follow
+areas/architecture/data-modelling.md | Data modelling | the product stores things people create or depend on (records, orders, documents, messages, accounts) and someone has to decide what those things are, who owns them and where they live
+areas/architecture/hosting-environments.md | Hosting and environments | the product runs on servers or cloud services someone has to choose, deploy to and keep separate for development, testing and real users
+areas/architecture/monolith-or-services.md | Monolith or services | deciding how many separately deployed backend parts a product has, or whether to split one that exists
+areas/architecture/observability.md | Observability | the product runs somewhere the team cannot watch directly (servers, cloud functions, people's phones and browsers) and someone needs to know when it breaks and why
+areas/architecture/real-time.md | Real-time updates | people expect to see changes without refreshing: chat, live status, dashboards, presence, shared editing, multiplayer
+areas/architecture/search-and-caching.md | Search and caching | people search across the product's data, the same data is read far more than it changes, or pages and APIs are slow because of repeated work
+areas/architecture/serverless-and-baas.md | Serverless and backend-as-a-service | the backend may run as functions on a platform (Cloudflare Workers, Vercel functions, AWS Lambda) or be largely provided by a hosted service (Supabase, Firebase)
+
 ## Area knowledge · design systems
 
 areas/design-systems/ant-design.md | Ant Design | a React product with many forms, tables and admin screens (back offices, internal tools, B2B consoles) wants a very broad component set and token-based theming

@@ -1,7 +1,7 @@
 ---
 kind: skill
 name: project-setup
-description: The setup widgets every start shares, after "where does your product stand": where things are, your product, your market, how it's built, typical parts. Every option guessed first, every tab skippable, the answers written as the owner's words.
+description: The setup widgets every start shares, after "where does your product stand": where things are, your product, your market, how it's built, its architecture, typical parts. Every option guessed first, every tab skippable, the answers written as the owner's words.
 ---
 # project-setup
 
@@ -17,8 +17,9 @@ The stage question (`core/welcome.md`) and the material line ("tell me about it;
 | read | their sentences and anything handed over | everything (`knowledge/catch-up.md`, step 2) | the code and the running product (`research/map-existing.md`) |
 | ② Product | yes, guessed from their sentences | yes, guessed from the documents | yes, guessed from the code |
 | ③ Market | yes | yes | yes |
-| ④ Build | yes; most tabs "not decided yet" | yes, guessed | yes, read from the code, to confirm |
-| ⑤ Parts | yes | only what the documents do not mention: "in scope?" | never (map-existing: no suggestions) |
+| ④ Build | yes, with *Connects to* in place of *Tech* | yes, guessed | yes, read from the code, to confirm |
+| ⑤ Architecture | no: the proposal drafts it (`knowledge/product-architecture.md`) | yes, what the documents and code show | yes, what the code shows |
+| ⑥ Parts | yes | only what the documents do not mention: "in scope?" | never (map-existing: no suggestions) |
 
 Then the start goes on: New idea → the format's kickoff, skipping what setup answered; In development → catch-up step 3; Running → map-existing's first deliverable. "Enough", "skip" or "later" at any widget → stop the setup, say in one line what was left, and go on.
 
@@ -29,7 +30,7 @@ Then the start goes on: New idea → the format's kickoff, skipping what setup a
 - **Not sure yet** is the last option where an answer may not exist yet. It is *unknown* in `open-questions/ask-questions.md`: the question stays open and comes back at the checkpoint.
 - **Skip what is certain.** A tab whose answer the folder or the owner's words already settle is left out, and the line above the widget says so ("Code: this folder; I see a git repository").
 - **One short line above the widget**, nothing long: some chat apps drop long text before a widget. The widget carries the content.
-- **Previews** (where the widget has them, as in Claude Code): ⑤ shows each item's usual shape and WHY from its library file.
+- **Previews** (where the widget has them, as in Claude Code): ⑥ shows each item's usual shape and WHY from its library file.
 - **Without a widget**: the same tabs as one numbered list with lettered options, guesses marked; the owner answers in one line ("1 a c, 2 b, 3 own words").
 
 ## The widgets
@@ -74,7 +75,20 @@ Ticked without a link → one line after the widget: "Paste the links for design
 | Team | checkboxes | Just me · Designers · Developers · Product or business people |
 | Spec tool | pick one | Spec Kit · BMAD · Kiro or OpenSpec · None yet |
 
-### ⑤ Parts (header *Parts*)
+New idea: *Connects to* (checkboxes) in place of *Tech*: three outside services or systems guessed from their words (company sign-in, calendars, Slack, payments, a system they already run) + Nothing yet. The rest of the architecture is derived, not asked (`knowledge/product-architecture.md`).
+
+### ⑤ Architecture (header *Architecture*)
+
+In development and Running, after reading. What was found, to confirm, at the C4 container level (`knowledge/product-architecture.md`); each option names where it was found. Tick what is right; Other for what is missing or wrong. More than four in a tab → group them ("Web app and admin console, both Next.js").
+
+| Tab | Kind | Options |
+|---|---|---|
+| Apps | checkboxes | the apps and surfaces found (web app, mobile app, admin, public site, partner API) |
+| Services and data | checkboxes | backends, jobs, databases and storage found |
+| Outside services | checkboxes | integrations found (payments, email, sign-in, maps, AI models …) |
+| Hosting | checkboxes | where it runs and in which regions, as found |
+
+### ⑥ Parts (header *Parts*)
 
 From `library/use-library.md`, step 3: the files matching the answers so far (domains, platforms, parts named). One tab per file, up to four tabs; its `often` items first, up to four, as checkboxes; the description is the file's why. Ticked → confirmed by the owner; unticked → noted as dropped, never offered again.
 
@@ -95,6 +109,7 @@ Setup answers are the owner's words: write them at once, without a checkpoint, t
 | links and competitors | `inputs/links.md` (the format's file); studying a competitor is Reverse engineer, offered once, on the owner's yes |
 | users | user types in the proposal (New idea, In development) or in what is found (Running); cards only after the checkpoint |
 | platforms, tech, design library | the kickoff's answers (`inputs/kickoff-answers.md`, New idea), so the kickoff skips them |
+| *Connects to*, *Architecture* | nodes of the Product Architecture: rows of the proposal's inventory (New idea, In development) or `as found` (Running), cards after the checkpoint (`knowledge/product-architecture.md`) |
 | a spec tool named | after setup, offer Connect a spec tool (`build/connect-pipeline.md`) |
 | ticked parts | the proposal's inventory, unmarked |
 

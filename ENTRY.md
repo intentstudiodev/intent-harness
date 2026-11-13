@@ -22,7 +22,7 @@ Version: see `VERSION`. This file is the only one always loaded. Keep it under a
 - **Read only what is needed.** One file at a time, only the files on the route. The harness is large; a step is small.
 - **Same format version, or no writing.** Before the first write to a project in a session, run the format's `check` on it. A `W001` on `standard:` means the project is in another version of the format: one that says `migrate` is older, so say so and offer `intent-format migrate` (on the owner's yes, before anything else is written); any other is newer, so stop and ask the owner to update (`npx github:intentstudiodev/intent-harness update`). Never write into a project of another version.
 - **Talk is safe, writing is deliberate.** Nothing in the conversation changes the project until a checkpoint shows the batch and the user says yes.
-- **Proactive partner.** At the end of every use case: say the next step, and in one line what you noticed on the way. At natural pauses only; once declined, not again this session.
+- **Proactive partner.** At the end of every use case: say the next step, and in one line what you noticed on the way. At natural pauses only; once declined, not again this session When the state script says *Improvement review due*, offer the review once (`self-improvement/review.md`).
 - **Retro.** At the end of every use case except trivial ones, run `self-improvement/retro.md`.
 
 ## Routes
@@ -39,6 +39,7 @@ The request decides the use case. When two fit, ask with one sentence.
 | no cards yet and the product already runs, with people using it (project status Live) | Map what exists | `research/map-existing.md` · `knowledge/project-setup.md` · `intake/intake.md` · `research/reverse-engineer.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
 | points at code, a running product, a screenshot, a recording, a competitor | Reverse engineer | `intake/intake.md` · `research/reverse-engineer.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
 | asks how a kind of product or an area usually works ("how do booking apps handle no-shows", "what should a dashboard have"), or a step needs it | Library | `library/use-library.md` (then only the matching files from `library/index.md`) |
+| asks how the product is built: its parts, apps, services, data, outside services ("how is it built", "draw the architecture") | Product Architecture | `knowledge/product-architecture.md` · `node <harness>/core/architecture.mjs <project>` |
 | talks, asks, thinks aloud | Discuss | `product-owner/talk.md` · `product-owner/checkpoint.md` |
 | wants something changed, added or removed in the product | Change | `knowledge/change-impact.md` · `product-owner/checkpoint.md` · `knowledge/librarian.md` · `knowledge/write-knowledge.md` |
 | brings a document, a file, a paste, a link, feedback, data | Add input | `intake/intake.md` · `research/read-input.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
@@ -57,6 +58,7 @@ The request decides the use case. When two fit, ask with one sentence.
 | says "let's do that parked one" | Unpark an idea | `knowledge/change-impact.md` · `product-owner/checkpoint.md` |
 | asks where things stand | Status | state output · `product-owner/talk.md` |
 | opens a project cold | Pick up | state output · `product-owner/talk.md` |
+| accepts the improvement review, or asks what could work better | Improvement review | `self-improvement/review.md` · `self-improvement/share-note.md` |
 | corrects you, declines, repeats a request | Tune | `self-improvement/retro.md` |
 | wants a critique of anything | Critique | `critique/critic.md` · `critique/tiers.md` |
 
@@ -66,7 +68,7 @@ Every route ends with: the next step suggested; `sandbox/where-we-stopped.md` re
 
 <!-- index:start -->
 ```
-CHANGELOG.md | Changelog | - **Project setup in a few clicks.** After "where does your product stand", up to five short widgets, every op
+CHANGELOG.md | Changelog | - **Product Architecture.** The parts a product runs on (apps, services, data, outside services, hosting), how
 CODE_OF_CONDUCT.md | Contributor Covenant Code of Conduct | We as members, contributors, and leaders pledge to make participation in our
 CONTRIBUTING.md | Contributing | Thanks for looking. The Intent Harness is made by one person, in the open. You don't need to be a developer to
 README.md | Intent Harness | ```bash
@@ -80,6 +82,7 @@ build/follow-pipeline.md | Read back what a connected spec tool wrote since the 
 build/hand-to-pipeline.md | Give one feature to a connected spec tool as a pack made from the cards, and record it in sandbox/pipelines.md. What the tool writes is read
 build/report.md | Report: <task> | kind: template
 core/anonymise.mjs | Strips project content from improvement notes before they are shared. Deny by default.
+core/architecture.mjs | Draws the Product Architecture from a project's cards: a Mermaid diagram at C4 container level, then one line per node.
 core/cold-start.md | Harness cold start | The first run of the harness on a computer: once, not once per project. It asks nothing that can be detected o
 core/config.md | Config (written at Harness cold start; edit freely) | kind: template
 core/connectors.md | Connectors | Our role files hold judgment: responsibility, what to push back on, what to write where, how to use the KB and
@@ -110,7 +113,8 @@ intake/intake.md | Saves anything the user hands over into inputs/, as given, wi
 knowledge/catch-up.md | A product in development — docs, designs, tickets, a prototype, some code — and no cards yet. First where the project stands, then read ever
 knowledge/change-impact.md | Impact first, then the change as a proposal. Also used to unpark an idea and to adopt a reference.
 knowledge/librarian.md | role librarian | runs as either
-knowledge/project-setup.md | The setup widgets every start shares, after "where does your product stand": where things are, your product, your market, how it's built, ty
+knowledge/product-architecture.md | Product Architecture — the parts a product runs on (apps, services, data, outside services, environments), how they connect, and WHY. Kept a
+knowledge/project-setup.md | The setup widgets every start shares, after "where does your product stand": where things are, your product, your market, how it's built, it
 knowledge/source-check.md | Inputs against the KB, both ways: nothing lost, nothing invented.
 knowledge/start-project.md | A new product, or a folder without cards: run the format's own cold start (intent-format next) with the harness's roles and rules on top. Re
 knowledge/versions.md | Opens a version beside the current one, so what was released or handed off stays intact.
@@ -142,6 +146,7 @@ research/read-input.md | Reads an input that states intent (a brief, a doc, a sp
 research/researcher.md | role researcher | runs as either
 research/reverse-engineer.md | Reads any result backwards to the intent behind it: code, a running product, a screenshot, a recording. One procedure, four purposes.
 self-improvement/retro.md | Four lines at the end of a use case; findings become a tweak, an improvement note, or nothing. Keeps an open line.
+self-improvement/review.md | Once a week (tweakable), at a natural pause, offer to look back at the improvement notes and library notes from every project and suggest a 
 self-improvement/share-note.md | Anonymise unsent improvement notes, show them, and on the user's yes open a GitHub issue under their own login.
 spec/assemble-spec.md | Pulls a scope out of the knowledge the same way every time, and records what it was made from.
 spec/make-spec.md | A spec from a template: scope plus blocks, the why chain, trade-offs. The tech lead proposes the type; the user chooses.

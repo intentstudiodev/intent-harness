@@ -117,7 +117,7 @@ const found = (() => {
   const txt = (p) => { try { return fs.readFileSync(at(p), 'utf8'); } catch { return ''; } };
   const has = (p) => fs.existsSync(at(p));
   const top = (() => { try { return fs.readdirSync(opened); } catch { return []; } })();
-  const f = { code: [], platforms: [], design: [], parts: [], links: [] };
+  const f = { code: [], platforms: [], design: [], parts: [], arch: [], links: [] };
   const remote = /url\s*=\s*(\S+)/.exec(txt('.git/config'));
   if (remote) f.code.push('git: ' + remote[1].replace(/\/\/[^/@]+@/, '//'));
   else if (has('.git')) f.code.push('git (no remote)');
@@ -141,6 +141,20 @@ const found = (() => {
   if (any('stripe', '@stripe')) f.parts.push('payments (Stripe)');
   if (any('next-auth', '@auth', '@clerk', 'better-auth', '@supabase/supabase-js', 'firebase')) f.parts.push('sign-in');
   if (any('@prisma/client', 'prisma', 'drizzle-orm', 'mongoose', 'pg')) f.parts.push('database');
+  // Product Architecture (knowledge/product-architecture.md): apps, hosting, data, outside services
+  const sub = (d) => { try { return fs.readdirSync(at(d)).filter(n => !n.startsWith('.') && isDir(at(path.join(d, n)))); } catch { return []; } };
+  for (const d of ['apps', 'services', 'packages']) { const s = sub(d); if (s.length && d !== 'packages') f.arch.push(`${d}/: ${s.slice(0, 6).join(', ')}`); }
+  const hosts = { 'vercel.json': 'Vercel', 'netlify.toml': 'Netlify', 'fly.toml': 'Fly.io', 'wrangler.toml': 'Cloudflare Workers', 'wrangler.jsonc': 'Cloudflare Workers', 'wrangler.json': 'Cloudflare Workers', 'firebase.json': 'Firebase', 'render.yaml': 'Render', 'railway.json': 'Railway', 'serverless.yml': 'Serverless (AWS)', 'app.yaml': 'Google App Engine', 'Procfile': 'Heroku-style' };
+  for (const [file, name] of Object.entries(hosts)) if (has(file)) f.arch.push('hosting: ' + name);
+  if (has('supabase')) f.arch.push('Supabase');
+  if (has('Dockerfile') || has('docker-compose.yml') || has('compose.yaml')) f.arch.push('containers (Docker)');
+  if (top.some(n => n.endsWith('.tf')) || has('terraform') || has('infra')) f.arch.push('infrastructure as code');
+  if (has('prisma/schema.prisma') || has('schema.prisma')) f.arch.push('data model: prisma/schema.prisma');
+  if (has('.github/workflows')) f.arch.push('CI: GitHub Actions');
+  const envNames = ['.env.example', '.env.sample', '.env.template', '.dev.vars.example'].map(txt).join('\n');
+  const services = { STRIPE: 'Stripe', SENDGRID: 'SendGrid', RESEND: 'Resend', POSTMARK: 'Postmark', MAILGUN: 'Mailgun', TWILIO: 'Twilio', OPENAI: 'OpenAI', ANTHROPIC: 'Anthropic', SUPABASE: 'Supabase', FIREBASE: 'Firebase', AWS: 'AWS', S3: 'S3 storage', CLOUDINARY: 'Cloudinary', ALGOLIA: 'Algolia', SENTRY: 'Sentry', POSTHOG: 'PostHog', SEGMENT: 'Segment', MAPBOX: 'Mapbox', GOOGLE_MAPS: 'Google Maps', PUSHER: 'Pusher', ABLY: 'Ably', REDIS: 'Redis', DATABASE_URL: 'a database', AUTH0: 'Auth0', CLERK: 'Clerk', OKTA: 'Okta', SLACK: 'Slack', GITHUB: 'GitHub', POLAR: 'Polar', PADDLE: 'Paddle', LEMONSQUEEZY: 'Lemon Squeezy' };
+  const outside = Object.entries(services).filter(([k]) => new RegExp('^\\s*(?:export\\s+)?[A-Z0-9_]*' + k + '[A-Z0-9_]*\\s*=', 'm').test(envNames)).map(([, v]) => v);
+  if (outside.length) f.arch.push('outside services (env names): ' + [...new Set(outside)].join(', '));
   const readme = top.find(n => /^readme(\.md)?$/i.test(n));
   const kinds = { 'figma.com': 'Figma', 'notion.so': 'Notion', 'notion.site': 'Notion', 'linear.app': 'Linear', 'atlassian.net': 'Jira', 'docs.google.com': 'Google Docs', 'miro.com': 'Miro' };
   for (const [host, name] of Object.entries(kinds)) if (readme && txt(readme).includes(host) && !f.links.includes(name)) f.links.push(name);
@@ -158,6 +172,21 @@ for (const m of setupText.matchAll(/^\s*[-*]\s*found:\s*`?(.+?)`?\s*(?:—|$)/gm
 }
 
 // the route: one use case, its files from ENTRY.md's table
+// Improvement review (self-improvement/review.md): due when the period in tweaks/config.md has passed since the last review and there is something to read.
+const review = (() => {
+  const every = ((hread('tweaks/config.md').match(/^-\s*improvement review:\s*(\w+)/m) || [, 'weekly'])[1]).toLowerCase();
+  if (every === 'off') return null;
+  const days = every === 'monthly' ? 30 : 7;
+  const record = hread('tweaks/review-record.md');
+  const dates = [...record.matchAll(/^(\d{4}-\d{2}-\d{2})/gm)].map(m => m[1]).sort();
+  const since = dates.length ? dates[dates.length - 1] : ((setupText.match(/(\d{4}-\d{2}-\d{2})/) || [])[1] || null);
+  if (!since) return null;
+  const age = Math.floor((Date.now() - Date.parse(since + 'T00:00:00')) / 86400000);
+  let notes = 0, fromProjects = 0;
+  for (const p of projects) { const t = (() => { try { return fs.readFileSync(path.join(p.folder, 'sandbox', 'improvement-notes.md'), 'utf8'); } catch { return ''; } })(); const n = (t.match(/^\s*[-*]\s+(?!.*\[(sent|closed))/gm) || []).length; if (n) { notes += n; fromProjects++; } }
+  if (!projects.some(p => path.resolve(p.folder) === path.resolve(root))) { const n = (improvement.match(/^\s*[-*]\s+(?!.*\[(sent|closed))/gm) || []).length; if (n) { notes += n; fromProjects++; } }
+  return age >= days && notes ? { since, age, notes, projects: fromProjects } : null;
+})();
 const entry = hread('ENTRY.md');
 const routes = new Map();
 for (const row of entry.split('\n')) {
@@ -178,7 +207,7 @@ const working = notes.length ? 'sandbox/notes/' + notes[notes.length - 1] : null
 const out = {
   project: root, opened: linked ? opened : undefined, projects: projects.map(({ touched, ...p }) => p), kb, format: { inputs, uncited, proposal, report, kickoff }, open: { asks: asksOpen, asksLater, asksDue, openDecisions },
   sandbox: nb ? { working: true, ideas, research, specs, plans, reports, notes: notes.length, tweaks, unsentImprovementNotes: unsent } : null,
-  pipelines, found,
+  pipelines, found, review,
   harness: { setupRecord: setup, drift },
   useCase, why, readNext, then: format ? `${format}  (the format's steps; intent-format next keeps the place)` : null, workingNotes: working,
 };
@@ -203,7 +232,8 @@ if (drift.length) line('Drift', 'missing: ' + drift.join(', '));
 for (const p of pipelines) line('Spec tool', !p.found ? `${p.tool}: code folder not found (${p.code})`
   : [p.changed ? `${p.tool} (${p.mode}) wrote ${p.changed} file(s) since ${p.lastRead || 'it was connected'} → build/follow-pipeline.md` : `${p.tool} (${p.mode}): nothing new since ${p.lastRead || 'it was connected'}`,
      p.block ? null : `our block is missing from ${p.file} → build/connect-pipeline.md (Repair)`].filter(Boolean).join(' · '));
-if (found && !kb.some(k => k.total > 1)) line('Found (setup)', [found.code.length && 'code: ' + found.code.join(', '), found.platforms.length && 'platforms: ' + found.platforms.join(', '), found.design.length && 'design: ' + found.design.join(', '), found.parts.length && 'parts: ' + found.parts.join(', '), found.links.length && 'links in README: ' + found.links.join(', ')].filter(Boolean).join(' · ') + ' — guesses for knowledge/project-setup.md');
+if (found && !kb.some(k => k.total > 1)) line('Found (setup)', [found.code.length && 'code: ' + found.code.join(', '), found.platforms.length && 'platforms: ' + found.platforms.join(', '), found.design.length && 'design: ' + found.design.join(', '), found.parts.length && 'parts: ' + found.parts.join(', '), found.arch.length && 'architecture: ' + found.arch.join(', '), found.links.length && 'links in README: ' + found.links.join(', ')].filter(Boolean).join(' · ') + ' — guesses for knowledge/project-setup.md');
+if (review) line('Improvement review', `due: ${review.notes} note(s) from ${review.projects} project(s), last review ${review.since} — offer once at a natural pause (self-improvement/review.md)`);
 console.log('');
 line('Use case', `${useCase} — ${why}`);
 line('Load, in order', readNext.length ? readNext.join(' · ') : '(see the route table in ENTRY.md)');

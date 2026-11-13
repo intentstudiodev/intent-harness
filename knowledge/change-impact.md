@@ -5,7 +5,7 @@ description: Impact first, then the change as a proposal. Also used to unpark an
 ---
 # change-impact
 
-1. **Impact.** Find the cards the change touches by following links from the entry point (feature → screens → flows → rules → decisions). List them with what would change in each. Say the size: small fix (one card, no decision touched) or real change.
+1. **Impact.** Find the cards the change touches by following links from the entry point (feature → screens → flows → rules → decisions; APIs → backend nodes for the Product Architecture, `knowledge/product-architecture.md`). List them with what would change in each. Say the size: small fix (one card, no decision touched) or real change.
 2. **Why.** If the why of the change is missing: assume it and tag, suggest candidates, or ask, by the ask-or-assume rule.
 3. **Small fix** → write straight away through `write-knowledge`, say so in one line.
 4. **Real change** → a proposal: added · changed · removed, per card, with the why and the decisions it touches. A change that reverses a decision says so and reopens it.

@@ -11,6 +11,7 @@ Nothing is asked at cold start. Every line is detected or a shipped default, and
 - write-as-you-go: yes    # default · notes from the first exchange (checkpoint opens sandbox/notes/<date>.md)
 - contribute: ask         # default · yes · no · ask — asked the first time an improvement note is about to be sent
 - maintainer-repo: intentstudiodev/intent-harness   # default · where share-note opens issues
+- improvement review: weekly   # default · weekly · monthly · off — how often the harness offers to look back at the notes and suggest improvements (self-improvement/review.md)
 - coding-agent: <detected from the environment, or —>   # detected
 - design-tool: <detected from the survey, or —>          # detected
 - format-tool: intent-format        # default · the Intent Format's command

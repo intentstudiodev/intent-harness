@@ -20,7 +20,7 @@ Our own block, our steering file and `intent-pack-*` copies are not news.
 2. **Save first.** Each changed file through `intake`, type `spec`: a line in `inputs/links.md` (it stays in the repository), or a copy in `inputs/` when the owner wants it kept as it was then.
 3. **Read** (`read-input`) and sort:
    - **progress** → one line per feature in the Handed table (`with the tool · 5/8 tasks`; all done or archived → *done*);
-   - **tech** → proposed tech, backend and API cards;
+   - **tech and architecture** (BMAD's architecture document, Spec Kit's `plan.md`, Kiro's `design.md` and steering, OpenSpec's `design.md`) → proposed tech, backend and API cards at container level (`knowledge/product-architecture.md`);
    - **a choice the cards did not make** → a proposed decision card, the tool's reason as its WHY `[likely]`, the file as Source;
    - **an open marker** (`[NEEDS CLARIFICATION: …]`, TBD, an open question) → `[ask: …]` in the card it is about;
    - **a contradiction with a card** → listed with both sources, an Open decision on that card; never overwritten.
