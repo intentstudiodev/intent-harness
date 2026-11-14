@@ -29,15 +29,15 @@ A spec tool reads two things: a context it always loads, and the input for one f
 
 ```
 <!-- intent-harness:start -->
-Product knowledge for <Name> is in ~/Intent/Projects/<name>/ (Intent Format). If it is not there, ask the owner where it is.
-Before you specify anything: read its project card (V*/project.md) and run `node ~/Intent/Format/kit/cli/intent-format.mjs open <that folder>`: it lists what is still unknown, guessed or undecided.
+Product knowledge for <Name> is in <knowledge path> (Intent Format). If it is not there, ask the owner where it is.
+Before you specify anything: read its project card (V*/project.md) and run `node <format path>/kit/cli/intent-format.mjs open <knowledge path>`: it lists what is still unknown, guessed or undecided.
 Never edit the cards there: they change only through the Intent Harness. Never invent what a card marks [ask: …], [assumed] or —. Ask the owner, or leave the gap visible in your spec.
 Feature packs are in its sandbox/packs/. Start a feature's spec from its pack when there is one.
 When you decide something the cards do not say, write it down in your spec with its reason: it is read back into the knowledge.
 <!-- intent-harness:end -->
 ```
 
-The path: `~/Intent/Projects/<name>/` when the project lives there; a path inside the code folder when the knowledge lives in the repository; otherwise the path the owner gives, written with `~`, never this computer's full home path. The block is committed with the repository, so the whole team's agents read it; a teammate whose knowledge sits elsewhere is asked where it is.
+The paths: relative to the code folder when the harness is installed in it (`Projects/<name>/`, `Intent-Harness/Format`), so every teammate's clone works; otherwise the install's paths written with `~`, never this computer's full home path. The block is committed with the repository, so the whole team's agents read it; a teammate whose knowledge sits elsewhere is asked where it is.
 
 3. **Record it** in `sandbox/pipelines.md` (created from the shape below when missing): one Connections row. Say it back in one line: tool, file, mode, and that "disconnect" removes the block.
 

@@ -9,7 +9,7 @@
 | Evidence (`inputs/`) | The format's folder at the project root: the files cards cite with a `Source` link. Never deleted. A file gets there by being cited, nowhere else. |
 | Inputs (`inputs/`) | Everything the user hands over, as given, with one header line; the format's folder for evidence. A card cites a file with a Source link. Never moved or deleted. |
 | Format (Intent Format) | How knowledge is written and its tools: `intent-format new`, `regen`, `check`, `open`, `next`, `frame`, `branch`, `migrate`. Installed once; not part of the harness. Its cold start (`intent-format next`) is the procedure Start a project wraps. |
-| Factory | An untouched copy of the harness as shipped. `core/verify.mjs` compares against it. |
+| Factory settings | `Intent-Harness/Factory-Settings/`: the harness exactly as installed, renewed by every install or update, never edited. `core/verify.mjs` compares against it and restores a file from it. |
 | Module | A box with one job: what it takes, what it gives. `modules.md`. |
 | Role | A file of instructions: responsibility, what it knows, what it produces, what it pushes back on, which skills it uses. Judgment and accountability, loaded once per task. A role does nothing by itself. |
 | Agent | A running model instance that executes instructions. |
@@ -25,7 +25,7 @@
 | Checkpoint | The moment talk becomes writing: the pending batch is shown, the user chooses per item. |
 | Tweak | One plain sentence that adjusts a default. Personal (`tweaks/`), or the project's (`sandbox/tweaks.md`). Never touches the philosophy or the format. |
 | Improvement note | A finding for the harness maintainer. Local in `sandbox/improvement-notes.md`; shared only anonymised and confirmed. |
-| Setup record | Proof that Harness cold start ran on this computer: `tweaks/setup-record.md`, in the harness, once per computer. |
+| Setup record | Proof that Harness cold start ran for this install: `tweaks/setup-record.md`, in the harness, once per install. |
 | Open list | What is still unknown, guessed or undecided in the KB: `intent-format open` generates it from `—`, `[assumed]`, `[likely]` and Open decisions. Never kept by hand. |
 | Ask marker | `[ask: …]` inside a card's sentence: a question for the owner. `intent-format open` lists them; the harness keeps no question list of its own. `· later <date>` when the owner said later (due again after two days); "unknown" leaves it as it is. |
 | Marks on knowledge | `fixed` (decided), `guidance` (default), `as found` (read backwards from an existing product, not yet confirmed). |
@@ -36,9 +36,12 @@
 Lowercase kebab-case. One file per skill: `<module>/<name>.md`. `.md` for anything an agent reads, `.mjs` for scripts. No numbers in names except KB versions.
 
 ```
-~/Intent/                       installed by npx …intent-harness init; README.md says what is where
-  Harness/  Format/             one copy each for all projects; .factory/ holds the untouched harness
-  Projects/                     the default home of every project
+<your folder>/                  where `npx …intent-harness init` ran; README.md says what is where
+  AGENTS.md  CLAUDE.md          the pointer, relative: read Intent-Harness/Harness/ENTRY.md first
+  Intent-Harness/
+    Harness/  Format/           the harness and the format for this folder; tweaks/ in Harness is yours
+    Factory-Settings/           the harness exactly as installed; core/verify.mjs compares and restores
+  Projects/                     every project of this folder, one or many
   booking-example-service/      the knowledge project (Projects/<name>/)
   booking-elsewhere/pointer.md  a project the owner keeps elsewhere: `- kb: <folder>`
     AGENTS.md                   entry for any agent: points to the format and to the harness
@@ -53,4 +56,4 @@ Lowercase kebab-case. One file per skill: `<module>/<name>.md`. `.md` for anythi
 <anywhere>/booking-app/         the product's own folder: the code repository, design exports, prototypes; any structure; the harness never writes here except the pointer in its AGENTS.md (on the owner's yes)
 ```
 
-The code stays where it is; the project goes to `Projects/<name>/` and points back to it with `code:` in `sandbox/where-we-stopped.md`. "Knowledge inside the repository" (or any other place) is the owner's choice at Set up, never offered and never the default; then `Projects/<name>/` holds only `pointer.md` (`- kb: <folder>`), so every project has its entry in `Projects/`.
+Everything lives in the folder the harness was installed in: the harness, the format and the projects. Two folders are two independent installs. Installed in a code repository, the knowledge sits in the repository's `Projects/` and travels with the code; installed elsewhere, a project points to its code with `code:` in `sandbox/where-we-stopped.md`. Another place for one project is the owner's choice, never offered; then `Projects/<name>/` holds only `pointer.md` (`- kb: <folder>`), so every project has its entry in `Projects/`.

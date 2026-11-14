@@ -3,7 +3,7 @@ kind: template
 ---
 # Setup record
 
-Written once per computer at Harness cold start, into `tweaks/setup-record.md`. `core/state.mjs` reads it at every session start and tests every `found:` line that holds a path.
+Written once per install at Harness cold start, into `tweaks/setup-record.md`. `core/state.mjs` reads it at every session start and tests every `found:` line that holds a path.
 
 - date: <date> · harness <version>
 - found: <path> — <what it is>            one line per thing found: repo, agent instructions, docs, design library, older KB, installed skill, MCP server, format tool

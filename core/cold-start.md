@@ -1,10 +1,10 @@
 # Harness cold start
 
-The first run of the harness on a computer: once, not once per project. It asks nothing that can be detected or defaulted; most users answer zero questions. Re-run when the environment changes; `state.mjs` flags drift at every session start. It has no retro: the setup record is the record.
+The first run of the harness in an install (the folder it was installed in): once, not once per project. It asks nothing that can be detected or defaulted; most users answer zero questions. Re-run when the environment changes; `state.mjs` flags drift at every session start. It has no retro: the setup record is the record.
 
 ## Steps
 
-1. **Say hello first**: the Welcome of `core/welcome.md`, without its closing question, then one line: *This is my first time on this computer, so I'm setting myself up. No questions; it takes a minute.* This setup only writes inside the harness and can be redone.
+1. **Say hello first**: the Welcome of `core/welcome.md`, without its closing question, then one line: *This is my first time in this folder, so I'm setting myself up. No questions; it takes a minute.* This setup only writes inside the harness and can be redone.
 2. **Detect** what the config needs (`core/config.md`): the language from the message the user wrote; the coding agent from the environment you run in; whether a question widget exists (Claude Code: the AskUserQuestion tool → `question widget: yes` in the setup record, else `no`); the design tool and other tools from step 3. Everything else takes its shipped default. No question here: a config line is asked the first time a step actually needs it (for example `contribute` when the first improvement note is about to be sent, `care` when the user says you ask too much or too little).
 3. **Survey the environment** (read only; list, do not open contents): a repository; existing agent instructions (`AGENTS.md`, `CLAUDE.md`, `.cursor/`, `.codex/`); docs, specs, designs; a design library or tokens; a tech stack; an older KB; installed skills (`.claude/skills`, `.agents/skills`, plugin lists) and MCP servers; the format's tool (`intent-format`).
 4. **Conflicts.** Only where an existing instruction contradicts a harness rule: show both and ask which wins. Record the answer as a tweak (`tweaks/entry.md`). No conflict → nothing to ask.

@@ -31,7 +31,7 @@ The request decides the use case. When two fit, ask with one sentence.
 
 | The user… | Use case | Load, in order |
 |---|---|---|
-| uses the harness on this computer for the first time (no `tweaks/setup-record.md`) | Harness cold start | `core/cold-start.md` · `core/welcome.md` |
+| uses this install of the harness for the first time (no `tweaks/setup-record.md`) | Harness cold start | `core/cold-start.md` · `core/welcome.md` |
 | opens with hello or anything that names no project yet, and projects exist (the state script lists them) | Choose a project | `core/welcome.md` |
 | picks the Welcome tour, or asks what you can do | Welcome tour | `core/tour.md` |
 | says "let's start" with no cards yet: the hello asks where the product stands (Which start); an idea, a brief, nothing made → New product; or brings a large batch for a new version | Start a project | `core/welcome.md` · `knowledge/start-project.md` (wraps the format's cold start; `intent-format next` keeps the place) · `knowledge/project-setup.md` · `research/researcher.md` · `research/interview.md` · `product-owner/checkpoint.md` · `knowledge/librarian.md` · `knowledge/write-knowledge.md` |
@@ -68,12 +68,12 @@ Every route ends with: the next step suggested; `sandbox/where-we-stopped.md` re
 
 <!-- index:start -->
 ```
-CHANGELOG.md | Changelog | - **Software Architecture.** The parts a product runs on (apps, services, data, outside services, hosting), ho
+CHANGELOG.md | Changelog | - **Everything in one folder.** `npx github:intentstudiodev/intent-harness init` installs into the folder you 
 CODE_OF_CONDUCT.md | Contributor Covenant Code of Conduct | We as members, contributors, and leaders pledge to make participation in our
 CONTRIBUTING.md | Contributing | Thanks for looking. The Intent Harness is made by one person, in the open. You don't need to be a developer to
 README.md | Intent Harness | ```bash
 SECURITY.md | Security | Found a security problem, for example in the installer or the harness's scripts? Please don't open a public is
-bin/intent-harness.mjs | Installs the Intent Harness and the Intent Format on this computer, in one visible folder, and wires the current folder to them.
+bin/intent-harness.mjs | Installs the Intent Harness and the Intent Format into the folder you run it in, and wires that folder to them.
 build/connect-pipeline.md | Connect, add, switch, disconnect or repair a spec tool (Spec Kit, Kiro, BMAD, OpenSpec, or any coding agent). Puts one short marked block wh
 build/connector.md | Connector: developer | kind: connector
 build/develop.md | One developer skill: before (context and the product-scale paragraph), during (findings sorted), after (the report).
@@ -83,7 +83,7 @@ build/hand-to-pipeline.md | Give one feature to a connected spec tool as a pack 
 build/report.md | Report: <task> | kind: template
 core/anonymise.mjs | Strips project content from improvement notes before they are shared. Deny by default.
 core/architecture.mjs | Draws the Software Architecture from a project's cards: a Mermaid diagram at C4 container level, then one line per node.
-core/cold-start.md | Harness cold start | The first run of the harness on a computer: once, not once per project. It asks nothing that can be detected o
+core/cold-start.md | Harness cold start | The first run of the harness in an install (the folder it was installed in): once, not once per project. It as
 core/config.md | Config (written at Harness cold start; edit freely) | kind: template
 core/connectors.md | Connectors | Our role files hold judgment: responsibility, what to push back on, what to write where, how to use the KB and
 core/index.mjs | Regenerates the index at the end of ENTRY.md: one line per file, pipe-delimited, from each file's first heading or description.
@@ -94,7 +94,7 @@ core/skill-template.md | <one line: what it does and when to use it>
 core/state.mjs | Reads a project folder and says where it stands, which use case is next and which files to load, in order.
 core/terms.md | Terms and names | | Term | Meaning |
 core/tour.md | The welcome tour: eight short stops, one screen each, a widget under each. When the user picks "Welcome tour" or asks what you can do.
-core/verify.mjs | Compares this harness with the Factory (the untouched copy) file by file.
+core/verify.mjs | Compares this harness with its factory settings (the untouched copy made at install) file by file.
 core/welcome.md | The first screen. The welcome (first time, or no projects yet) and the project menu (projects exist). Said in the user's language; the diagr
 critique/change.md | Critique: a change | kind: checklist
 critique/critic.md | role critic | runs as sub-agent

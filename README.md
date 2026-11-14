@@ -41,34 +41,41 @@ Not a dev pipeline, not a spec generator, not a wiki. It is the memory the other
 
 ## Set up
 
-1. In any folder (your product's code, or an empty one), run:
+1. In the folder you want to work in (an empty one, or your product's code), run:
 
    ```bash
    npx github:intentstudiodev/intent-harness init
    ```
 
-   It creates one visible folder, `~/Intent/`, the same for all your products:
+   Everything goes into that folder:
 
    ```
-   ~/Intent/
-   ├── Harness/
-   ├── Format/
-   └── Projects/
+   your-folder
+   ├── AGENTS.md
+   ├── CLAUDE.md
+   ├── README.md
+   ├── Intent-Harness
+   │   ├── Harness
+   │   ├── Format
+   │   └── Factory-Settings
+   └── Projects
    ```
 
-   | Folder | What it holds | Who changes it |
+   | Name | What it holds | Who changes it |
    |---|---|---|
-   | `Harness/` | the harness, one copy for all projects | updates; your own changes go in `Harness/tweaks/` |
-   | `Format/` | the Intent Format and its tool | updates |
-   | `Projects/` | each product's knowledge, one folder per product | you, with your agent |
+   | `AGENTS.md`, `CLAUDE.md` | two lines: read `Intent-Harness/Harness/ENTRY.md` first; if it is missing, offer to install | the installer, once |
+   | `Intent-Harness/Harness` | the harness | updates; your own changes go in its `tweaks/` |
+   | `Intent-Harness/Format` | the Intent Format and its tool | updates |
+   | `Intent-Harness/Factory-Settings` | the harness exactly as installed, to compare and restore | updates only |
+   | `Projects` | each product's knowledge, one folder per product, as many as you like | you, with your agent |
 
-   It also writes a two-line `AGENTS.md` (and a `CLAUDE.md` that imports it) in the folder you ran it in and in `~/Intent/`: read the harness first, and if it is missing on this computer, offer to install it. So a project you send to someone tells their agent what to do. It never overwrites a file of yours. Needs Node 18 or newer and git.
-2. Say hello, in the same chat or a new one. The first time, it welcomes you and asks where your product stands: a new idea, in development, or running (or a short tour first). Later, it shows your projects and where each one stopped.
-3. Update any time: `npx github:intentstudiodev/intent-harness update`. Your tweaks are kept. Each project's files carry the format version they were written in; the harness never writes into a project of another version, and offers `intent-format migrate` for an older one.
+   The pointer uses a relative path, so the folder still works after a copy, a move or a teammate's `git clone`. It never overwrites a file of yours. Needs Node 18 or newer and git.
+2. Say hello, in the same chat or a new one opened in that folder. The first time, it welcomes you and asks where your product stands: a new idea, in development, or running (or a short tour first). Later, it shows the projects in this folder and where each one stopped.
+3. Update any time, in that folder: `npx github:intentstudiodev/intent-harness update`. Your tweaks and projects are kept; the factory settings follow the new version. Each project's files carry the format version they were written in; the harness never writes into a project of another version, and offers `intent-format migrate` for an older one.
 
-Your code stays where it is. The knowledge goes to `~/Intent/Projects/<name>/` and remembers where the code lives; a chat opened in the code folder finds its project. Keeping the knowledge inside the repository is a choice at the start, not the default.
+Two folders are two independent installs, each with its own version, settings and projects. Installed in your code repository, the knowledge travels with the code; installed elsewhere, each project remembers where its code lives.
 
-By hand, without npx: clone `intentstudiodev/intent-harness` and `intentstudiodev/intent-format` into one folder as `Harness/` and `Format/`, add `Projects/`, and put the two lines, with your path, into your project's `AGENTS.md`.
+By hand, without npx: in your folder, clone `intentstudiodev/intent-harness` and `intentstudiodev/intent-format` into `Intent-Harness/` as `Harness/` and `Format/`, add `Projects/`, and put the two lines into `AGENTS.md`.
 
 A walk: a brief in `inputs/` → twelve cards and five questions → a tester's mail pasted → a rule changed, with its why → a pack handed to your spec tool → its spec back in `inputs/` → the decisions it took, recorded.
 
@@ -86,12 +93,12 @@ A walk: a brief in `inputs/` → twelve cards and five questions → a tester's 
 | `critique/` | critique checklists per kind, QA, tiers |
 | `<module>/connector.md` | designer, developer, QA: cases → outside skills |
 | `library/` | short, sourced notes: `domains/` (what a product is; a product has several) and `areas/` (Area knowledge: platforms, design systems, patterns, parts, practices). A lens, never a rulebook; `index.md` lists them |
-| `tweaks/` | yours; empty when shipped; survives upgrades; holds `config.md`, `setup-record.md` (proof of cold start, once per computer), `connectors.md` |
+| `tweaks/` | yours; empty when shipped; survives upgrades; holds `config.md`, `setup-record.md` (proof of cold start, once per install), `connectors.md` |
 | `bin/` | the installer behind `npx github:intentstudiodev/intent-harness init` |
 | `.github/` | issue forms: something went wrong, idea, improvement note, library file, tweak |
 
 ## Versions
 
-`VERSION` holds the harness version; `CHANGELOG.md` the changes. Upgrading = replacing every file except `tweaks/`; `core/verify.mjs` shows what you had adjusted. Projects carry their own tweaks in `sandbox/tweaks.md`.
+`VERSION` holds the harness version; `CHANGELOG.md` the changes. Upgrading = replacing every file except `tweaks/`; `core/verify.mjs` compares with the factory settings and shows what you had adjusted. Projects carry their own tweaks in `sandbox/tweaks.md`.
 
 MIT licence. How to help: [`CONTRIBUTING.md`](CONTRIBUTING.md). Everyone here follows the [Code of Conduct](CODE_OF_CONDUCT.md).

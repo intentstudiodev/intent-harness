@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.7 — 2026-11-14
+
+- **Everything in one folder.** `npx github:intentstudiodev/intent-harness init` installs into the folder you run it in: `Intent-Harness/` (`Harness`, `Format`, `Factory-Settings`) and `Projects/`, one folder per product, as many as you like. Nothing goes to your home folder. Two folders are two independent installs, each with its own version, settings and projects; installed in a code repository, the knowledge travels with the code.
+- **The pointer is relative** (`Intent-Harness/Harness/ENTRY.md`; `../../…` inside a project), so a folder still works after a copy, a move or a teammate's `git clone`.
+- **Factory settings** (was the hidden `.factory`): the harness exactly as installed, renewed by every install or update, never edited; `core/verify.mjs` finds it by itself, compares and restores.
+- `update` and `where` work on the install in the current folder (or `--dir`). An older install in `~/Intent` is left as it is; the installer says so and names its projects to copy over.
+- Cold start runs once per install, not once per computer.
+
 ## 1.6 — 2026-11-14
 
 - **Software Architecture.** The parts a product runs on (apps, services, data, outside services, hosting), how they connect, and WHY, at the C4 model's context and container level (`knowledge/software-architecture.md`). Kept in the format's cards (backend, api, tech, decision); derived from what is known, then confirmed: New idea asks only what it must connect to and drafts the rest in the proposal; In development and Running confirm what the documents and code show. `core/architecture.mjs` draws it as a diagram, also per feature for spec-tool packs; spec tools' architecture documents are read back.

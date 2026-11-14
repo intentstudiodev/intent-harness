@@ -14,8 +14,10 @@ const opened = path.resolve(process.argv.slice(2).find(a => !a.startsWith('--'))
 const HOME = process.env.HOME || '';
 const untilde = (p) => p.startsWith('~') ? path.join(HOME, p.slice(1)) : p;
 
-// the projects: <Intent>/Projects/<name>/, beside the harness (core/welcome.md, Choose a project)
-const intent = path.resolve(harness, '..'), projectsDir = path.join(intent, 'Projects');
+// the install: <folder>/Intent-Harness/{Harness,Format,Factory-Settings} and the projects in <folder>/Projects/<name>/ (core/welcome.md, Choose a project).
+// Older layouts still work: Harness/ and Format/ side by side with Projects/ beside them (~/Intent in 1.4–1.6, the lab's sandbox).
+const tools = path.resolve(harness, '..');
+const intent = path.basename(tools) === 'Intent-Harness' ? path.dirname(tools) : tools, projectsDir = path.join(intent, 'Projects');
 const isDir = (p) => { try { return fs.statSync(p).isDirectory(); } catch { return false; } };
 const kbVersions = (dir) => { try { return fs.readdirSync(dir).filter(n => /^V\d+(\.\d+)*(-[a-z0-9-]+)?$/.test(n) && isDir(path.join(dir, n))).sort(); } catch { return []; } };
 const stopOf = (dir) => {
@@ -114,7 +116,7 @@ for (const row of ((read('sandbox/pipelines.md').split(/^## /m).find(t => t.star
   let block = false; try { block = fs.readFileSync(path.join(dir, file), 'utf8').includes('<!-- intent-harness:start -->'); } catch {}
   pipelines.push({ tool, code, mode, lastRead, found, changed, file, block });
 }
-// the harness: set up on this computer? (once per computer, proof in tweaks/)
+// the harness: set up in this install? (once per install, proof in tweaks/)
 // Found: signals in the folder the chat was opened in, so the setup widgets can guess (knowledge/project-setup.md). Local files only.
 const found = (() => {
   const at = (p) => path.join(opened, p);
@@ -171,7 +173,7 @@ const found = (() => {
 // The config's `format-tool:` line wins when it names a file that exists; then the Format folder beside the harness.
 const formatTool = (() => {
   const conf = ((hread('tweaks/config.md').match(/^-\s*format-tool:\s*([^#\n]+)/m) || [])[1] || '').trim().replace(/^node\s+/, '').replace(/^["'`]|["'`]$/g, '');
-  const tries = [conf && /[\\/]|\.mjs$/.test(conf) ? path.resolve(harness, untilde(conf)) : null, ...['Format', 'intent-format'].map(d => path.join(intent, d, 'kit', 'cli', 'intent-format.mjs'))].filter(Boolean);
+  const tries = [conf && /[\\/]|\.mjs$/.test(conf) ? path.resolve(harness, untilde(conf)) : null, ...['Format', 'intent-format'].map(d => path.join(tools, d, 'kit', 'cli', 'intent-format.mjs'))].filter(Boolean);
   const hit = tries.find(p => fs.existsSync(p));
   return hit ? `node "${hit}"` : 'intent-format';
 })();
@@ -210,7 +212,7 @@ for (const row of entry.split('\n')) {
   routes.set(m[2], [...m[3].matchAll(/`([^`]+\.md)`/g)].map(x => x[1]));
 }
 let useCase, why, format = null;
-if (!setup) { useCase = 'Harness cold start'; why = 'no tweaks/setup-record.md in the harness (once per computer; say "skip" to run on defaults)'; }
+if (!setup) { useCase = 'Harness cold start'; why = 'no tweaks/setup-record.md in the harness (once per install; say "skip" to run on defaults)'; }
 else if (menu) { useCase = 'Choose a project'; why = `${projects.length} project(s) in ${path.relative(intent, projectsDir) || 'Projects'}/ and none in this folder — the project menu (core/welcome.md), unless the first message already names one`; }
 else if (!versions.length) { useCase = 'Start a project'; why = 'no project yet — the welcome, then where the product stands (core/welcome.md); the new project goes to Projects/<name>/ (elsewhere only where the owner names it, with Projects/<name>/pointer.md)'; format = 'intent-format next <project>'; }
 else if (cardsNow <= 1 || (proposal && !report)) { useCase = startFor(lifecycle); why = (cardsNow <= 1 ? 'the KB holds no cards beyond the project card' : 'the format\'s cold start is under way (proposal/ exists, report.md does not)') + (lifecycle === '—' ? '; the project card has no status yet — the hello asks where the product stands' : ` · project status ${lifecycle}`); format = useCase === 'Start a project' ? 'intent-format next ' + root : null; }
