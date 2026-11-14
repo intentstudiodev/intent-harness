@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.6 — not released yet
+## 1.6 — 2026-11-14
 
 - **Software Architecture.** The parts a product runs on (apps, services, data, outside services, hosting), how they connect, and WHY, at the C4 model's context and container level (`knowledge/software-architecture.md`). Kept in the format's cards (backend, api, tech, decision); derived from what is known, then confirmed: New idea asks only what it must connect to and drafts the rest in the proposal; In development and Running confirm what the documents and code show. `core/architecture.mjs` draws it as a diagram, also per feature for spec-tool packs; spec tools' architecture documents are read back.
 - **Improvement review, weekly.** At a natural pause, the harness offers to look back at the notes from every project and suggest three to five improvements: a tweak, a library line, notes worth sending, notes to close (`self-improvement/review.md`; `improvement review: weekly · monthly · off` in your config).
@@ -15,7 +15,7 @@
 - **A plan, not the whole product.** From a brief, the proposal holds the core (roles, the main flow with its screens, rules and decisions, the draft architecture) and a `## Next areas` list; the whole product only when the owner asks. Before a write of more than about 20 cards: how many and how long, then area by area.
 - **"Do something reasonable" answers one setup widget**, never the whole setup: its guesses are taken as `[assumed]` answers and the next widget follows. Running products always confirm the architecture before the first deliverable; tabs the code answers are shown as found, to tick.
 - **One home per item.** "Later" is an `[ask: … · later <date>]` even when it sounds like an idea; a parked change lives in its Parked card only, with no new `ideas.md` line.
-- **Decisions keep their Outcome.** Carried out, or touched by a later change: a dated line in the decision's `## History` (format, next version), never a sentence added to the Outcome.
+- **Decisions keep their Outcome.** Carried out, or touched by a later change: a dated line in the decision's `## History` (Intent Format 1.2, hotfix 2026-11-14), never a sentence added to the Outcome.
 - **Numbers computed, not counted.** Data inputs are counted with a `node -e` one-liner; hand counts are said and marked `[likely]`.
 - The improvement review is offered at the first natural pause, not announced in a first reply.
 
