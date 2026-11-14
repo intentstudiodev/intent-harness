@@ -5,7 +5,7 @@ description: Once a week (tweakable), at a natural pause, offer to look back at 
 ---
 # review
 
-**When.** The state script says *Improvement review due*: the setting `improvement review` in `tweaks/config.md` (weekly by default · monthly · off) has passed since the last line of `tweaks/review-record.md`, and there is something to read. Offer it once, at a natural pause, never mid-task, in one line: "It's been a week; I have 6 notes from 2 projects. Shall I look for what to improve? It takes a minute." Declined → write `<date> · declined` to the record, so it comes back next period, not this session.
+**When.** The state script says *Improvement review due*: the setting `improvement review` in `tweaks/config.md` (weekly by default · monthly · off) has passed since the last line of `tweaks/review-record.md`, and there is something to read. Offer it once, at the first natural pause (the end of a use case), never mid-task and never as a heads-up in a first reply, in one line: "It's been a week; I have 6 notes from 2 projects. Shall I look for what to improve? It takes a minute." Declined → write `<date> · declined` to the record, so it comes back next period, not this session.
 
 1. **Gather.** Unsent lines of `sandbox/improvement-notes.md` in every project the state script lists; lines added to `tweaks/` (yours, including `tweaks/library/`) since the last review; `sandbox/tweaks.md` of those projects. Nothing else: no cards, no conversations.
 2. **Find the patterns.** Group by what they are about (cost, routing, questions, coverage, fit, library, anything that recurs). A note seen in two projects, or twice in one, weighs more than a single one. Check the harness `CHANGELOG.md`: a note the current version already fixed is resolved, say so.

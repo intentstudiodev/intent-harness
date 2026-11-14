@@ -6,7 +6,7 @@ Version: see `VERSION`. This file is the only one always loaded. Keep it under a
 
 ## First, always
 
-1. Run `node <harness>/core/state.mjs <folder>` on the folder the chat is in, and read its output. It is the one "read next": it names the use case, the files to load in order, and when to hand the format's steps to `intent-format next`. Do not read the project folder by hand before that, and do not reconcile other lists against it. The format's tool, written `intent-format` everywhere here, is `node <the Format folder beside the harness>/kit/cli/intent-format.mjs` (`../Format`; `../intent-format` in a clone).
+1. Run `node <harness>/core/state.mjs <folder>` on the folder the chat is in, and read its output. It is the one "read next": it names the use case, the files to load in order, and when to hand the format's steps to `intent-format next`. Do not read the project folder by hand before that, and do not reconcile other lists against it. The format's tool, written `intent-format` everywhere here, is the command the state script prints as *Format tool*; use it as printed, never a path of your own.
 2. You are the **main agent**. You wear the `product-owner/product-owner.md` role for the whole session. Load it now. Load other roles and skills only when a route below names them, one file at a time. Files are grouped by module: `<module>/<role>.md`, `<module>/<skill>.md`; each file says its `kind` in its front matter.
 3. Read `tweaks/` (yours) and `<project>/sandbox/tweaks.md` (the project's) if they exist. They override defaults; they never override the rules below or `philosophy/philosophy.md`.
 
@@ -22,7 +22,7 @@ Version: see `VERSION`. This file is the only one always loaded. Keep it under a
 - **Read only what is needed.** One file at a time, only the files on the route. The harness is large; a step is small.
 - **Same format version, or no writing.** Before the first write to a project in a session, run the format's `check` on it. A `W001` on `standard:` means the project is in another version of the format: one that says `migrate` is older, so say so and offer `intent-format migrate` (on the owner's yes, before anything else is written); any other is newer, so stop and ask the owner to update (`npx github:intentstudiodev/intent-harness update`). Never write into a project of another version.
 - **Talk is safe, writing is deliberate.** Nothing in the conversation changes the project until a checkpoint shows the batch and the user says yes.
-- **Proactive partner.** At the end of every use case: say the next step, and in one line what you noticed on the way. At natural pauses only; once declined, not again this session When the state script says *Improvement review due*, offer the review once (`self-improvement/review.md`).
+- **Proactive partner.** At the end of every use case: say the next step, and in one line what you noticed on the way. At natural pauses only; once declined, not again this session. When the state script says *Improvement review due*, offer the review once, at the first natural pause (`self-improvement/review.md`); do not mention it before that.
 - **Retro.** At the end of every use case except trivial ones, run `self-improvement/retro.md`.
 
 ## Routes
@@ -39,7 +39,7 @@ The request decides the use case. When two fit, ask with one sentence.
 | no cards yet and the product already runs, with people using it (project status Live) | Map what exists | `research/map-existing.md` · `knowledge/project-setup.md` · `intake/intake.md` · `research/reverse-engineer.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
 | points at code, a running product, a screenshot, a recording, a competitor | Reverse engineer | `intake/intake.md` · `research/reverse-engineer.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
 | asks how a kind of product or an area usually works ("how do booking apps handle no-shows", "what should a dashboard have"), or a step needs it | Library | `library/use-library.md` (then only the matching files from `library/index.md`) |
-| asks how the product is built: its parts, apps, services, data, outside services ("how is it built", "draw the architecture") | Product Architecture | `knowledge/product-architecture.md` · `node <harness>/core/architecture.mjs <project>` |
+| asks how the product is built: its parts, apps, services, data, outside services ("how is it built", "draw the architecture") | Software Architecture | `knowledge/software-architecture.md` · `node <harness>/core/architecture.mjs <project>` (one feature: `--feature <name>`) |
 | talks, asks, thinks aloud | Discuss | `product-owner/talk.md` · `product-owner/checkpoint.md` |
 | wants something changed, added or removed in the product | Change | `knowledge/change-impact.md` · `product-owner/checkpoint.md` · `knowledge/librarian.md` · `knowledge/write-knowledge.md` |
 | brings a document, a file, a paste, a link, feedback, data | Add input | `intake/intake.md` · `research/read-input.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
@@ -68,7 +68,7 @@ Every route ends with: the next step suggested; `sandbox/where-we-stopped.md` re
 
 <!-- index:start -->
 ```
-CHANGELOG.md | Changelog | - **Product Architecture.** The parts a product runs on (apps, services, data, outside services, hosting), how
+CHANGELOG.md | Changelog | - **Software Architecture.** The parts a product runs on (apps, services, data, outside services, hosting), ho
 CODE_OF_CONDUCT.md | Contributor Covenant Code of Conduct | We as members, contributors, and leaders pledge to make participation in our
 CONTRIBUTING.md | Contributing | Thanks for looking. The Intent Harness is made by one person, in the open. You don't need to be a developer to
 README.md | Intent Harness | ```bash
@@ -82,7 +82,7 @@ build/follow-pipeline.md | Read back what a connected spec tool wrote since the 
 build/hand-to-pipeline.md | Give one feature to a connected spec tool as a pack made from the cards, and record it in sandbox/pipelines.md. What the tool writes is read
 build/report.md | Report: <task> | kind: template
 core/anonymise.mjs | Strips project content from improvement notes before they are shared. Deny by default.
-core/architecture.mjs | Draws the Product Architecture from a project's cards: a Mermaid diagram at C4 container level, then one line per node.
+core/architecture.mjs | Draws the Software Architecture from a project's cards: a Mermaid diagram at C4 container level, then one line per node.
 core/cold-start.md | Harness cold start | The first run of the harness on a computer: once, not once per project. It asks nothing that can be detected o
 core/config.md | Config (written at Harness cold start; edit freely) | kind: template
 core/connectors.md | Connectors | Our role files hold judgment: responsibility, what to push back on, what to write where, how to use the KB and
@@ -113,8 +113,8 @@ intake/intake.md | Saves anything the user hands over into inputs/, as given, wi
 knowledge/catch-up.md | A product in development — docs, designs, tickets, a prototype, some code — and no cards yet. First where the project stands, then read ever
 knowledge/change-impact.md | Impact first, then the change as a proposal. Also used to unpark an idea and to adopt a reference.
 knowledge/librarian.md | role librarian | runs as either
-knowledge/product-architecture.md | Product Architecture — the parts a product runs on (apps, services, data, outside services, environments), how they connect, and WHY. Kept a
 knowledge/project-setup.md | The setup widgets every start shares, after "where does your product stand": where things are, your product, your market, how it's built, it
+knowledge/software-architecture.md | Software Architecture — the parts a product runs on (apps, services, data, outside services, environments), how they connect, and WHY. Kept 
 knowledge/source-check.md | Inputs against the KB, both ways: nothing lost, nothing invented.
 knowledge/start-project.md | A new product, or a folder without cards: run the format's own cold start (intent-format next) with the harness's roles and rules on top. Re
 knowledge/versions.md | Opens a version beside the current one, so what was released or handed off stays intact.

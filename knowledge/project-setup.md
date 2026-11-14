@@ -18,16 +18,17 @@ The stage question (`core/welcome.md`) and the material line ("tell me about it;
 | ② Product | yes, guessed from their sentences | yes, guessed from the documents | yes, guessed from the code |
 | ③ Market | yes | yes | yes |
 | ④ Build | yes, with *Connects to* in place of *Tech* | yes, guessed | yes, read from the code, to confirm |
-| ⑤ Architecture | no: the proposal drafts it (`knowledge/product-architecture.md`) | yes, what the documents and code show | yes, what the code shows |
+| ⑤ Architecture | no: the proposal drafts it (`knowledge/software-architecture.md`) | yes, what the documents and code show | yes, what the code shows; always before the first deliverable |
 | ⑥ Parts | yes | only what the documents do not mention: "in scope?" | never (map-existing: no suggestions) |
 
-Then the start goes on: New idea → the format's kickoff, skipping what setup answered; In development → catch-up step 3; Running → map-existing's first deliverable. "Enough", "skip" or "later" at any widget → stop the setup, say in one line what was left, and go on.
+Then the start goes on: New idea → the format's kickoff, skipping what setup answered; In development → catch-up step 3; Running → map-existing's first deliverable. "Enough", "skip the rest" or "later" at any widget → stop the setup, say in one line what was left, and go on. "Just do something reasonable", "you decide" or "whatever you think" answers **that widget only**: its guesses become the answers, marked `[assumed]` in the setup file, and the next widget follows with its own guesses. It never ends the setup, and it never skips the architecture confirmation.
 
 ## Widget rules
 
 - **One widget per message**, up to four tabs (questions), two to four options each, plus the automatic **Other** for the owner's own words or a link. Headers as below (at most 12 characters).
 - **Guess first**, its description saying where the guess comes from: *(my guess)*, *(from your README)*, *(from the code)*. Checkboxes (several answers) where several can be true.
 - **Not sure yet** is the last option where an answer may not exist yet. It is *unknown* in `open-questions/ask-questions.md`: the question stays open and comes back at the checkpoint.
+- **Found, to confirm.** In development and Running, a tab the documents or code answer is shown with what was found and where ("Stripe, from `.env.example`"), to confirm with one tick. Ask in words only what the material cannot show: audience, market, the WHYs.
 - **Skip what is certain.** A tab whose answer the folder or the owner's words already settle is left out, and the line above the widget says so ("Code: this folder; I see a git repository").
 - **One short line above the widget**, nothing long: some chat apps drop long text before a widget. The widget carries the content.
 - **Previews** (where the widget has them, as in Claude Code): ⑥ shows each item's usual shape and WHY from its library file.
@@ -75,11 +76,11 @@ Ticked without a link → one line after the widget: "Paste the links for design
 | Team | checkboxes | Just me · Designers · Developers · Product or business people |
 | Spec tool | pick one | Spec Kit · BMAD · Kiro or OpenSpec · None yet |
 
-New idea: *Connects to* (checkboxes) in place of *Tech*: three outside services or systems guessed from their words (company sign-in, calendars, Slack, payments, a system they already run) + Nothing yet. The rest of the architecture is derived, not asked (`knowledge/product-architecture.md`).
+New idea: *Connects to* (checkboxes) in place of *Tech*: three outside services or systems guessed from their words (company sign-in, calendars, Slack, payments, a system they already run) + Nothing yet. The rest of the architecture is derived, not asked (`knowledge/software-architecture.md`).
 
 ### ⑤ Architecture (header *Architecture*)
 
-In development and Running, after reading. What was found, to confirm, at the C4 container level (`knowledge/product-architecture.md`); each option names where it was found. Tick what is right; Other for what is missing or wrong. More than four in a tab → group them ("Web app and admin console, both Next.js").
+In development and Running, after reading. What was found, to confirm, at the C4 container level (`knowledge/software-architecture.md`); each option names where it was found. Tick what is right; Other for what is missing or wrong. More than four in a tab → group them ("Web app and admin console, both Next.js").
 
 | Tab | Kind | Options |
 |---|---|---|
@@ -109,7 +110,7 @@ Setup answers are the owner's words: write them at once, without a checkpoint, t
 | links and competitors | `inputs/links.md` (the format's file); studying a competitor is Reverse engineer, offered once, on the owner's yes |
 | users | user types in the proposal (New idea, In development) or in what is found (Running); cards only after the checkpoint |
 | platforms, tech, design library | the kickoff's answers (`inputs/kickoff-answers.md`, New idea), so the kickoff skips them |
-| *Connects to*, *Architecture* | nodes of the Product Architecture: rows of the proposal's inventory (New idea, In development) or `as found` (Running), cards after the checkpoint (`knowledge/product-architecture.md`) |
+| *Connects to*, *Architecture* | nodes of the Software Architecture: rows of the proposal's inventory (New idea, In development) or `as found` (Running), cards after the checkpoint (`knowledge/software-architecture.md`) |
 | a spec tool named | after setup, offer Connect a spec tool (`build/connect-pipeline.md`) |
 | ticked parts | the proposal's inventory, unmarked |
 

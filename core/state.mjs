@@ -23,8 +23,12 @@ const stopOf = (dir) => {
   const get = (k) => (text.match(new RegExp(`^\\s*[-*]\\s*${k}:\\s*(.+)$`, 'm')) || [, null])[1]?.trim() || null;
   return { last: get('last'), next: get('next'), code: get('code') };
 };
-const projects = (isDir(projectsDir) ? fs.readdirSync(projectsDir) : []).filter(n => !n.startsWith('.') && kbVersions(path.join(projectsDir, n)).length).map(n => {
-  const dir = path.join(projectsDir, n), vs = kbVersions(dir), card = (() => { try { return fs.readFileSync(path.join(dir, vs[vs.length - 1], 'project.md'), 'utf8'); } catch { return ''; } })();
+// A project kept somewhere else (the owner named the place) still has its entry here: Projects/<name>/pointer.md
+// with one line `- kb: <folder>`. The menu, the review and a code folder's `code:` all follow it.
+const pointerOf = (dir) => { try { const m = fs.readFileSync(path.join(dir, 'pointer.md'), 'utf8').match(/^\s*[-*]?\s*kb:\s*(.+)$/m); return m ? path.resolve(dir, untilde(m[1].trim().replace(/^`|`$/g, ''))) : null; } catch { return null; } };
+const homeOf = (dir) => kbVersions(dir).length ? dir : (pointerOf(dir) && kbVersions(pointerOf(dir)).length ? pointerOf(dir) : null);
+const projects = (isDir(projectsDir) ? fs.readdirSync(projectsDir) : []).filter(n => !n.startsWith('.') && homeOf(path.join(projectsDir, n))).map(n => {
+  const dir = homeOf(path.join(projectsDir, n)), vs = kbVersions(dir), card = (() => { try { return fs.readFileSync(path.join(dir, vs[vs.length - 1], 'project.md'), 'utf8'); } catch { return ''; } })();
   const stop = stopOf(dir);
   let touched = 0; for (const f of ['sandbox/where-we-stopped.md', vs[vs.length - 1], '.']) { try { touched = Math.max(touched, fs.statSync(path.join(dir, f)).mtimeMs); } catch {} }
   return { name: (card.match(/^name:\s*(.+)$/m) || [, n])[1].trim(), folder: dir, status: (card.match(/^status:\s*(.+)$/m) || [, '—'])[1].trim(), ...stop, touched };
@@ -142,7 +146,7 @@ const found = (() => {
   if (any('stripe', '@stripe')) f.parts.push('payments (Stripe)');
   if (any('next-auth', '@auth', '@clerk', 'better-auth', '@supabase/supabase-js', 'firebase')) f.parts.push('sign-in');
   if (any('@prisma/client', 'prisma', 'drizzle-orm', 'mongoose', 'pg')) f.parts.push('database');
-  // Product Architecture (knowledge/product-architecture.md): apps, hosting, data, outside services
+  // Software Architecture (knowledge/software-architecture.md): apps, hosting, data, outside services
   const sub = (d) => { try { return fs.readdirSync(at(d)).filter(n => !n.startsWith('.') && isDir(at(path.join(d, n)))); } catch { return []; } };
   for (const d of ['apps', 'services', 'packages']) { const s = sub(d); if (s.length && d !== 'packages') f.arch.push(`${d}/: ${s.slice(0, 6).join(', ')}`); }
   const hosts = { 'vercel.json': 'Vercel', 'netlify.toml': 'Netlify', 'fly.toml': 'Fly.io', 'wrangler.toml': 'Cloudflare Workers', 'wrangler.jsonc': 'Cloudflare Workers', 'wrangler.json': 'Cloudflare Workers', 'firebase.json': 'Firebase', 'render.yaml': 'Render', 'railway.json': 'Railway', 'serverless.yml': 'Serverless (AWS)', 'app.yaml': 'Google App Engine', 'Procfile': 'Heroku-style' };
@@ -161,6 +165,15 @@ const found = (() => {
   const kinds = { 'figma.com': 'Figma', 'notion.so': 'Notion', 'notion.site': 'Notion', 'linear.app': 'Linear', 'atlassian.net': 'Jira', 'docs.google.com': 'Google Docs', 'miro.com': 'Miro' };
   for (const [host, name] of Object.entries(kinds)) if (readme && txt(readme).includes(host) && !f.links.includes(name)) f.links.push(name);
   return Object.values(f).some(v => v.length) ? f : null;
+})();
+
+// The format's tool: one command for every step, found here once instead of guessed (ENTRY.md, First, always).
+// The config's `format-tool:` line wins when it names a file that exists; then the Format folder beside the harness.
+const formatTool = (() => {
+  const conf = ((hread('tweaks/config.md').match(/^-\s*format-tool:\s*([^#\n]+)/m) || [])[1] || '').trim().replace(/^node\s+/, '').replace(/^["'`]|["'`]$/g, '');
+  const tries = [conf && /[\\/]|\.mjs$/.test(conf) ? path.resolve(harness, untilde(conf)) : null, ...['Format', 'intent-format'].map(d => path.join(intent, d, 'kit', 'cli', 'intent-format.mjs'))].filter(Boolean);
+  const hit = tries.find(p => fs.existsSync(p));
+  return hit ? `node "${hit}"` : 'intent-format';
 })();
 
 const setupText = hread('tweaks/setup-record.md');
@@ -199,7 +212,7 @@ for (const row of entry.split('\n')) {
 let useCase, why, format = null;
 if (!setup) { useCase = 'Harness cold start'; why = 'no tweaks/setup-record.md in the harness (once per computer; say "skip" to run on defaults)'; }
 else if (menu) { useCase = 'Choose a project'; why = `${projects.length} project(s) in ${path.relative(intent, projectsDir) || 'Projects'}/ and none in this folder — the project menu (core/welcome.md), unless the first message already names one`; }
-else if (!versions.length) { useCase = 'Start a project'; why = 'no project yet — the welcome, then where the product stands (core/welcome.md); the new project goes to Projects/<name>/'; format = 'intent-format next <project>'; }
+else if (!versions.length) { useCase = 'Start a project'; why = 'no project yet — the welcome, then where the product stands (core/welcome.md); the new project goes to Projects/<name>/ (elsewhere only where the owner names it, with Projects/<name>/pointer.md)'; format = 'intent-format next <project>'; }
 else if (cardsNow <= 1 || (proposal && !report)) { useCase = startFor(lifecycle); why = (cardsNow <= 1 ? 'the KB holds no cards beyond the project card' : 'the format\'s cold start is under way (proposal/ exists, report.md does not)') + (lifecycle === '—' ? '; the project card has no status yet — the hello asks where the product stands' : ` · project status ${lifecycle}`); format = useCase === 'Start a project' ? 'intent-format next ' + root : null; }
 else if (asksDue || asksOpen + openDecisions > 5) { useCase = 'Answer questions'; why = `${asksOpen} question(s) to the owner${asksDue ? `, ${asksDue} said later and due again` : ''} and ${openDecisions} open decision(s) in the KB (intent-format open lists them)`; }
 else { useCase = 'Pick up'; why = 'a KB exists; say where we stopped and what is next (sandbox/where-we-stopped.md), then ask what the user wants'; }
@@ -211,7 +224,7 @@ const out = {
   sandbox: nb ? { working: true, ideas, research, specs, plans, reports, notes: notes.length, tweaks, unsentImprovementNotes: unsent } : null,
   pipelines, found, review,
   harness: { setupRecord: setup, drift },
-  useCase, why, readNext, then: format ? `${format}  (the format's steps; intent-format next keeps the place)` : null, workingNotes: working,
+  useCase, why, readNext, then: format ? `${format}  (the format's steps; intent-format next keeps the place)` : null, workingNotes: working, formatTool,
 };
 if (json) { console.log(JSON.stringify(out, null, 2)); process.exit(0); }
 
@@ -230,6 +243,7 @@ line('Sandbox (working)', nb ? `ideas ${ideas} open · notes ${notes.length} · 
 line('Project tweaks', tweaks ? 'yes' : 'no');
 if (unsent) line('Improvement notes', `${unsent} unsent`);
 line('Harness set up', setup ? 'yes (tweaks/setup-record.md)' : 'no');
+line('Format tool', formatTool + '   (written `intent-format` everywhere; use this command)');
 if (drift.length) line('Drift', 'missing: ' + drift.join(', '));
 for (const p of pipelines) line('Spec tool', !p.found ? `${p.tool}: code folder not found (${p.code})`
   : [p.changed ? `${p.tool} (${p.mode}) wrote ${p.changed} file(s) since ${p.lastRead || 'it was connected'} → build/follow-pipeline.md` : `${p.tool} (${p.mode}): nothing new since ${p.lastRead || 'it was connected'}`,

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Draws the Product Architecture from a project's cards: a Mermaid diagram at C4 container level, then one line per node.
+// Draws the Software Architecture from a project's cards: a Mermaid diagram at C4 container level, then one line per node.
 //   node core/architecture.mjs <project> [--feature <name>]
 // Reads backend, api, tech and feature cards of the latest version; writes nothing.
 import fs from 'node:fs';
@@ -31,7 +31,7 @@ const nodes = cards('backend').map(c => {
     serves: refs(section(t, '⚙ Serves')),
   };
 });
-if (!nodes.length) { console.log(`# Product Architecture: ${path.basename(root)}\n\nNo backend cards yet in ${versions[versions.length - 1]}/backend/. The map starts with the first node (knowledge/product-architecture.md).`); process.exit(0); }
+if (!nodes.length) { console.log(`# Software Architecture: ${path.basename(root)}\n\nNo backend cards yet in ${versions[versions.length - 1]}/backend/. The map starts with the first node (knowledge/software-architecture.md).`); process.exit(0); }
 
 // --feature: only the nodes the feature reaches (feature → linked cards → APIs → Served by → their connections)
 let keep = null;
@@ -61,7 +61,7 @@ for (const g of order) {
 for (const n of shown) for (const c of n.connections) if (!keep || keep.has(c.to)) lines.push(`  ${n.id} -->|${c.kind}${c.note ? ': ' + label(c.note) : ''}| ${c.to}`);
 lines.push('```');
 
-console.log(`# Product Architecture: ${path.basename(root)}${feature ? ' · feature ' + feature : ''}\n`);
+console.log(`# Software Architecture: ${path.basename(root)}${feature ? ' · feature ' + feature : ''}\n`);
 console.log(lines.join('\n') + '\n');
 for (const g of order) for (const n of shown.filter(x => x.group === g)) {
   const conn = n.connections.map(c => `${c.kind} ${nameOf(c.to)}`).join(', ');

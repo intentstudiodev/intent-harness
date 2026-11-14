@@ -40,6 +40,7 @@ Lowercase kebab-case. One file per skill: `<module>/<name>.md`. `.md` for anythi
   Harness/  Format/             one copy each for all projects; .factory/ holds the untouched harness
   Projects/                     the default home of every project
   booking-example-service/      the knowledge project (Projects/<name>/)
+  booking-elsewhere/pointer.md  a project the owner keeps elsewhere: `- kb: <folder>`
     AGENTS.md                   entry for any agent: points to the format and to the harness
     inputs/                     everything handed over, as given, with a header line; what cards cite (the format's folder); never deleted
     proposal/  report.md        the format's cold-start files (Start a project)
@@ -52,4 +53,4 @@ Lowercase kebab-case. One file per skill: `<module>/<name>.md`. `.md` for anythi
 <anywhere>/booking-app/         the product's own folder: the code repository, design exports, prototypes; any structure; the harness never writes here except the pointer in its AGENTS.md (on the owner's yes)
 ```
 
-The code stays where it is; the project goes to `Projects/<name>/` and points back to it with `code:` in `sandbox/where-we-stopped.md`. "Knowledge inside the repository" is the owner's choice at Set up, not the default.
+The code stays where it is; the project goes to `Projects/<name>/` and points back to it with `code:` in `sandbox/where-we-stopped.md`. "Knowledge inside the repository" (or any other place) is the owner's choice at Set up, never offered and never the default; then `Projects/<name>/` holds only `pointer.md` (`- kb: <folder>`), so every project has its entry in `Projects/`.

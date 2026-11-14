@@ -1,11 +1,13 @@
 ---
 kind: skill
-name: product-architecture
-description: Product Architecture — the parts a product runs on (apps, services, data, outside services, environments), how they connect, and WHY. Kept at the C4 model's context and container level as format cards; derived from what is known, then confirmed. Not the tech stack (what each part is built with), not domains (what the product is).
+name: software-architecture
+description: Software Architecture — the parts a product runs on (apps, services, data, outside services, environments), how they connect, and WHY. Kept at the C4 model's context and container level as format cards; derived from what is known, then confirmed. Not the tech stack (what each part is built with), not domains (what the product is).
 ---
-# product-architecture
+# software-architecture
 
-**Product Architecture** is the map of the parts the product runs on, how they talk, and **WHY** they are that way. The **tech stack** hangs off it: each part is *built with* something. The depth is the C4 model's first two levels and no deeper: **context** (the product, its people, the outside systems) and **containers** (apps, services, databases, queues, outside services). Classes, modules and code structure belong to the code and the spec tools.
+**Software Architecture** is the map of the parts the product runs on, how they talk, and **WHY** they are that way. The **tech stack** hangs off it: each part is *built with* something. The depth is the C4 model's first two levels and no deeper: **context** (the product, its people, the outside systems) and **containers** (apps, services, databases, queues, outside services). Classes, modules and code structure belong to the code and the spec tools.
+
+**Two architectures, two names.** *Software Architecture (C4)* is this file: how it is built. *Information Architecture (UX)* is where screens sit and how people move between them: the format's `ia` maps and shells (`design/`). To the owner say "how it's built" and "screens and navigation", never C4 or UX. C4 stops at containers here, and C4's *component* is not the format's `component` card, which is a UI component.
 
 ## Where it lives: the format's cards
 
@@ -49,7 +51,7 @@ Most of the architecture follows from what is already known: platforms, parts (p
 
 ## The view
 
-`node <harness>/core/architecture.mjs <project>` draws the map from the cards: a Mermaid diagram at container level, then one line per node with its connections and what it is built with. Show it at the checkpoint, when the owner asks "how is it built", and in packs for spec tools. It is generated; never edit it by hand, never keep a copy.
+`node <harness>/core/architecture.mjs <project> [--feature <name>]` draws the map from the cards (with `--feature`, only the parts one feature reaches, by its exact name: "show me just the swaps part"): a Mermaid diagram at container level, then one line per node with its connections and what it is built with. Show it at the checkpoint, when the owner asks "how is it built", and in packs for spec tools. It is generated; never edit it by hand, never keep a copy.
 
 The library's `areas/architecture/` files are a lens for the choices (monolith or services, serverless, real-time, data, hosting, AI features): their questions sharpen yours (`library/use-library.md`).
 
