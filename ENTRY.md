@@ -93,7 +93,7 @@ core/setup-record.md | Setup record | kind: template
 core/skill-template.md | <one line: what it does and when to use it>
 core/state.mjs | Reads a project folder and says where it stands, which use case is next and which files to load, in order.
 core/terms.md | Terms and names | | Term | Meaning |
-core/tour.md | The welcome tour: eight short stops, one screen each, a widget under each. When the user picks "Welcome tour" or asks what you can do.
+core/tour.md | The welcome tour: one short message, eight numbered points under the diagram. When the user picks "Welcome tour" or asks what you can do.
 core/verify.mjs | Compares this harness with its factory settings (the untouched copy made at install) file by file.
 core/welcome.md | The first screen. The welcome (first time, or no projects yet) and the project menu (projects exist). Said in the user's language; the diagr
 critique/change.md | Critique: a change | kind: checklist
