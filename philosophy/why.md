@@ -20,6 +20,8 @@ Every card has the format's `## Why` section, right after Description (after Que
 | `[likely]` | follows from inputs; no input says it outright — the test: you can name the input line | listed to confirm (`intent-format open`) |
 | `[assumed]` | a guess; no input line to point at | an open question until confirmed |
 
+**Unmarked means the owner's or an input's words**, quoted or closely paraphrased. Anything you add is `[assumed]`, even one clause in an otherwise confirmed sentence ("a week is the most a lender goes without it" that nobody said): split it off or mark the whole. A why you composed from several answers is `[assumed]` until the owner reads it. An owner's unsure answer ("I think so… not sure") stays the owner's, unmarked, with `[ask: confirm]`; `[likely]` is for inputs, never for a hesitant person.
+
 Confirming means removing the mark. Where the evidence lives is the card's `## Links · type: Source`, which may point only into `inputs/`. There are no other tags.
 
 **A question** that no value can hold — an unknown fact, a doubt about one sentence — goes into the sentence as `[ask: <question>]`. `intent-format open` lists it with its card and line. `—` says unknown, `[assumed]` says probably, `[ask: …]` says somebody must answer this. Only the owner closes one (`open-questions/ask-questions.md`).

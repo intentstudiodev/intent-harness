@@ -110,7 +110,10 @@ const pipelines = [];
 for (const row of ((read('sandbox/pipelines.md').split(/^## /m).find(t => t.startsWith('Connections'))) || '').split('\n')) {
   const c = row.split('|').slice(1, -1).map(t => t.trim());
   if (c.length < 7 || c[0] === 'Tool' || /^-+$/.test(c[0]) || !/^connected/i.test(c[6])) continue;
-  const [tool, code, fileMarker, mode, , lastRead] = c, dir = path.resolve(root, untilde(code)), file = fileMarker.split('·')[0].trim();
+  // the code folder: absolute, ~/…, or relative — to the install folder (`.` = the repository the harness is installed in), else to the project
+  const [tool, code, fileMarker, mode, , lastRead] = c, file = fileMarker.split('·')[0].trim();
+  const rel = untilde(code.replace(/`/g, '').replace(/\s*\(.*\)\s*$/, '').trim() || '.');
+  const dir = path.isAbsolute(rel) ? rel : [path.resolve(intent, rel), path.resolve(root, rel)].find(isDir) || path.resolve(intent, rel);
   const found = isDir(dir), since = sinceOf(lastRead);
   const changed = found ? (WATCH[tool.toLowerCase()] || []).reduce((n, w) => n + newerThan(path.join(dir, w), since), 0) : 0;
   let block = false; try { block = fs.readFileSync(path.join(dir, file), 'utf8').includes('<!-- intent-harness:start -->'); } catch {}
@@ -175,7 +178,9 @@ const formatTool = (() => {
   const conf = ((hread('tweaks/config.md').match(/^-\s*format-tool:\s*([^#\n]+)/m) || [])[1] || '').trim().replace(/^node\s+/, '').replace(/^["'`]|["'`]$/g, '');
   const tries = [conf && /[\\/]|\.mjs$/.test(conf) ? path.resolve(harness, untilde(conf)) : null, ...['Format', 'intent-format'].map(d => path.join(tools, d, 'kit', 'cli', 'intent-format.mjs'))].filter(Boolean);
   const hit = tries.find(p => fs.existsSync(p));
-  return hit ? `node "${hit}"` : 'intent-format';
+  if (!hit) return 'intent-format';
+  const rel = path.relative(process.cwd(), hit), shown = rel && !rel.startsWith('..') && !path.isAbsolute(rel) ? rel : hit; // relative to where the chat runs: shorter, one plain command
+  return /\s/.test(shown) ? `node "${shown}"` : `node ${shown}`;
 })();
 
 const setupText = hread('tweaks/setup-record.md');
@@ -184,7 +189,7 @@ const drift = [];
 for (const m of setupText.matchAll(/^\s*[-*]\s*found:\s*`?(.+?)`?\s*(?:—|$)/gm)) { // the path runs up to " — "; spaces are part of it
   const p = m[1].trim();
   if (!/^(\/|\.|~)/.test(p)) continue;
-  const abs = p.startsWith('~') ? path.join(process.env.HOME || '', p.slice(1)) : path.resolve(harness, p);
+  const abs = p.startsWith('~') ? path.join(process.env.HOME || '', p.slice(1)) : path.resolve(intent, p); // relative: to the install folder (core/setup-record.md)
   if (!fs.existsSync(abs)) drift.push(p);
 }
 

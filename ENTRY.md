@@ -22,6 +22,9 @@ Version: see `VERSION`. This file is the only one always loaded. Keep it under a
 - **Read only what is needed.** One file at a time, only the files on the route. The harness is large; a step is small.
 - **Same format version, or no writing.** Before the first write to a project in a session, run the format's `check` on it. A `W001` on `standard:` means the project is in another version of the format: one that says `migrate` is older, so say so and offer `intent-format migrate` (on the owner's yes, before anything else is written); any other is newer, so stop and ask the owner to update (`npx github:intentstudiodev/intent-harness update`). Never write into a project of another version.
 - **Talk is safe, writing is deliberate.** Nothing in the conversation changes the project until a checkpoint shows the batch and the user says yes.
+- **Nothing leaves the folder without a yes.** No connector, upload, shared document, issue, email or message, even when the owner's account has one connected and even when it would fit the request. The file in the project is the default; offer the outside place in one line and act only on the owner's yes.
+- **Cards are never deleted.** A card that should no longer count is marked (Parked, or superseded, with a History line), never removed; in a released version nothing changes at all (`knowledge/versions.md`).
+- **Plain commands.** Run the harness's commands one per call, exactly as the state script prints them, from the install folder: no `cd … &&`, no variables, loops, pipes into scripts or heredocs. Write and edit files with the file tools, not the shell. Each extra shell construct is a permission prompt for the owner.
 - **Proactive partner.** At the end of every use case: say the next step, and in one line what you noticed on the way. At natural pauses only; once declined, not again this session. When the state script says *Improvement review due*, offer the review once, at the first natural pause (`self-improvement/review.md`); do not mention it before that.
 - **Retro.** At the end of every use case except trivial ones, run `self-improvement/retro.md`.
 
@@ -57,7 +60,7 @@ The request decides the use case. When two fit, ask with one sentence.
 | starts the next version | Next version | `knowledge/versions.md` · `knowledge/change-impact.md` (a large batch of new material: `knowledge/start-project.md` again, in the new version) |
 | says "let's do that parked one" | Unpark an idea | `knowledge/change-impact.md` · `product-owner/checkpoint.md` |
 | asks where things stand | Status | state output · `product-owner/talk.md` |
-| opens a project cold | Pick up | state output · `product-owner/talk.md` |
+| opens a project cold | Pick up | state output · the format's `check` (a card that fails or a stale generated index means someone edited by hand: say "changed outside our writes: …" in one line, before anything else) · `product-owner/talk.md` |
 | accepts the improvement review, or asks what could work better | Improvement review | `self-improvement/review.md` · `self-improvement/share-note.md` |
 | corrects you, declines, repeats a request | Tune | `self-improvement/retro.md` |
 | wants the harness updated | Update | first `node <harness>/core/verify.mjs`: name every *adjusted* file to the owner (an update puts it back as shipped) and offer to keep the change as a tweak; then, on yes, `npx github:intentstudiodev/intent-harness update` from the install folder (it stops on hand-edited files; `--discard` only on the owner's word) |
@@ -69,7 +72,7 @@ Every route ends with: the next step suggested; `sandbox/where-we-stopped.md` re
 
 <!-- index:start -->
 ```
-CHANGELOG.md | Changelog | After lab test 4 (2026-11-15: two fresh installs, three products, six chats):
+CHANGELOG.md | Changelog | The rest of lab test 4 (findings T4-6 to T4-18):
 CODE_OF_CONDUCT.md | Contributor Covenant Code of Conduct | We as members, contributors, and leaders pledge to make participation in our
 CONTRIBUTING.md | Contributing | Thanks for looking. The Intent Harness is made by one person, in the open. You don't need to be a developer to
 README.md | Intent Harness | ```bash

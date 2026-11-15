@@ -12,4 +12,6 @@ description: Saves anything the user hands over into inputs/, as given, with one
 3. **Route.** `wanted` → `research/read-input.md`; `exists` → `research/reverse-engineer.md`; `feedback` and `data` → read-input with counting; a `reference` of any type → reverse-engineer with purpose `reference`.
 4. Say what was saved where, in one line. Nothing else is written.
 
+**Other people's personal details** (a tester's phone, a customer's email, a home address: anyone outside the team) are never changed silently. Ask once, before saving: *keep as given in `inputs/`* (never copied into a card) or *save with them removed*. The answer holds for the project; say it in the saved line.
+
 Files in `inputs/` are never moved, renamed or deleted; a card that cites one depends on its path. A file no card cites is still kept: the state script lists it as not yet cited.
