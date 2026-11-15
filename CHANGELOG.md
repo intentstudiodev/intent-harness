@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.8 — in progress
+## 1.8 — 2026-11-15
 
 After lab test 4 (2026-11-15: two fresh installs, three products, six chats):
 
