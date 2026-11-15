@@ -3,7 +3,7 @@
 //   npx github:intentstudiodev/intent-harness init      install or update here: Intent-Harness/ and Projects/, AGENTS.md and CLAUDE.md
 //   npx github:intentstudiodev/intent-harness update    update the install in this folder; your tweaks and projects stay
 //   npx github:intentstudiodev/intent-harness where     print the paths and versions of the install in this folder
-// Options: --dir <path> (default: the current folder)
+// Options: --dir <path> (default: the current folder) · --discard (update even though shipped files were changed by hand: they go back as shipped)
 // No dependencies. Needs Node 18 or newer and git. Never overwrites a file of yours.
 //
 // <your folder>/
@@ -52,21 +52,50 @@ try { git(['--version']); } catch { say('✗ git is needed: https://git-scm.com'
 fs.mkdirSync(TOOLS, { recursive: true });
 fs.mkdirSync(path.join(ROOT, 'Projects'), { recursive: true });
 
+// 0. Files changed by hand inside an installed copy (not in tweaks/): an update would keep some and lose others, and nobody
+//    would see them any more. Say which, and stop, unless --discard (put them back as shipped) was given.
+const discard = args.includes('--discard');
+const handEdits = (dir) => {
+  if (!fs.existsSync(path.join(dir, '.git'))) return [];
+  const out = execFileSync('git', ['status', '--porcelain', '--untracked-files=no'], { cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+  return out.split('\n').filter(Boolean).map((l) => l.slice(3)).filter((f) => !f.startsWith('tweaks/'));
+};
+const edited = REPOS.map((r) => ({ r, files: handEdits(path.join(TOOLS, r.name)) })).filter((x) => x.files.length);
+if (edited.length && !discard) {
+  say(`✗ Nothing updated. These shipped files were changed by hand:`);
+  for (const { r, files } of edited) for (const f of files) say(`  Intent-Harness/${r.name}/${f}`);
+  say(`\n  An update would keep or lose them unpredictably. Keep what you need as a tweak in Intent-Harness/Harness/tweaks/\n  (see its README), then run this again with --discard to put the files back as shipped and update.`);
+  process.exit(1);
+}
+
 // 1. Install or update both, in this folder.
 for (const r of REPOS) {
   const dir = path.join(TOOLS, r.name);
   try {
-    if (fs.existsSync(path.join(dir, '.git'))) { git(['fetch', '-q', '--depth', '1', 'origin', 'main'], dir); git(['reset', '-q', '--keep', 'FETCH_HEAD'], dir); }
+    if (fs.existsSync(path.join(dir, '.git'))) { git(['fetch', '-q', '--depth', '1', 'origin', 'main'], dir); git(['reset', '-q', discard ? '--hard' : '--keep', 'FETCH_HEAD'], dir); }
     else git(['clone', '-q', '--depth', '1', r.url, dir]);
   } catch (e) {
     say(`✗ could not get the ${r.title} from ${r.url}\n  ${String(e.stderr || e.message).trim().split('\n')[0]}\n  Check your internet connection and that git works (git --version). If you changed files inside ${tilde(dir)}, move your changes to Harness/tweaks/ and run this again.`);
     process.exit(1);
   }
 }
-// 2. Factory settings: the harness exactly as installed, renewed with every install or update.
+// 2. Factory settings: the harness exactly as installed, renewed with every install or update. Taken from the commit,
+//    never from the working files, so a hand edit can never become the factory setting (core/verify.mjs would then miss it).
 const factory = path.join(TOOLS, 'Factory-Settings');
 fs.rmSync(factory, { recursive: true, force: true });
-fs.cpSync(path.join(TOOLS, 'Harness'), factory, { recursive: true, filter: (s) => !['.git', 'tweaks'].includes(path.basename(s)) });
+{
+  const hdir = path.join(TOOLS, 'Harness');
+  const files = git(['ls-tree', '-r', '-z', '--name-only', 'HEAD'], hdir).split('\0').filter((f) => f && !f.startsWith('tweaks/'));
+  const out = execFileSync('git', ['cat-file', '--batch'], { cwd: hdir, input: files.map((f) => `HEAD:${f}`).join('\n') + '\n', maxBuffer: 512 * 1024 * 1024 });
+  let i = 0;
+  for (const f of files) {
+    const nl = out.indexOf(10, i), size = Number(out.subarray(i, nl).toString().split(' ')[2]);
+    const p = path.join(factory, f);
+    fs.mkdirSync(path.dirname(p), { recursive: true });
+    fs.writeFileSync(p, out.subarray(nl + 1, nl + 1 + size));
+    i = nl + 1 + size + 1;
+  }
+}
 
 // 3. The pointer: a relative path, so the folder still works after a copy, a move or a git clone by a teammate.
 const ENTRY = 'Intent-Harness/Harness/ENTRY.md';

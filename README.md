@@ -71,7 +71,7 @@ Not a dev pipeline, not a spec generator, not a wiki. It is the memory the other
 
    The pointer uses a relative path, so the folder still works after a copy, a move or a teammate's `git clone`. It never overwrites a file of yours. Needs Node 18 or newer and git.
 2. Say hello, in the same chat or a new one opened in that folder. The first time, it welcomes you and asks where your product stands: a new idea, in development, or running (or a short tour first). Later, it shows the projects in this folder and where each one stopped.
-3. Update any time, in that folder: `npx github:intentstudiodev/intent-harness update`. Your tweaks and projects are kept; the factory settings follow the new version. Each project's files carry the format version they were written in; the harness never writes into a project of another version, and offers `intent-format migrate` for an older one.
+3. Update any time, in that folder: `npx github:intentstudiodev/intent-harness update`. Your tweaks and projects are kept; the factory settings follow the new version. If a shipped file was changed by hand, the update stops and names it: keep the change as a tweak, then run `update --discard`. Each project's files carry the format version they were written in; the harness never writes into a project of another version, and offers `intent-format migrate` for an older one.
 
 Two folders are two independent installs, each with its own version, settings and projects. Installed in your code repository, the knowledge travels with the code; installed elsewhere, each project remembers where its code lives.
 

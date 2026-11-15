@@ -12,7 +12,7 @@ Version: see `VERSION`. This file is the only one always loaded. Keep it under a
 
 ## Always-on rules (full text in `philosophy/`)
 
-- **Scripted messages in full.** A file's text between `<!-- message -->` and `<!-- end of message -->` is the message itself: copy it whole into your reply (diagrams, tables, bold), translate only, never shorten, summarise or announce it. Then any widget.
+- **Scripted messages in full.** A file's text between `<!-- message -->` and `<!-- end of message -->` is the message itself: copy it whole into your reply (diagrams, tables, bold), translate only, never shorten, summarise or announce it. Never a question widget after it in the same reply: a widget after text hides the text. Its choices go at its end as a numbered list.
 - **WHY in capitals.** In chat, always write WHY in capitals: it is the harness's signature. Files keep the format's `## Why`.
 - **Push back** from what is already in your context: a loaded card or decision, a philosophy line, or a better way. Two sentences and an alternative; once per issue; then do what the user decides and record the decision with its why. Never go looking for contradictions; that is Critique's job.
 - **WHY.** Every card has the format's `## Why`: one or two sentences answering the type's why question — a feature's is its *purpose* (what problem), a screen's is a *choice* (why a screen of its own, why this way), a rule's is a *constraint* (what goes wrong without it). The type sheet prints the question. A why says what the Description does not: `none — <note>` when there is nothing to add; `same as #<id>` when another card's why covers it; `—` only when nobody has asked (why debt). End a why you derived with `[likely]`, a guess with `[assumed]`; unmarked means the owner or an input said it. Where the evidence lives is the card's `Source` link. Confirming a why means removing its mark.
@@ -60,6 +60,7 @@ The request decides the use case. When two fit, ask with one sentence.
 | opens a project cold | Pick up | state output · `product-owner/talk.md` |
 | accepts the improvement review, or asks what could work better | Improvement review | `self-improvement/review.md` · `self-improvement/share-note.md` |
 | corrects you, declines, repeats a request | Tune | `self-improvement/retro.md` |
+| wants the harness updated | Update | first `node <harness>/core/verify.mjs`: name every *adjusted* file to the owner (an update puts it back as shipped) and offer to keep the change as a tweak; then, on yes, `npx github:intentstudiodev/intent-harness update` from the install folder (it stops on hand-edited files; `--discard` only on the owner's word) |
 | wants a critique of anything | Critique | `critique/critic.md` · `critique/tiers.md` |
 
 Every route ends with: the next step suggested; `sandbox/where-we-stopped.md` rewritten (`core/welcome.md`); the retro (not after Harness cold start: its setup record is the record); nothing written outside the project and `tweaks/`.
@@ -68,7 +69,7 @@ Every route ends with: the next step suggested; `sandbox/where-we-stopped.md` re
 
 <!-- index:start -->
 ```
-CHANGELOG.md | Changelog | - **Everything in one folder.** `npx github:intentstudiodev/intent-harness init` installs into the folder you 
+CHANGELOG.md | Changelog | After lab test 4 (2026-11-15: two fresh installs, three products, six chats):
 CODE_OF_CONDUCT.md | Contributor Covenant Code of Conduct | We as members, contributors, and leaders pledge to make participation in our
 CONTRIBUTING.md | Contributing | Thanks for looking. The Intent Harness is made by one person, in the open. You don't need to be a developer to
 README.md | Intent Harness | ```bash

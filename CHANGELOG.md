@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.8 — in progress
+
+After lab test 4 (2026-11-15: two fresh installs, three products, six chats):
+
+- **Update never hides a hand edit.** `update` stops when a shipped file was changed by hand and names it; keep the change as a tweak, then `update --discard` puts the file back as shipped. The factory settings are now taken from the installed commit, never from the working files, so `core/verify.mjs` always sees a hand edit. The Update route runs `core/verify.mjs` first and tells the owner what an update would put back.
+- **Versions only on the owner's word.** A version opens, or is marked released, only when the owner says so; a change to a live product stays in the version in progress. Opening or releasing is always an item in the batch the owner sees (`knowledge/versions.md`, `product-owner/checkpoint.md`).
+- **A yes covers the batch the owner saw.** When the answer changes the batch (an alternative taken, a condition added, questions that reshape it), the new batch is shown in a few lines and written on the next yes (`product-owner/checkpoint.md`).
+- **The Welcome and the project menu are plain replies** ending with a numbered list, never a question widget after text: in the desktop app a widget right after a text kept the Welcome from being seen at all. The question may still go through the widget when it comes alone (after the tour, after New project). Scripted messages in general: no widget after them in the same reply (`ENTRY.md`).
+- **No silent fills.** A write of more than about 20 cards says in the offer how many and how long; the frame (project card, roles, features) is written first and reported, then the rest area by area with a line each (`knowledge/start-project.md`, `research/map-existing.md`).
+
 ## 1.7 — 2026-11-14
 
 - **Everything in one folder.** `npx github:intentstudiodev/intent-harness init` installs into the folder you run it in: `Intent-Harness/` (`Harness`, `Format`, `Factory-Settings`) and `Projects/`, one folder per product, as many as you like. Nothing goes to your home folder. Two folders are two independent installs, each with its own version, settings and projects; installed in a code repository, the knowledge travels with the code.
