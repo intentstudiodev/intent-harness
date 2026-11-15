@@ -37,14 +37,14 @@ Intent ──▶ PRODUCT KNOWLEDGE ──▶ SPEC ──▶ DESIGN · DEV
 
 **You stay in charge.** Just talk. I ask, I suggest, and I push back when something doesn't add up.
 
-Where does your product stand?
+How far along is your product?
 <!-- end of message -->
 
 Then the question, at once. With the question widget (`question widget: yes` in the setup record): one question, header *Your product*, these four options in this order, **Welcome tour always first**. When the folder says something (a repository → Running or In development), mark that option's description with *(my guess)*; the order stays.
 
 | Option | Description |
 |---|---|
-| Welcome tour | See what I can do first, in eight short stops |
+| Welcome tour | See what I can do, in one short message |
 | New idea | Nothing built yet, maybe a brief or notes |
 | In development | Designs, docs, tickets or some code exist |
 | Running | People already use it |

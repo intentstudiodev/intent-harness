@@ -7,6 +7,7 @@
 - **Factory settings** (was the hidden `.factory`): the harness exactly as installed, renewed by every install or update, never edited; `core/verify.mjs` finds it by itself, compares and restores.
 - `update` and `where` work on the install in the current folder (or `--dir`). An older install in `~/Intent` is left as it is; the installer says so and names its projects to copy over.
 - Cold start runs once per install, not once per computer.
+- hotfix 2026-11-15: the welcome tour is one short message: the link to the full guide, the diagram and eight plain points, with no question widget in that reply (a widget right after a text kept the text from being shown). "start" then brings the Welcome's question on its own. The question is now *How far along is your product?*
 
 ## 1.6 — 2026-11-14
 
