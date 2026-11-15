@@ -36,7 +36,9 @@ const projects = (isDir(projectsDir) ? fs.readdirSync(projectsDir) : []).filter(
   return { name: (card.match(/^name:\s*(.+)$/m) || [, n])[1].trim(), folder: dir, status: (card.match(/^status:\s*(.+)$/m) || [, '—'])[1].trim(), ...stop, touched };
 }).sort((a, b) => b.touched - a.touched);
 // a product's own folder (its code) leads to its project
-const linked = kbVersions(opened).length ? null : projects.find(p => p.code && path.resolve(untilde(p.code)) === opened);
+// `code:` is relative to the install folder (`.` = the install folder itself), `~/…`, or absolute (older projects)
+const codeDir = (c) => { const p = untilde(c.replace(/`/g, '').trim()); return path.isAbsolute(p) ? p : path.resolve(intent, p); };
+const linked = kbVersions(opened).length ? null : projects.find(p => p.code && codeDir(p.code) === opened);
 const root = linked ? linked.folder : opened;
 const menu = !kbVersions(root).length && projects.length > 0; // no project here, projects exist: Choose a project
 const ex = (p) => fs.existsSync(path.join(root, p));
@@ -95,7 +97,7 @@ const unsent = (improvement.match(/^\s*[-*]\s+(?!.*\[sent)/gm) || []).length;
 // spec tools connected to this project (sandbox/pipelines.md, build/connect-pipeline.md): files they wrote since the last
 // read-back, by modification time only, depth-limited; and whether our marked block is still in their always-read file
 const WATCH = { 'spec kit': ['specs'], kiro: ['.kiro/specs', '.kiro/steering'], bmad: ['_bmad-output'], openspec: ['openspec/changes', 'openspec/specs'] };
-const sinceOf = (t) => { const m = /^(\d{4}-\d{2}-\d{2})(?:[ T](\d{1,2}:\d{2}))?/.exec(t || ''); if (!m) return 0; const at = Date.parse(`${m[1]}T${m[2] ? m[2].padStart(5, '0') : '00:00'}`); return m[2] ? at : at + 86400000; };
+const sinceOf = (t) => { const m = /^(\d{4}-\d{2}-\d{2})(?:[ T](\d{1,2}:\d{2}))?/.exec(t || ''); if (!m) return 0; const at = Date.parse(`${m[1]}T${m[2] ? m[2].padStart(5, '0') : '00:00'}`); return at; }; // a date without a time counts from the start of that day: report too much rather than miss a write
 const newerThan = (dir, since, depth = 0, seen = { n: 0 }) => {
   let count = 0; if (depth > 4 || seen.n > 5000) return 0;
   let names = []; try { names = fs.readdirSync(dir); } catch { return 0; }
@@ -217,7 +219,7 @@ for (const row of entry.split('\n')) {
   routes.set(m[2], [...m[3].matchAll(/`([^`]+\.md)`/g)].map(x => x[1]));
 }
 let useCase, why, format = null;
-if (!setup) { useCase = 'Harness cold start'; why = 'no tweaks/setup-record.md in the harness (once per install; say "skip" to run on defaults)'; }
+if (!setup) { useCase = 'Harness cold start'; why = 'no tweaks/setup-record.md in the harness (once per install; say "skip" to run on defaults). First message a task: no Welcome; steps 2–6 of core/cold-start.md quietly, answer it, then the one-line offer (ENTRY, cold-start row)'; }
 else if (menu) { useCase = 'Choose a project'; why = `${projects.length} project(s) in ${path.relative(intent, projectsDir) || 'Projects'}/ and none in this folder — the project menu (core/welcome.md), unless the first message already names one`; }
 else if (!versions.length) { useCase = 'Start a project'; why = 'no project yet — the welcome, then where the product stands (core/welcome.md); the new project goes to Projects/<name>/ (elsewhere only where the owner names it, with Projects/<name>/pointer.md)'; format = 'intent-format next <project>'; }
 else if (cardsNow <= 1 || (proposal && !report)) { useCase = startFor(lifecycle); why = (cardsNow <= 1 ? 'the KB holds no cards beyond the project card' : 'the format\'s cold start is under way (proposal/ exists, report.md does not)') + (lifecycle === '—' ? '; the project card has no status yet — the hello asks where the product stands' : ` · project status ${lifecycle}`); format = useCase === 'Start a project' ? 'intent-format next ' + root : null; }

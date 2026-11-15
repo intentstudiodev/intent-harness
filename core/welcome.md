@@ -74,5 +74,5 @@ Every project keeps `sandbox/where-we-stopped.md`, three lines, rewritten (not a
 ```
 - last: <date> · <use case> · <what was done, one line>
 - next: <the next step you suggested, one line>
-- code: <path to the product's code, when it lives elsewhere; omit otherwise>
+- code: <the product's code, relative to the install folder (`../shop-web`), when it lives elsewhere; omit otherwise>
 ```

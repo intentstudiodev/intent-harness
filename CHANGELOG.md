@@ -1,23 +1,5 @@
 # Changelog
 
-## 1.9 — in progress
-
-The rest of lab test 4 (findings T4-6 to T4-18):
-
-- **Nothing leaves the folder without a yes.** No connector, upload, shared document, issue or message, even when the owner's account has one connected; the file in the project is the default (`ENTRY.md`).
-- **Settings from a yes, for one project.** A remark in passing is never a setting: a tweak is offered with its scope and written to the project unless the owner says every project (`self-improvement/retro.md`).
-- **Released versions stay as they are.** Prepare first, freeze last; nothing in a released version is corrected, reverted or deleted; a card that should not count is parked or superseded in the version in progress. Cards are never deleted (`knowledge/versions.md`, `ENTRY.md`).
-- **A task first, the setup quietly.** When the first message in a new install is a task, the setup runs without the Welcome, the task is answered, and the start is offered in one line (`core/cold-start.md`, `core/welcome.md`).
-- **Plain commands.** The harness's commands one per call, as the state script prints them (now relative to the chat's folder), no `cd`, variables, loops or heredocs; files written with the file tools. Fewer permission prompts (`ENTRY.md`, `core/state.mjs`).
-- **Per-feature architecture.** `core/architecture.mjs --feature` finds a feature by id or by any part of its name, draws the apps that call it, the data it uses and only the outside services its cards name, and exits 1 with the list of features when nothing or several match.
-- **Spec tool in the repository root.** A code folder of `.` (the harness installed in the repository) is found; the Connections row holds a path only (`core/state.mjs`, `build/connect-pipeline.md`).
-- **Hand edits noticed at pick up.** Pick up runs the format's check and says in one line what changed outside the harness's writes (`ENTRY.md`).
-- **Other people's personal details** in a paste are kept as given or removed, asked once, never changed silently (`intake/intake.md`).
-- **Unmarked means said.** Anything the agent adds to a why is `[assumed]`, even one clause; an unsure owner's answer stays theirs with `[ask: confirm]`, never `[likely]` (`philosophy/why.md`).
-- **"Figure it out" keeps three questions.** On a running product the owner can wave the questions off, but the whys of money, legal duties and promises to customers stay asks (`research/map-existing.md`).
-- **Own words first.** Setup questions without a widget offer short phrases and "answer in your own words"; letters are a shortcut (`knowledge/project-setup.md`).
-- **The setup record travels.** Paths relative to the install folder; connectors by kind, never the owner's account list (`core/setup-record.md`, `core/state.mjs`).
-
 ## 1.8 — 2026-11-15
 
 After lab test 4 (2026-11-15: two fresh installs, three products, six chats):
@@ -27,6 +9,21 @@ After lab test 4 (2026-11-15: two fresh installs, three products, six chats):
 - **A yes covers the batch the owner saw.** When the answer changes the batch (an alternative taken, a condition added, questions that reshape it), the new batch is shown in a few lines and written on the next yes (`product-owner/checkpoint.md`).
 - **The Welcome and the project menu are plain replies** ending with a numbered list, never a question widget after text: in the desktop app a widget right after a text kept the Welcome from being seen at all. The question may still go through the widget when it comes alone (after the tour, after New project). Scripted messages in general: no widget after them in the same reply (`ENTRY.md`).
 - **No silent fills.** A write of more than about 20 cards says in the offer how many and how long; the frame (project card, roles, features) is written first and reported, then the rest area by area with a line each (`knowledge/start-project.md`, `research/map-existing.md`).
+
+- hotfix 2026-11-15, after lab tests 4 and 5:
+  - **Nothing leaves the folder without a yes**: no connector, upload, shared document, issue or message; the file in the project is the default.
+  - **How you want it to work is a tweak, nothing else**: offered with its scope (this project or every project), written on a yes; never into the coding agent's own memory or settings.
+  - **Released versions stay as they are**: prepare first, freeze last; a card that should not count is parked or superseded in the version in progress; cards are never deleted.
+  - **A task first, the setup quietly**: when the first message in a new install is a task, no Welcome, the task answered, the start offered in one line.
+  - **Plain commands**: every shell command one per call, no `cd … &&`, loops or heredocs; files read and written with the file tools. Far fewer permission prompts.
+  - **Per-feature architecture**: `core/architecture.mjs --feature` finds a feature by id or any part of its name and draws only what it reaches; shown as printed, never redrawn.
+  - **Spec tools**: a code folder of `.` (installed in the repository) is found; same-day writes are no longer missed.
+  - **Hand edits noticed at pick up**, in one line, before anything else.
+  - **Other people's personal details** in a paste: asked once, keep or remove.
+  - **Unmarked means said**: any WHY the agent wrote or composed is `[assumed]`; an unsure owner's answer stays theirs with `[ask: confirm]`.
+  - **"Figure it out" keeps three questions** on a running product: money, legal duties, promises to customers.
+  - **Own words first** in setup questions without a widget.
+  - **The project travels**: the setup record and `code:` are relative to the install folder; connectors by kind, never the owner's account list.
 
 ## 1.7 — 2026-11-14
 

@@ -24,7 +24,8 @@ Version: see `VERSION`. This file is the only one always loaded. Keep it under a
 - **Talk is safe, writing is deliberate.** Nothing in the conversation changes the project until a checkpoint shows the batch and the user says yes.
 - **Nothing leaves the folder without a yes.** No connector, upload, shared document, issue, email or message, even when the owner's account has one connected and even when it would fit the request. The file in the project is the default; offer the outside place in one line and act only on the owner's yes.
 - **Cards are never deleted.** A card that should no longer count is marked (Parked, or superseded, with a History line), never removed; in a released version nothing changes at all (`knowledge/versions.md`).
-- **Plain commands.** Run the harness's commands one per call, exactly as the state script prints them, from the install folder: no `cd … &&`, no variables, loops, pipes into scripts or heredocs. Write and edit files with the file tools, not the shell. Each extra shell construct is a permission prompt for the owner.
+- **Plain commands.** Every shell command, not only the harness's: one per call, from the install folder, the harness's exactly as the state script prints them. No `cd … &&`, `;`, variables, loops, pipes into scripts, `printf >>` or heredocs. Read, list and search files with the file tools (Read, Glob, Grep), write and edit them with the file tools too. Each extra shell construct is a permission prompt for the owner.
+- **How the owner wants you to work is a tweak, nothing else.** "Stop asking", "shorter answers", "always in English": offer it as a tweak with its scope (this project, or every project) and write it on a yes (`self-improvement/retro.md`). Never into the coding agent's own memory, rules or settings (Claude Code's memory, `.cursor/rules`, …): the owner can't see them, `verify` can't, and they follow the agent out of the folder.
 - **Proactive partner.** At the end of every use case: say the next step, and in one line what you noticed on the way. At natural pauses only; once declined, not again this session. When the state script says *Improvement review due*, offer the review once, at the first natural pause (`self-improvement/review.md`); do not mention it before that.
 - **Retro.** At the end of every use case except trivial ones, run `self-improvement/retro.md`.
 
@@ -34,7 +35,7 @@ The request decides the use case. When two fit, ask with one sentence.
 
 | The user… | Use case | Load, in order |
 |---|---|---|
-| uses this install of the harness for the first time (no `tweaks/setup-record.md`) | Harness cold start | `core/cold-start.md` · `core/welcome.md` |
+| uses this install of the harness for the first time (no `tweaks/setup-record.md`) | Harness cold start | `core/cold-start.md` · `core/welcome.md`. **First message a task** ("what does this break?"): no Welcome; steps 2–6 of `core/cold-start.md` quietly, answer the task, then one line: *By the way, I can keep this product's knowledge for you; say "start" when you want to.* |
 | opens with hello or anything that names no project yet, and projects exist (the state script lists them) | Choose a project | `core/welcome.md` |
 | picks the Welcome tour, or asks what you can do | Welcome tour | `core/tour.md` |
 | says "let's start" with no cards yet: the hello asks where the product stands (Which start); an idea, a brief, nothing made → New product; or brings a large batch for a new version | Start a project | `core/welcome.md` · `knowledge/start-project.md` (wraps the format's cold start; `intent-format next` keeps the place) · `knowledge/project-setup.md` · `research/researcher.md` · `research/interview.md` · `product-owner/checkpoint.md` · `knowledge/librarian.md` · `knowledge/write-knowledge.md` |
@@ -42,7 +43,7 @@ The request decides the use case. When two fit, ask with one sentence.
 | no cards yet and the product already runs, with people using it (project status Live) | Map what exists | `research/map-existing.md` · `knowledge/project-setup.md` · `intake/intake.md` · `research/reverse-engineer.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
 | points at code, a running product, a screenshot, a recording, a competitor | Reverse engineer | `intake/intake.md` · `research/reverse-engineer.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
 | asks how a kind of product or an area usually works ("how do booking apps handle no-shows", "what should a dashboard have"), or a step needs it | Library | `library/use-library.md` (then only the matching files from `library/index.md`) |
-| asks how the product is built: its parts, apps, services, data, outside services ("how is it built", "draw the architecture") | Software Architecture | `knowledge/software-architecture.md` · `node <harness>/core/architecture.mjs <project>` (one feature: `--feature <name>`) |
+| asks how the product is built: its parts, apps, services, data, outside services ("how is it built", "draw the architecture") | Software Architecture | `knowledge/software-architecture.md` · `node <harness>/core/architecture.mjs <project>` (one feature: `--feature <name>`): show its output as printed; your notes go under it, never into it; never a diagram of your own |
 | talks, asks, thinks aloud | Discuss | `product-owner/talk.md` · `product-owner/checkpoint.md` |
 | wants something changed, added or removed in the product | Change | `knowledge/change-impact.md` · `product-owner/checkpoint.md` · `knowledge/librarian.md` · `knowledge/write-knowledge.md` |
 | brings a document, a file, a paste, a link, feedback, data | Add input | `intake/intake.md` · `research/read-input.md` · `product-owner/checkpoint.md` · `knowledge/write-knowledge.md` |
@@ -72,7 +73,7 @@ Every route ends with: the next step suggested; `sandbox/where-we-stopped.md` re
 
 <!-- index:start -->
 ```
-CHANGELOG.md | Changelog | The rest of lab test 4 (findings T4-6 to T4-18):
+CHANGELOG.md | Changelog | After lab test 4 (2026-11-15: two fresh installs, three products, six chats):
 CODE_OF_CONDUCT.md | Contributor Covenant Code of Conduct | We as members, contributors, and leaders pledge to make participation in our
 CONTRIBUTING.md | Contributing | Thanks for looking. The Intent Harness is made by one person, in the open. You don't need to be a developer to
 README.md | Intent Harness | ```bash
