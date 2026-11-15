@@ -2,8 +2,6 @@
 
 The first run of the harness in an install (the folder it was installed in): once, not once per project. It asks nothing that can be detected or defaulted; most users answer zero questions. Re-run when the environment changes; `state.mjs` flags drift at every session start. It has no retro: the setup record is the record.
 
-**When the first message is a task** ("what does this break?", a pasted bug, "draw the architecture"), the Welcome is never a gate: do steps 2–6 quietly (no Welcome text, no setup line), answer the task, then offer the start in one line at the end: *By the way, I can keep this product's knowledge for you; say "start" when you want to.*
-
 ## Steps
 
 1. **Say hello first**: the Welcome of `core/welcome.md`, without its closing question, then one line: *This is my first time in this folder, so I'm setting myself up. No questions; it takes a minute.* This setup only writes inside the harness and can be redone.

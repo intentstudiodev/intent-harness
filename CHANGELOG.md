@@ -10,21 +10,6 @@ After lab test 4 (2026-11-15: two fresh installs, three products, six chats):
 - **The Welcome and the project menu are plain replies** ending with a numbered list, never a question widget after text: in the desktop app a widget right after a text kept the Welcome from being seen at all. The question may still go through the widget when it comes alone (after the tour, after New project). Scripted messages in general: no widget after them in the same reply (`ENTRY.md`).
 - **No silent fills.** A write of more than about 20 cards says in the offer how many and how long; the frame (project card, roles, features) is written first and reported, then the rest area by area with a line each (`knowledge/start-project.md`, `research/map-existing.md`).
 
-- hotfix 2026-11-15, after lab tests 4 and 5:
-  - **Nothing leaves the folder without a yes**: no connector, upload, shared document, issue or message; the file in the project is the default.
-  - **How you want it to work is a tweak, nothing else**: offered with its scope (this project or every project), written on a yes; never into the coding agent's own memory or settings.
-  - **Released versions stay as they are**: prepare first, freeze last; a card that should not count is parked or superseded in the version in progress; cards are never deleted.
-  - **A task first, the setup quietly**: when the first message in a new install is a task, no Welcome, the task answered, the start offered in one line.
-  - **Plain commands**: every shell command one per call, no `cd … &&`, loops or heredocs; files read and written with the file tools. Far fewer permission prompts.
-  - **Per-feature architecture**: `core/architecture.mjs --feature` finds a feature by id or any part of its name and draws only what it reaches; shown as printed, never redrawn.
-  - **Spec tools**: a code folder of `.` (installed in the repository) is found; same-day writes are no longer missed.
-  - **Hand edits noticed at pick up**, in one line, before anything else.
-  - **Other people's personal details** in a paste: asked once, keep or remove.
-  - **Unmarked means said**: any WHY the agent wrote or composed is `[assumed]`; an unsure owner's answer stays theirs with `[ask: confirm]`.
-  - **"Figure it out" keeps three questions** on a running product: money, legal duties, promises to customers.
-  - **Own words first** in setup questions without a widget.
-  - **The project travels**: the setup record and `code:` are relative to the install folder; connectors by kind, never the owner's account list.
-
 ## 1.7 — 2026-11-14
 
 - **Everything in one folder.** `npx github:intentstudiodev/intent-harness init` installs into the folder you run it in: `Intent-Harness/` (`Harness`, `Format`, `Factory-Settings`) and `Projects/`, one folder per product, as many as you like. Nothing goes to your home folder. Two folders are two independent installs, each with its own version, settings and projects; installed in a code repository, the knowledge travels with the code.

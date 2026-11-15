@@ -36,9 +36,7 @@ const projects = (isDir(projectsDir) ? fs.readdirSync(projectsDir) : []).filter(
   return { name: (card.match(/^name:\s*(.+)$/m) || [, n])[1].trim(), folder: dir, status: (card.match(/^status:\s*(.+)$/m) || [, '—'])[1].trim(), ...stop, touched };
 }).sort((a, b) => b.touched - a.touched);
 // a product's own folder (its code) leads to its project
-// `code:` is relative to the install folder (`.` = the install folder itself), `~/…`, or absolute (older projects)
-const codeDir = (c) => { const p = untilde(c.replace(/`/g, '').trim()); return path.isAbsolute(p) ? p : path.resolve(intent, p); };
-const linked = kbVersions(opened).length ? null : projects.find(p => p.code && codeDir(p.code) === opened);
+const linked = kbVersions(opened).length ? null : projects.find(p => p.code && path.resolve(untilde(p.code)) === opened);
 const root = linked ? linked.folder : opened;
 const menu = !kbVersions(root).length && projects.length > 0; // no project here, projects exist: Choose a project
 const ex = (p) => fs.existsSync(path.join(root, p));
@@ -97,7 +95,7 @@ const unsent = (improvement.match(/^\s*[-*]\s+(?!.*\[sent)/gm) || []).length;
 // spec tools connected to this project (sandbox/pipelines.md, build/connect-pipeline.md): files they wrote since the last
 // read-back, by modification time only, depth-limited; and whether our marked block is still in their always-read file
 const WATCH = { 'spec kit': ['specs'], kiro: ['.kiro/specs', '.kiro/steering'], bmad: ['_bmad-output'], openspec: ['openspec/changes', 'openspec/specs'] };
-const sinceOf = (t) => { const m = /^(\d{4}-\d{2}-\d{2})(?:[ T](\d{1,2}:\d{2}))?/.exec(t || ''); if (!m) return 0; const at = Date.parse(`${m[1]}T${m[2] ? m[2].padStart(5, '0') : '00:00'}`); return at; }; // a date without a time counts from the start of that day: report too much rather than miss a write
+const sinceOf = (t) => { const m = /^(\d{4}-\d{2}-\d{2})(?:[ T](\d{1,2}:\d{2}))?/.exec(t || ''); if (!m) return 0; const at = Date.parse(`${m[1]}T${m[2] ? m[2].padStart(5, '0') : '00:00'}`); return m[2] ? at : at + 86400000; };
 const newerThan = (dir, since, depth = 0, seen = { n: 0 }) => {
   let count = 0; if (depth > 4 || seen.n > 5000) return 0;
   let names = []; try { names = fs.readdirSync(dir); } catch { return 0; }
@@ -112,10 +110,7 @@ const pipelines = [];
 for (const row of ((read('sandbox/pipelines.md').split(/^## /m).find(t => t.startsWith('Connections'))) || '').split('\n')) {
   const c = row.split('|').slice(1, -1).map(t => t.trim());
   if (c.length < 7 || c[0] === 'Tool' || /^-+$/.test(c[0]) || !/^connected/i.test(c[6])) continue;
-  // the code folder: absolute, ~/…, or relative — to the install folder (`.` = the repository the harness is installed in), else to the project
-  const [tool, code, fileMarker, mode, , lastRead] = c, file = fileMarker.split('·')[0].trim();
-  const rel = untilde(code.replace(/`/g, '').replace(/\s*\(.*\)\s*$/, '').trim() || '.');
-  const dir = path.isAbsolute(rel) ? rel : [path.resolve(intent, rel), path.resolve(root, rel)].find(isDir) || path.resolve(intent, rel);
+  const [tool, code, fileMarker, mode, , lastRead] = c, dir = path.resolve(root, untilde(code)), file = fileMarker.split('·')[0].trim();
   const found = isDir(dir), since = sinceOf(lastRead);
   const changed = found ? (WATCH[tool.toLowerCase()] || []).reduce((n, w) => n + newerThan(path.join(dir, w), since), 0) : 0;
   let block = false; try { block = fs.readFileSync(path.join(dir, file), 'utf8').includes('<!-- intent-harness:start -->'); } catch {}
@@ -180,9 +175,7 @@ const formatTool = (() => {
   const conf = ((hread('tweaks/config.md').match(/^-\s*format-tool:\s*([^#\n]+)/m) || [])[1] || '').trim().replace(/^node\s+/, '').replace(/^["'`]|["'`]$/g, '');
   const tries = [conf && /[\\/]|\.mjs$/.test(conf) ? path.resolve(harness, untilde(conf)) : null, ...['Format', 'intent-format'].map(d => path.join(tools, d, 'kit', 'cli', 'intent-format.mjs'))].filter(Boolean);
   const hit = tries.find(p => fs.existsSync(p));
-  if (!hit) return 'intent-format';
-  const rel = path.relative(process.cwd(), hit), shown = rel && !rel.startsWith('..') && !path.isAbsolute(rel) ? rel : hit; // relative to where the chat runs: shorter, one plain command
-  return /\s/.test(shown) ? `node "${shown}"` : `node ${shown}`;
+  return hit ? `node "${hit}"` : 'intent-format';
 })();
 
 const setupText = hread('tweaks/setup-record.md');
@@ -191,7 +184,7 @@ const drift = [];
 for (const m of setupText.matchAll(/^\s*[-*]\s*found:\s*`?(.+?)`?\s*(?:—|$)/gm)) { // the path runs up to " — "; spaces are part of it
   const p = m[1].trim();
   if (!/^(\/|\.|~)/.test(p)) continue;
-  const abs = p.startsWith('~') ? path.join(process.env.HOME || '', p.slice(1)) : path.resolve(intent, p); // relative: to the install folder (core/setup-record.md)
+  const abs = p.startsWith('~') ? path.join(process.env.HOME || '', p.slice(1)) : path.resolve(harness, p);
   if (!fs.existsSync(abs)) drift.push(p);
 }
 
@@ -219,7 +212,7 @@ for (const row of entry.split('\n')) {
   routes.set(m[2], [...m[3].matchAll(/`([^`]+\.md)`/g)].map(x => x[1]));
 }
 let useCase, why, format = null;
-if (!setup) { useCase = 'Harness cold start'; why = 'no tweaks/setup-record.md in the harness (once per install; say "skip" to run on defaults). First message a task: no Welcome; steps 2–6 of core/cold-start.md quietly, answer it, then the one-line offer (ENTRY, cold-start row)'; }
+if (!setup) { useCase = 'Harness cold start'; why = 'no tweaks/setup-record.md in the harness (once per install; say "skip" to run on defaults)'; }
 else if (menu) { useCase = 'Choose a project'; why = `${projects.length} project(s) in ${path.relative(intent, projectsDir) || 'Projects'}/ and none in this folder — the project menu (core/welcome.md), unless the first message already names one`; }
 else if (!versions.length) { useCase = 'Start a project'; why = 'no project yet — the welcome, then where the product stands (core/welcome.md); the new project goes to Projects/<name>/ (elsewhere only where the owner names it, with Projects/<name>/pointer.md)'; format = 'intent-format next <project>'; }
 else if (cardsNow <= 1 || (proposal && !report)) { useCase = startFor(lifecycle); why = (cardsNow <= 1 ? 'the KB holds no cards beyond the project card' : 'the format\'s cold start is under way (proposal/ exists, report.md does not)') + (lifecycle === '—' ? '; the project card has no status yet — the hello asks where the product stands' : ` · project status ${lifecycle}`); format = useCase === 'Start a project' ? 'intent-format next ' + root : null; }

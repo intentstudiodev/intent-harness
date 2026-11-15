@@ -32,7 +32,7 @@ Then the start goes on: New idea → the format's kickoff, skipping what setup a
 - **Skip what is certain.** A tab whose answer the folder or the owner's words already settle is left out, and the line above the widget says so ("Code: this folder; I see a git repository").
 - **One short line above the widget**, nothing long: some chat apps drop long text before a widget. The widget carries the content.
 - **Previews** (where the widget has them, as in Claude Code): ⑥ shows each item's usual shape and WHY from its library file.
-- **Without a widget**: the same tabs as one numbered list, each option a short phrase, guesses marked. Say first *answer in your own words*; the letters are a shortcut, second ("or in one line: 1 a c, 2 b"). An owner who answers in sentences is mapped to the options, never asked to use letters.
+- **Without a widget**: the same tabs as one numbered list with lettered options, guesses marked; the owner answers in one line ("1 a c, 2 b, 3 own words").
 
 ## The widgets
 

@@ -37,7 +37,7 @@ When you decide something the cards do not say, write it down in your spec with 
 <!-- intent-harness:end -->
 ```
 
-The Connections row's *Code folder* is a path only, nothing after it: relative to the install folder (`.` when the harness is installed in the repository itself, `../shop-web` beside it), `~/…` otherwise; `core/state.mjs` reads it to see what the tool wrote. The paths in the block: relative to the code folder when the harness is installed in it (`Projects/<name>/`, `Intent-Harness/Format`), so every teammate's clone works; otherwise the install's paths written with `~`, never this computer's full home path. The block is committed with the repository, so the whole team's agents read it; a teammate whose knowledge sits elsewhere is asked where it is.
+The paths: relative to the code folder when the harness is installed in it (`Projects/<name>/`, `Intent-Harness/Format`), so every teammate's clone works; otherwise the install's paths written with `~`, never this computer's full home path. The block is committed with the repository, so the whole team's agents read it; a teammate whose knowledge sits elsewhere is asked where it is.
 
 3. **Record it** in `sandbox/pipelines.md` (created from the shape below when missing): one Connections row. Say it back in one line: tool, file, mode, and that "disconnect" removes the block.
 

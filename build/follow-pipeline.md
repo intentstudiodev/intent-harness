@@ -28,6 +28,6 @@ Our own block, our steering file and `intent-pack-*` copies are not news.
 
 > Since 2026-11-10, BMAD wrote 6 files. Progress: Reviews 3/8 stories done. New tech: PostgreSQL, a payments API. 2 decisions to record, 1 contradiction (refund window: 48 h in the cards, 24 h in the PRD), 2 open questions. Read them in?
 
-5. **Write** what the owner says yes to (`checkpoint`, `write-knowledge`). Then move the row's `Last read back` to now, as date and time (`2026-11-15 14:30`), update Handed, rewrite `sandbox/where-we-stopped.md`.
+5. **Write** what the owner says yes to (`checkpoint`, `write-knowledge`). Then move the row's `Last read back` to now, update Handed, rewrite `sandbox/where-we-stopped.md`.
 
 **Never.** Write into the tool's files. Take a decision into the knowledge without the owner's yes. Change a card because a spec says otherwise: that is an Open decision.

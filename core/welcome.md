@@ -10,7 +10,7 @@ Two screens. `core/state.mjs` says which: **Welcome** when there is no project y
 
 **No question widget on these screens.** A widget right after a text keeps the text from being shown (the agent moves it out of the reply; lab, 2026-11-15: the Welcome was never seen in 13 desktop runs). So each screen is one plain reply that ends with its numbered list, and the user answers by typing a number or in their own words.
 
-**Never a gate.** When the user's first message already says what they want ("let's design the checkout for Shop", a pasted brief, a question), skip the screen: pick the project, say which in one line, and go to that route. The screen is for "hello", "let's start" and other openings that say nothing yet. The first time in an install, the same: `core/cold-start.md`, *When the first message is a task*.
+**Never a gate.** When the user's first message already says what they want ("let's design the checkout for Shop", a pasted brief, a question), skip the screen: pick the project, say which in one line, and go to that route. The screen is for "hello", "let's start" and other openings that say nothing yet.
 
 ## Welcome
 
@@ -74,5 +74,5 @@ Every project keeps `sandbox/where-we-stopped.md`, three lines, rewritten (not a
 ```
 - last: <date> · <use case> · <what was done, one line>
 - next: <the next step you suggested, one line>
-- code: <the product's code, relative to the install folder (`../shop-web`), when it lives elsewhere; omit otherwise>
+- code: <path to the product's code, when it lives elsewhere; omit otherwise>
 ```
