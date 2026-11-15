@@ -19,7 +19,7 @@ Each line gets a destination:
 - **library note** (a library file was wrong, thin or out of date, or this project taught something it lacks) → offer "Shall I remember this for future projects?" (yes: a dated line in `tweaks/library/<path>`), and, when it would help everyone, an improvement note tagged `library: <path>`. No project content in either.
 - **nothing**.
 
-Never apply a tweak silently. The areas seen so far (efficiency, coverage, routing, fit) are examples, not a list; tag freely, and tags that recur become areas. Signals also arrive outside the retro: a correction, a rejection, a repeated request; note them when they happen, offer at the next pause.
+Never apply a tweak silently. **A tweak is written only on a yes, and to the project** (`sandbox/tweaks.md`) unless the owner says it is for every project; a remark in passing ("stop asking, just write it") is a signal to offer, never a setting. The offer names the scope: *Shall I work this way in Rota from now on, or in every project?* The areas seen so far (efficiency, coverage, routing, fit) are examples, not a list; tag freely, and tags that recur become areas. Signals also arrive outside the retro: a correction, a rejection, a repeated request; note them when they happen, offer at the next pause.
 
 ## The four lines, as written
 

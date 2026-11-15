@@ -51,7 +51,7 @@ Most of the architecture follows from what is already known: platforms, parts (p
 
 ## The view
 
-`node <harness>/core/architecture.mjs <project> [--feature <name>]` draws the map from the cards (with `--feature`, only the parts one feature reaches, by its exact name: "show me just the swaps part"): a Mermaid diagram at container level, then one line per node with its connections and what it is built with. Show it at the checkpoint, when the owner asks "how is it built", and in packs for spec tools. It is generated; never edit it by hand, never keep a copy.
+`node <harness>/core/architecture.mjs <project> [--feature <name>]` draws the map from the cards (with `--feature`, only the parts one feature reaches; the feature by id or any part of its name: "show me just the swaps part"): a Mermaid diagram at container level, then one line per node with its connections and what it is built with. Show it at the checkpoint, when the owner asks "how is it built", and in packs for spec tools. It is generated: show it as printed, your notes under it; never edit it by hand, never redraw it, never keep a copy.
 
 The library's `areas/architecture/` files are a lens for the choices (monolith or services, serverless, real-time, data, hosting, AI features): their questions sharpen yours (`library/use-library.md`).
 
