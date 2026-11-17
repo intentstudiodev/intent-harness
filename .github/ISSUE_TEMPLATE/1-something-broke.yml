@@ -21,7 +21,7 @@ body:
     attributes: { label: "Which AI agent?", options: [Claude Code, Codex, Cursor, Other] }
   - type: input
     id: version
-    attributes: { label: "Harness version", description: "Run `npx github:intentstudiodev/intent-harness where` — or leave empty if you don't know." }
+    attributes: { label: "Harness version", description: "Run `npx intent-harness where` — or leave empty if you don't know." }
   - type: markdown
     attributes:
       value: Please don't paste anything private from your product. A made-up example is just as useful.
