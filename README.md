@@ -1,7 +1,9 @@
 # Intent Harness
 
+[![npm](https://img.shields.io/npm/v/intent-harness)](https://www.npmjs.com/package/intent-harness) [![downloads](https://img.shields.io/npm/dw/intent-harness)](https://www.npmjs.com/package/intent-harness)
+
 ```bash
-npx github:intentstudiodev/intent-harness init
+npx intent-harness init
 ```
 
 Run it in your coding agent's chat or a terminal, in any folder (your product's code, or an empty one). Then say hello: the harness greets you and asks where your product stands, or which project to continue.
@@ -28,7 +30,7 @@ The knowledge sits in the middle. Each tool gets a slice in the shape it already
 
 | Your tool | What it gets | How |
 |---|---|---|
-| Your coding agent (Claude Code, Codex, Cursor …) | the whole harness | `npx github:intentstudiodev/intent-harness init` writes the one line into your project's `AGENTS.md` |
+| Your coding agent (Claude Code, Codex, Cursor …) | the whole harness | `npx intent-harness init` writes the one line into your project's `AGENTS.md` |
 | A spec tool (Spec Kit, Kiro, BMAD, OpenSpec) | a short block where it always reads; a feature pack per feature, made from the cards with every WHY | *connect a spec tool* writes the block between markers (removable); hand it features one by one, or work straight in the tool and let the harness catch up: its progress, tech, decisions and open points come back as cards on your yes |
 | A design tool or skill | a design brief from the cards | the designer's connector (`design/connector.md`) |
 | A test tool or skill | the rules and flows to check | the QA connector (`qa/connector.md`) |
@@ -44,7 +46,7 @@ Not a dev pipeline, not a spec generator, not a wiki. It is the memory the other
 1. In the folder you want to work in (an empty one, or your product's code), run:
 
    ```bash
-   npx github:intentstudiodev/intent-harness init
+   npx intent-harness init
    ```
 
    Everything goes into that folder:
@@ -71,7 +73,7 @@ Not a dev pipeline, not a spec generator, not a wiki. It is the memory the other
 
    The pointer uses a relative path, so the folder still works after a copy, a move or a teammate's `git clone`. It never overwrites a file of yours. Needs Node 18 or newer and git.
 2. Say hello, in the same chat or a new one opened in that folder. The first time, it welcomes you and asks where your product stands: a new idea, in development, or running (or a short tour first). Later, it shows the projects in this folder and where each one stopped.
-3. Update any time, in that folder: `npx github:intentstudiodev/intent-harness update`. Your tweaks and projects are kept; the factory settings follow the new version. If a shipped file was changed by hand, the update stops and names it: keep the change as a tweak, then run `update --discard`. Each project's files carry the format version they were written in; the harness never writes into a project of another version, and offers `intent-format migrate` for an older one.
+3. Update any time, in that folder: `npx intent-harness update`. Your tweaks and projects are kept; the factory settings follow the new version. If a shipped file was changed by hand, the update stops and names it: keep the change as a tweak, then run `update --discard`. Each project's files carry the format version they were written in; the harness never writes into a project of another version, and offers `intent-format migrate` for an older one.
 
 Two folders are two independent installs, each with its own version, settings and projects. Installed in your code repository, the knowledge travels with the code; installed elsewhere, each project remembers where its code lives.
 
@@ -94,7 +96,7 @@ A walk: a brief in `inputs/` → twelve cards and five questions → a tester's 
 | `<module>/connector.md` | designer, developer, QA: cases → outside skills |
 | `library/` | short, sourced notes: `domains/` (what a product is; a product has several) and `areas/` (Area knowledge: platforms, design systems, patterns, parts, practices). A lens, never a rulebook; `index.md` lists them |
 | `tweaks/` | yours; empty when shipped; survives upgrades; holds `config.md`, `setup-record.md` (proof of cold start, once per install), `connectors.md` |
-| `bin/` | the installer behind `npx github:intentstudiodev/intent-harness init` |
+| `bin/` | the installer behind `npx intent-harness init` |
 | `.github/` | issue forms: something went wrong, idea, improvement note, library file, tweak |
 
 ## Versions

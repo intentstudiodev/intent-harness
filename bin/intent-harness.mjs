@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // Installs the Intent Harness and the Intent Format into the folder you run it in, and wires that folder to them.
-//   npx github:intentstudiodev/intent-harness init      install or update here: Intent-Harness/ and Projects/, AGENTS.md and CLAUDE.md
-//   npx github:intentstudiodev/intent-harness update    update the install in this folder; your tweaks and projects stay
-//   npx github:intentstudiodev/intent-harness where     print the paths and versions of the install in this folder
+//   npx intent-harness init      install or update here: Intent-Harness/ and Projects/, AGENTS.md and CLAUDE.md
+//   npx intent-harness update    update the install in this folder; your tweaks and projects stay
+//   npx intent-harness where     print the paths and versions of the install in this folder
 // Options: --dir <path> (default: the current folder) · --discard (update even though shipped files were changed by hand: they go back as shipped)
 // No dependencies. Needs Node 18 or newer and git. Never overwrites a file of yours.
 //
@@ -39,7 +39,7 @@ const say = (s = '') => console.log(s);
 if (!['init', 'update', 'where', 'help'].includes(cmd)) { say('usage: intent-harness [init|update|where] [--dir <path>]'); process.exit(2); }
 if (cmd === 'help') { say(fs.readFileSync(new URL(import.meta.url), 'utf8').split('\n').slice(1, 7).map((l) => l.replace(/^\/\/ ?/, '')).join('\n')); process.exit(0); }
 if (cmd === 'where') {
-  if (!fs.existsSync(TOOLS)) { say(`No Intent Harness in ${tilde(ROOT)}. Install here: npx github:intentstudiodev/intent-harness init`); process.exit(1); }
+  if (!fs.existsSync(TOOLS)) { say(`No Intent Harness in ${tilde(ROOT)}. Install here: npx intent-harness init`); process.exit(1); }
   for (const r of REPOS) say(`${r.title.padEnd(17)} ${version(path.join(TOOLS, r.name)).padEnd(6)} ${tilde(path.join(TOOLS, r.name))}`);
   say(`${'Factory settings'.padEnd(17)} ${version(path.join(TOOLS, 'Factory-Settings')).padEnd(6)} ${tilde(path.join(TOOLS, 'Factory-Settings'))}`);
   say(`${'Projects'.padEnd(24)} ${tilde(path.join(ROOT, 'Projects'))}`);
@@ -47,7 +47,7 @@ if (cmd === 'where') {
 }
 if (ROOT === ME) { say('✗ Not in your home folder. Make a folder for your product work (or open your code folder), and run this there.'); process.exit(2); }
 if (path.basename(ROOT) === 'Intent-Harness' || ROOT.split(path.sep).includes('Intent-Harness')) { say('✗ This is inside an install. Run it in the folder that holds Intent-Harness/.'); process.exit(2); }
-if (cmd === 'update' && !fs.existsSync(TOOLS)) { say(`✗ No Intent Harness in ${tilde(ROOT)} to update. Install it here: npx github:intentstudiodev/intent-harness init`); process.exit(1); }
+if (cmd === 'update' && !fs.existsSync(TOOLS)) { say(`✗ No Intent Harness in ${tilde(ROOT)} to update. Install it here: npx intent-harness init`); process.exit(1); }
 try { git(['--version']); } catch { say('✗ git is needed: https://git-scm.com'); process.exit(1); }
 fs.mkdirSync(TOOLS, { recursive: true });
 fs.mkdirSync(path.join(ROOT, 'Projects'), { recursive: true });
@@ -99,7 +99,7 @@ fs.rmSync(factory, { recursive: true, force: true });
 
 // 3. The pointer: a relative path, so the folder still works after a copy, a move or a git clone by a teammate.
 const ENTRY = 'Intent-Harness/Harness/ENTRY.md';
-const pointer = (rel) => `This folder uses the Intent Harness. Read \`${rel}\` first.\nIf that file does not exist, tell the user and offer to install it here: \`npx github:intentstudiodev/intent-harness init\`.`;
+const pointer = (rel) => `This folder uses the Intent Harness. Read \`${rel}\` first.\nIf that file does not exist, tell the user and offer to install it here: \`npx intent-harness init\`.`;
 const OLDLINE = /^This folder uses the Intent Harness\. Read `[^`]*ENTRY\.md` first\.\nIf that file does not exist[^\n]*$/m;
 const wireFolder = (here) => {
   const rel = path.relative(here, path.join(ROOT, ENTRY)).split(path.sep).join('/');
@@ -107,19 +107,20 @@ const wireFolder = (here) => {
   if (!fs.existsSync(agents)) fs.writeFileSync(agents, pointer(rel) + '\n');
   else {
     const t = fs.readFileSync(agents, 'utf8');
-    if (OLDLINE.test(t)) { if (!t.includes(`\`${rel}\``)) fs.writeFileSync(agents, t.replace(OLDLINE, pointer(rel))); }
+    if (OLDLINE.test(t)) { if (!t.includes(pointer(rel))) fs.writeFileSync(agents, t.replace(OLDLINE, pointer(rel))); }
     else fs.appendFileSync(agents, `\n${pointer(rel)}\n`);
   }
   if (!fs.existsSync(claude)) fs.writeFileSync(claude, '@AGENTS.md\n');
   else if (!fs.readFileSync(claude, 'utf8').includes('AGENTS.md')) say(`· ${tilde(claude)} does not import AGENTS.md: add the line @AGENTS.md if your agent needs it`);
 };
-if (cmd === 'init') wireFolder(ROOT);
+// init wires the folder; update only refreshes a pointer that is already there (never adds one the owner removed)
+if (cmd === 'init' || (fs.existsSync(path.join(ROOT, 'AGENTS.md')) && OLDLINE.test(fs.readFileSync(path.join(ROOT, 'AGENTS.md'), 'utf8')))) wireFolder(ROOT);
 // projects already here point at this install too (their AGENTS.md is written by the format, the pointer added by the harness)
 for (const p of fs.readdirSync(path.join(ROOT, 'Projects'))) { const d = path.join(ROOT, 'Projects', p); if (fs.existsSync(path.join(d, 'AGENTS.md'))) wireFolder(d); }
-const table = `| Folder | What it holds | Who changes it |\n|---|---|---|\n| \`Projects/\` | each product's knowledge, one folder per product | you, with your agent |\n| \`Intent-Harness/Harness/\` | the Intent Harness | updates; your own changes go in \`Intent-Harness/Harness/tweaks/\` |\n| \`Intent-Harness/Format/\` | the Intent Format and its tool | updates |\n| \`Intent-Harness/Factory-Settings/\` | the harness exactly as installed, to compare and restore | updates only |\n\nOpen this folder in your coding agent and say hello.\nUpdate: \`npx github:intentstudiodev/intent-harness update\` (run it here)\n`;
+const table = `| Folder | What it holds | Who changes it |\n|---|---|---|\n| \`Projects/\` | each product's knowledge, one folder per product | you, with your agent |\n| \`Intent-Harness/Harness/\` | the Intent Harness | updates; your own changes go in \`Intent-Harness/Harness/tweaks/\` |\n| \`Intent-Harness/Format/\` | the Intent Format and its tool | updates |\n| \`Intent-Harness/Factory-Settings/\` | the harness exactly as installed, to compare and restore | updates only |\n\nOpen this folder in your coding agent and say hello.\nUpdate: \`npx intent-harness update\` (run it here)\n`;
 const readme = path.join(ROOT, 'README.md');
 if (!fs.existsSync(readme)) fs.writeFileSync(readme, `# Product knowledge\n\nKept by the Intent Harness.\n\n${table}`);
-fs.writeFileSync(path.join(TOOLS, 'README.md'), `# Intent Harness\n\nInstalled here by \`npx github:intentstudiodev/intent-harness init\`.\n\n${table}`);
+fs.writeFileSync(path.join(TOOLS, 'README.md'), `# Intent Harness\n\nInstalled here by \`npx intent-harness init\`.\n\n${table}`);
 
 // 4. What the person (and the agent that ran this) reads.
 const hv = version(path.join(TOOLS, 'Harness')), fv = version(path.join(TOOLS, 'Format'));
@@ -135,4 +136,4 @@ ${old ? `\n  An older install is in ${tilde(OLD_HOME)} and stays as it is.${oldP
 Next: open this folder in your coding agent and say hello.
 ${cmd === 'init' ? `
 (For the agent that ran this: to start in this same chat, read ${tilde(path.join(ROOT, ENTRY))} now and follow it; the greeting is core/welcome.md.)` : ''}
-Details: npx github:intentstudiodev/intent-harness where`);
+Details: npx intent-harness where`);

@@ -25,6 +25,8 @@ After lab test 4 (2026-11-15: two fresh installs, three products, six chats):
   - **Own words first** in setup questions without a widget.
   - **The project travels**: the setup record and `code:` are relative to the install folder; connectors by kind, never the owner's account list.
 
+- hotfix 2026-11-17: **on npm.** Install and update with `npx intent-harness init` / `update` (the package `intent-harness`, npm version 1.8.1); the old `npx github:intentstudiodev/intent-harness …` keeps working. An update now also rewrites the old command in the pointer line of `AGENTS.md`, in the install folder and in every project.
+
 ## 1.7 — 2026-11-14
 
 - **Everything in one folder.** `npx github:intentstudiodev/intent-harness init` installs into the folder you run it in: `Intent-Harness/` (`Harness`, `Format`, `Factory-Settings`) and `Projects/`, one folder per product, as many as you like. Nothing goes to your home folder. Two folders are two independent installs, each with its own version, settings and projects; installed in a code repository, the knowledge travels with the code.
